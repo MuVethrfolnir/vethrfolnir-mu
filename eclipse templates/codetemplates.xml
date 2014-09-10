@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="filecomment_context" deleted="false" description="Comment for created Java files" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.filecomment" name="filecomment">/*
+ * This file is strictly bounded by Corvus Corax Entertainment and its prohibited
+ * for commercial use, or any use what so ever.
+ * This application can be ran only by an Corvus - Corax Employee
+ * Copyright © Corvus Corax 2013
+ */</template></templates>

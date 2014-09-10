@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="info" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="log4J-V-2.0.xsd">  <!-- Set it to debug to be able to see ALL debug messages -->
+    <appenders>
+        <RollingFile name="Core" fileName="log/core.log" filePattern="log/archive/$${date:yyyy-MM}/core-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern = "%d %p %c [%t] %m%n" />
+            <OnStartupTriggeringPolicy />
+        </RollingFile>
+
+        <RollingFile name="items" fileName="log/items.log" filePattern="log/archive/$${date:yyyy-MM}/items-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern = "%d %p %c [%t] %m%n" />
+            <OnStartupTriggeringPolicy />
+        </RollingFile>
+
+        <RollingFile name="chat" fileName="log/chat.log" filePattern="log/archive/$${date:yyyy-MM}/chat-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern = "%d %p %c [%t] %m%n" />
+            <OnStartupTriggeringPolicy />
+        </RollingFile>
+
+        <RollingFile name="gm" fileName="log/game-masters.log" filePattern="log/archive/$${date:yyyy-MM}/game-masters-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern = "%d %p %c [%t] %m%n" />
+            <OnStartupTriggeringPolicy />
+        </RollingFile>
+
+        <RollingFile name="enchant" fileName="log/enchant.log" filePattern="log/archive/$${date:yyyy-MM}/enchant-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern = "%d %p %c [%t] %m%n" />
+            <OnStartupTriggeringPolicy />
+        </RollingFile>
+
+        <RollingFile name="punishments" fileName="log/punishments.log" filePattern="log/archive/$${date:yyyy-MM}/punishments-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout pattern = "%d %p %c [%t] %m%n" />
+            <OnStartupTriggeringPolicy />
+        </RollingFile>
+
+        <RollingFile name="All-Errors" fileName="log/error-all.log" filePattern="log/archive/$${date:yyyy-MM}/error-%d{MM-dd-yyyy}-%i.log.gz">
+			<filters>
+				<ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+			</filters>
+            <PatternLayout pattern = "%d %p %c [%t] %m%n" />
+            <OnStartupTriggeringPolicy />
+        </RollingFile>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%highlight{%-5level %c{0} - %msg%n}{FATAL=Blinking bright red, ERROR=Blinking bright red, WARN=bright red, INFO=white, DEBUG=bright green, TRACE=bright black}"/>
+        </Console>
+    </appenders>
+
+    <loggers>
+
+        <logger name = "item" level = "info">
+        	<appender-ref ref="items"/>
+        </logger>
+
+        <logger name = "chat" level = "info">
+        	<appender-ref ref="chat"/>
+        </logger>
+
+        <logger name = "gm" level = "info">
+        	<appender-ref ref="gm"/>
+        </logger>
+
+        <logger name = "enchant" level = "info">
+        	<appender-ref ref="enchant"/>
+        </logger>
+        
+        <logger name = "audit" level = "info">
+        	<appender-ref ref="punishments"/>
+        </logger>
+
+        <logger name = "netty.io.exception" level = "fatal">
+        	<appender-ref ref="All-Errors"/>
+        </logger>
+
+        <root level= "info"> <!-- Set it to debug to be able to see debug messages as well -->
+            <appender-ref ref="Console"/>
+            <appender-ref ref="Core"/>
+            <appender-ref ref="All-Errors"/>
+        </root>
+
+    </loggers>
+</configuration>
