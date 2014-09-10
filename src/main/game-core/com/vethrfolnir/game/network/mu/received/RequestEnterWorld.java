@@ -21,8 +21,7 @@ import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.network.mu.*;
 import com.vethrfolnir.game.network.mu.MuClient.ClientStatus;
-import com.vethrfolnir.game.network.mu.send.StateChange;
-import com.vethrfolnir.game.network.mu.send.StatusInfo;
+import com.vethrfolnir.game.network.mu.send.*;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
 import com.vethrfolnir.network.NetworkClient;
 import com.vethrfolnir.network.ReadPacket;
@@ -68,6 +67,8 @@ public class RequestEnterWorld extends ReadPacket {
 
 		if(state.getAccessLevel() > 0)
 			client.sendPacket(MuPackets.StateChange, StateChange.StateGM); // GM
+		
+		client.sendPacket(MuPackets.SystemMessage, "Powerd by Project Vethrfolnir.", SystemMessage.MessageType.Admin);
 	}
 
 }

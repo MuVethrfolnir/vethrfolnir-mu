@@ -100,8 +100,12 @@ public final class MuClient extends NetworkClient {
 		ClientStatus old = this.status;
 		this.status = status;
 
-		if(this.status == ClientStatus.Authed && old != ClientStatus.Authed)
+		if(this.status == ClientStatus.Authed && old != ClientStatus.Authed) {
+			if(entity.isInitialized())
+				entity.destroy(true);
+			
 			account.enteredLobby();
+		}
 		else
 			account.leftLobby();
 	}
@@ -123,7 +127,7 @@ public final class MuClient extends NetworkClient {
 	@Override
 	public void close() {
 		clean();
-		entity.destroy();
+		entity.destroy(false);
 
 		channel().close();
 	}

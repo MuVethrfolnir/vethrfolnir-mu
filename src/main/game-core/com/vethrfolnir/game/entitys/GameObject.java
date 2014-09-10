@@ -101,8 +101,12 @@ public final class GameObject implements Updatable {
 		
 		return null;
 	}
-	
-	public void destroy() {
+
+	/**
+	 * @param light option only for players, to reset the client's entity data.
+	 * It will clear and dispose all components, but don't destroy the entity reference from the world.
+	 */
+	public void destroy(boolean light) {
 		for (int i = 0; i < components.size(); i++) {
 			Component component = components.get(i);
 
@@ -111,7 +115,9 @@ public final class GameObject implements Updatable {
 		}
 
 		initialized = false;
-		world.free(this);
+		
+		if(!light)
+			world.free(this);
 	}
 
 	/**
@@ -163,4 +169,13 @@ public final class GameObject implements Updatable {
 		if(isPlayer())
 			getClient().sendPacket(packet, params);
 	}
+	
+	/**
+	 * @return the initialized
+	 */
+	public boolean isInitialized() {
+		return initialized;
+	}
+
+	
 }

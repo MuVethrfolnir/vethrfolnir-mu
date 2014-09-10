@@ -102,14 +102,32 @@ public class MuPackets {
 	public static final MoveObject MoveObject = new MoveObject();
 
 	/**
+	 * Deletes the object
+	 * Requires: GameObject Entity
+	 */
+	public static final DeleteObject DeleteObject = new DeleteObject();
+
+	/**
 	 * Sends the Player information packet, that can update the players apparel and visually appear for players around him
 	 * Requires: boolean toSelf? and if its not to self it requires the entity in question
 	 */
 	public static final PlayerInfo PlayerInfo = new PlayerInfo();
 	
 	/**
-	 * Sends twords the world this clients intention
+	 * Sends a text packet
+	 * Requires: String actor and message, and if this is a pm, it should be specified with another boolean argument 
+	 */
+	public static final PlayerSay PlayerSay = new PlayerSay();
+	
+	/**
+	 * Sends to the world this clients intention
 	 * Requires: ActionUpdate.#TYPE also a target if needed
 	 */
 	public static final ActionUpdate ActionUpdate = new ActionUpdate();
+	
+	/**
+	 * Sends a system message
+	 * Requires: String message and SystemMessage.{@link MessageType}
+	 */
+	public static final SystemMessage SystemMessage = new SystemMessage();
 }
