@@ -56,9 +56,10 @@ public class GameServerApplication implements Runnable {
 		Tools.printSection("Services");
 		Corax.getInstance(IdFactory.class);
 		Corax.getInstance(DatabaseService.class);
-		Corax.getInstance(EntityWorld.class);
+		
+		EntityWorld world = Corax.getInstance(EntityWorld.class);
 		GameController gc = Corax.getInstance(GameController.class);
-
+		gc.subscribe(world);
 		
 		Tools.printSection("Static Data");
 		MuKeyFactory.parse();

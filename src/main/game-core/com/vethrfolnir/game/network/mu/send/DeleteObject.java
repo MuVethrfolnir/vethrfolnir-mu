@@ -19,8 +19,29 @@ import com.vethrfolnir.network.WritePacket;
  */
 public class DeleteObject extends WritePacket {
 
+	private int[] knwonList;
+
+	public DeleteObject() { /* Default 1 object */ }
+
+	public DeleteObject(int[] knwonList) {
+		this.knwonList = knwonList;
+	}
+
 	@Override
 	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+		if(knwonList != null) {
+
+			writeArray(buff, 0xC1, 0x06, 0x14);
+			writeC(buff, knwonList.length); // Count of ids to forget
+
+			for (int i = 0; i < knwonList.length; i++) {
+				int wi = knwonList[0];
+				writeSh(buff, wi, ByteOrder.BIG_ENDIAN);
+			}
+
+			return;
+		}
+		
 		GameObject entity = as(params[0]);
 		
 		writeArray(buff, 0xC1, 0x06, 0x14);

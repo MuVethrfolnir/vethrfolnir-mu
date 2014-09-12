@@ -14,18 +14,26 @@
  */
 package com.vethrfolnir.game.staticdata.world;
 
+import gnu.trove.iterator.TIntIterator;
+
 import java.util.ArrayList;
 
-import com.vethrfolnir.game.entitys.GameObject;
+import com.vethrfolnir.game.entitys.*;
+import com.vethrfolnir.game.entitys.components.KnownCreatures;
 import com.vethrfolnir.game.network.mu.MuPackets;
+import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.network.WritePacket;
 import com.vethrfolnir.tools.Disposable;
+
+import corvus.corax.Corax;
 
 /**
  * @author Vlad
  *
  */
 public class Region implements Disposable {
+	
+	private static final MuLogger log = MuLogger.getLogger(Region.class);
 	
 	public final int regionId;
 	public final String regionName;
@@ -34,6 +42,10 @@ public class Region implements Disposable {
 	public final ArrayList<GameObject> players = new ArrayList<GameObject>();
 	public final ArrayList<GameObject> nonPlayers = new ArrayList<GameObject>();
 	
+	private static final ComponentIndex<KnownCreatures> known = EntityWorld.getComponentIndex(KnownCreatures.class);
+	
+	private final EntityWorld entityWorld; 
+	
 	/**
 	 * @param regionId
 	 * @param regionName
@@ -41,6 +53,20 @@ public class Region implements Disposable {
 	public Region(int regionId, String regionName) {
 		this.regionId = regionId;
 		this.regionName = regionName;
+		
+		entityWorld = Corax.getInstance(EntityWorld.class);
+	}
+
+	/**
+	 * @param regionId
+	 * @param regionName
+	 * @param startX
+	 * @param startY
+	 */
+	public Region(int regionId, String regionName, int startX, int startY) {
+		this(regionId, regionName);
+		this.x = startX;
+		this.y = startY;
 	}
 
 	/**
@@ -51,20 +77,21 @@ public class Region implements Disposable {
 			players.add(entity);
 		else
 			nonPlayers.add(entity);
-		
-		broadcast(entity, MuPackets.PlayerInfo, false, entity);
 	}
 
 	/**
 	 * @param entity
 	 */
 	public void exit(GameObject entity) {
-		if(entity.isPlayer())
-			players.remove(entity);
-		else
-			nonPlayers.remove(entity);
+		if(!entity.isPlayer()) {
+			log.info("Npcs cannot exit regions! They are static!", new RuntimeException("Illigal removal!"));
+			return;
+		}
+
+		players.remove(entity);
 		
-		//TODO Delete object
+		entity.get(known).forgetAll();
+		broadcastToKnown(entity, MuPackets.DeleteObject, entity);
 	}
 
 	/**
@@ -91,20 +118,18 @@ public class Region implements Disposable {
 		}
 	}
 
-
-	/**
-	 * @param regionId
-	 * @param regionName
-	 * @param x
-	 * @param y
-	 */
-	public Region(int regionId, String regionName, int x, int y) {
-		this.regionId = regionId;
-		this.regionName = regionName;
-		this.x = x;
-		this.y = y;
+	public void broadcastToKnown(GameObject broadcaster, WritePacket packet, Object... params) {
+		KnownCreatures knownCreatures = broadcaster.get(Region.known);
+		TIntIterator iter = knownCreatures.knownIds.iterator();
+		
+		while(iter.hasNext()) {
+			int id = iter.next();
+			
+			GameObject entity = entityWorld.getEntitys().get(id);
+			entity.sendPacket(packet, params);
+		}
 	}
-
+	
 	@Override
 	public void dispose() {
 		players.clear();

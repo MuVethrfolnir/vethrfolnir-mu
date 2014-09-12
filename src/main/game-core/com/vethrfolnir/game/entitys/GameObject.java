@@ -32,12 +32,16 @@ public final class GameObject implements Updatable {
 	private MuClient client;
 	
 	protected long lastUsed;
-	protected int index;
+	protected int index, freeIndex;
 	
 	private boolean initialized;
+	private boolean isVisible;
+	
+	protected volatile boolean isVoid;
 	
 	protected GameObject(EntityWorld world) {
 		this.world = world;
+		setVisible(true);
 	}
 
 	/**
@@ -53,6 +57,8 @@ public final class GameObject implements Updatable {
 					component.initialize(this);
 			}
 			initialized = true;
+			setVisible(true);
+			isVoid = false;
 		}
 		
 	}
@@ -62,6 +68,10 @@ public final class GameObject implements Updatable {
 	 */
 	@Override
 	public void update(int tick, float deltaTime) {
+
+		if(!initialized)
+			return;
+		
 		for (int i = 0; i < components.size(); i++) {
 			Component component = components.get(i);
 			if(component != null && component instanceof Updatable)
@@ -107,11 +117,15 @@ public final class GameObject implements Updatable {
 	 * It will clear and dispose all components, but don't destroy the entity reference from the world.
 	 */
 	public void destroy(boolean light) {
+		isVoid = true;
+		
 		for (int i = 0; i < components.size(); i++) {
 			Component component = components.get(i);
 
 			if(component != null)
 				component.dispose();
+			
+			components.set(i, null);
 		}
 
 		initialized = false;
@@ -156,6 +170,13 @@ public final class GameObject implements Updatable {
 	}
 
 	/**
+	 * @return the world
+	 */
+	public EntityWorld getWorld() {
+		return world;
+	}
+	
+	/**
 	 * @return
 	 */
 	public boolean isPlayer() {
@@ -177,5 +198,34 @@ public final class GameObject implements Updatable {
 		return initialized;
 	}
 
+	/**
+	 * Used to set an npc dead or GM hidden
+	 * @return
+	 */
+	public boolean isVisable() {
+		return isVisible;
+	}
+
+	/**
+	 * Used to set an npc dead or GM hidden
+	 * @param isVisible the isVisible to set
+	 */
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+
+	/**
+	 * @return the isVoid
+	 */
+	public boolean isVoid() {
+		return isVoid;
+	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getName();
+	}
 }

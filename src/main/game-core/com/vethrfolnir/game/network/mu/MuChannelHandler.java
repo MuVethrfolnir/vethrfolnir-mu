@@ -14,13 +14,13 @@
  */
 package com.vethrfolnir.game.network.mu;
 
+import gnu.trove.map.hash.TIntObjectHashMap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.HashMap;
 
 import com.vethrfolnir.game.network.MuNetworkServer;
 import com.vethrfolnir.game.network.mu.received.*;
@@ -39,7 +39,7 @@ public class MuChannelHandler extends ChannelInboundHandlerAdapter {
 
 	private static final MuLogger log = MuLogger.getLogger(MuChannelHandler.class);
 	
-	private static final HashMap<Integer, ReadPacket> clientpackets = new HashMap<>(); //TODO Alternative? INT-Object MAP!
+	private static final TIntObjectHashMap<ReadPacket> clientpackets = new TIntObjectHashMap<>();
 	
 	@Inject
 	private MuNetworkServer networkServer;

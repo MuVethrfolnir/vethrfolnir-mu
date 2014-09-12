@@ -74,9 +74,8 @@ public final class EntityWorld implements Updatable {
 	 * @param entity
 	 */
 	public void free(GameObject entity) {
-		entitys.remove(entity);
 		free.add(entity);
-		entity.index = free.indexOf(entity);
+		entity.freeIndex = free.indexOf(entity); // or size
 		
 		if(entity.getClient() != null) {
 			clients.remove(entity);
@@ -90,6 +89,10 @@ public final class EntityWorld implements Updatable {
 	public void update(int tick, float deltaTime) {
 		for (int i = 0; i < entitys.size(); i++) {
 			GameObject entity = entitys.get(i);
+
+			if(entity.isVoid)
+				continue;
+				
 			entity.update(tick, deltaTime);
 		}
 		
@@ -116,7 +119,8 @@ public final class EntityWorld implements Updatable {
 
 		for (int i = 0; i < garbage.size(); i++) {
 			GameObject obj = garbage.get(i);
-			free.remove(obj.index);
+			free.remove(obj.freeIndex);
+			entitys.remove(obj.index);
 		}
 		
 		garbage.clear();

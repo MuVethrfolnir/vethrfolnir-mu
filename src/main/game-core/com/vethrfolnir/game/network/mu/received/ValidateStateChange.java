@@ -17,6 +17,7 @@ package com.vethrfolnir.game.network.mu.received;
 import io.netty.buffer.ByteBuf;
 
 import com.vethrfolnir.game.entitys.ComponentIndex;
+import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.entitys.components.player.PlayerState;
@@ -43,13 +44,14 @@ public class ValidateStateChange extends ReadPacket {
 		int heading = readC(buff);
 		int status = readC(buff); //XXX check, should we care about status replays from client? like sitting on a fence
 
-		Positioning positioning = as(context, MuClient.class).getEntity().get(this.positioning);
+		GameObject entity = as(context, MuClient.class).getEntity();
+		Positioning positioning = entity.get(this.positioning);
 		positioning.updateHeading(heading);
 
 		Region region = positioning.getCurrentRegion();
 
 		if(region != null)
-			region.broadcast(MuPackets.ActionUpdate, status);
+			region.broadcastToKnown(entity, MuPackets.ActionUpdate, status);
 		else
 			context.close();
 	}

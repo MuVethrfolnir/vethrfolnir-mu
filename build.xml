@@ -28,7 +28,6 @@
 	<property name="resource" location="src/main/resources" />
 	
     <property name="lib" location="lib"/>
-	<property name="lib.svn" location="lib/svn"/>
     <property name="ant.tasks.dir" location="${lib}"/>
     <property name="build" location="target"/>
     <property name="build.dependencies" location="target/dependencies"/>
@@ -38,15 +37,10 @@
 	<property name="build.dist.login" location="${build.dist}/LoginServer"/>
 	
 	<property name="release" value="0.9.3" />
+	<property name="revision" value="0.9.3" />
 
 	<path id="ant.classpath">
 	    <fileset id = "local.libs" dir="${lib}" />
-	</path>
-
-	<path id="svn.path">
-	    <fileset dir="${lib.svn}" >
-	    	<include name = "*.jar"/>
-	    </fileset>
 	</path>
 
 	<path id="classpath">
@@ -58,9 +52,6 @@
 
         <fileset refid="compile.fileset" />
     </path>   
-
-	<taskdef resource="org/tigris/subversion/svnant/svnantlib.xml" classpathref="svn.path" />
-	<svnSetting svnkit="true" javahl="false" id="svn.settings"/>
 
 	<taskdef uri="antlib:org.apache.maven.artifact.ant" resource="org/apache/maven/artifact/ant/antlib.xml" classpathref="ant.classpath" />
 	
@@ -94,7 +85,7 @@
     <target name="compile" depends="version" description="Compile the source.">
 
     	<!-- Commons bin -->
-        <javac destdir="${build.classes}/commons" optimize="on" debug="on" source="1.7" target="1.7" includeantruntime = "false" nowarn="off">
+        <javac destdir="${build.classes}/commons" optimize="on" debug="on" source="1.8" target="1.8" includeantruntime = "false" nowarn="off">
         	<src path="${src-commons}"/>
         	<classpath refid="classpath"/>
         </javac>
@@ -114,7 +105,7 @@
         </jar>
     	
     	<!-- Game bin -->
-        <javac destdir="${build.classes}/game" optimize="on" debug="on" source="1.7" target="1.7" includeantruntime = "false" nowarn="off">
+        <javac destdir="${build.classes}/game" optimize="on" debug="on" source="1.8" target="1.8" includeantruntime = "false" nowarn="off">
         	<src path="${src-game}"/>
             <classpath refid="classpath"/>
         </javac>
@@ -130,7 +121,7 @@
         </jar>
 
     	<!-- Login bin -->
-        <javac destdir="${build.classes}/login" optimize="on" debug="on" source="1.7" target="1.7" includeantruntime = "false" nowarn="off">
+        <javac destdir="${build.classes}/login" optimize="on" debug="on" source="1.8" target="1.8" includeantruntime = "false" nowarn="off">
         	<src path="${src-login}"/>
             <classpath refid="classpath"/>
         </javac>
@@ -171,11 +162,6 @@
 			<format property="date" pattern="yyyy-MM-dd HH:mm:ss" />
 		</tstamp>
 
-		<!-- TODO Revisions for all libs -->
-	     <svn refid="svn.settings">
-         	<status path="${basedir}" revisionProperty="revision" />
-         </svn>
-
 		<echo>Server Revision: ${revision}</echo>
 	</target>
 
@@ -193,7 +179,6 @@
 				<exclude name = "*maven-ant*"/>
 				<exclude name = "*junit*"/>
 				<exclude name = "**/sources/**" />
-				<exclude name = "**/svn/**" />
 			</fileset>	
 		</copy>
     	
@@ -205,7 +190,6 @@
 				<exclude name = "*maven*"/>
 				<exclude name = "*junit*"/>
 				<exclude name = "**/sources/**" />
-				<exclude name = "**/svn/**" />
 			</fileset>	
 		</copy>
     	

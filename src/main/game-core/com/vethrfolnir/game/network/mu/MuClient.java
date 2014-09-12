@@ -22,6 +22,7 @@ import java.nio.ByteOrder;
 
 import com.vethrfolnir.game.entitys.EntityWorld;
 import com.vethrfolnir.game.entitys.GameObject;
+import com.vethrfolnir.game.entitys.components.KnownCreatures;
 import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.entitys.components.player.PlayerStats;
@@ -81,6 +82,7 @@ public final class MuClient extends NetworkClient {
 		entity.setName(template.name);
 		
 		entity.add(new Positioning(template.x, template.y, template.mapId));
+		entity.add(new KnownCreatures());
 		
 		entity.add(new PlayerState(template));
 		entity.add(new PlayerStats(template));
@@ -91,6 +93,7 @@ public final class MuClient extends NetworkClient {
 		Corax.listen(ListenerKeys.ClientDisconnected, null, this);
 		
 		// Perform cleaning
+		entity.get(Positioning.class).getCurrentRegion().exit(entity);;
 	}
 
 	/**
