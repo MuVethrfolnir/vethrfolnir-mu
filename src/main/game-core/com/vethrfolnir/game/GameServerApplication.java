@@ -19,7 +19,7 @@ import java.io.IOException;
 
 import com.vethrfolnir.database.DatabaseFactory;
 import com.vethrfolnir.game.entitys.EntityWorld;
-import com.vethrfolnir.game.module.Regions;
+import com.vethrfolnir.game.module.StaticData;
 import com.vethrfolnir.game.network.LoginServerClient;
 import com.vethrfolnir.game.network.MuNetworkServer;
 import com.vethrfolnir.game.network.mu.crypt.MuKeyFactory;
@@ -63,7 +63,7 @@ public class GameServerApplication implements Runnable {
 		
 		Tools.printSection("Static Data");
 		MuKeyFactory.parse();
-		Regions.loadRegions();
+		StaticData.loadData();
 		
 		Tools.printSection("Scripts");
 		

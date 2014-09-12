@@ -14,9 +14,14 @@
  */
 package com.vethrfolnir.gen;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Lf2SpacesIndenter;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import de.undercouch.bson4jackson.BsonFactory;
 
@@ -26,8 +31,17 @@ import de.undercouch.bson4jackson.BsonFactory;
  */
 public class GenData {
 
+	public static DefaultPrettyPrinter defaultPrettyPrinter = new DefaultPrettyPrinter();
+	public static TypeFactory defaultTypeFactory = TypeFactory.defaultInstance();
+	
+	static ObjectMapper mp = new ObjectMapper();
+	static ObjectMapper bmp = new ObjectMapper(new BsonFactory());
+	
+	static {
+		defaultPrettyPrinter.indentArraysWith(new Lf2SpacesIndenter());
+	}
+
 	public static ObjectMapper getMapper() {
-		ObjectMapper mp = new ObjectMapper();
 		mp.setVisibilityChecker(mp.getDeserializationConfig().getDefaultVisibilityChecker()
 		        .withCreatorVisibility(JsonAutoDetect.Visibility.NONE)
 		        .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
@@ -36,19 +50,35 @@ public class GenData {
 		        .withSetterVisibility(JsonAutoDetect.Visibility.NONE));
 		
 		mp.configure(SerializationFeature.INDENT_OUTPUT, true);
+		
 		return mp;
 	}
+	
 	public static ObjectMapper getBinaryMapper() {
 		
-		ObjectMapper mp = new ObjectMapper(new BsonFactory());
-		mp.setVisibilityChecker(mp.getDeserializationConfig().getDefaultVisibilityChecker()
+		
+		bmp.setVisibilityChecker(bmp.getDeserializationConfig().getDefaultVisibilityChecker()
 		        .withCreatorVisibility(JsonAutoDetect.Visibility.NONE)
 		        .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
 		        .withGetterVisibility(JsonAutoDetect.Visibility.NONE)
 		        .withIsGetterVisibility(JsonAutoDetect.Visibility.NONE)
 		        .withSetterVisibility(JsonAutoDetect.Visibility.NONE));
 		
-		mp.configure(SerializationFeature.INDENT_OUTPUT, true);
-		return mp;
+		bmp.configure(SerializationFeature.INDENT_OUTPUT, true);
+		return bmp;
+	}
+	/**
+	 * @return
+	 */
+	public static ObjectWriter getWriter() {
+		return mp.writer(defaultPrettyPrinter);
+	}
+
+	public static ObjectWriter getBinaryWriter() {
+		return bmp.writer(defaultPrettyPrinter);
+	}
+	
+	public static <T> ArrayList<T> asArrayList(InputStream is, ObjectMapper mp, Class<? extends T> type) throws Exception {
+		return mp.readValue(is, defaultTypeFactory.constructCollectionType(ArrayList.class, type));
 	}
 }

@@ -16,7 +16,7 @@ package com.vethrfolnir.game.entitys.components;
 
 import com.vethrfolnir.game.entitys.Component;
 import com.vethrfolnir.game.entitys.GameObject;
-import com.vethrfolnir.game.module.Regions;
+import com.vethrfolnir.game.module.StaticData;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.staticdata.world.Region;
 
@@ -39,7 +39,7 @@ public class Positioning implements Component {
 		this.x = x;
 		this.y = y;
 		this.mapId = mapId;
-		currentRegion = Regions.getRegion(mapId);
+		currentRegion = StaticData.getRegion(mapId);
 	}
 
 	@Override

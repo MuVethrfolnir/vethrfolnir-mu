@@ -16,9 +16,6 @@ package com.vethrfolnir.game.network.mu.received;
 
 import io.netty.buffer.ByteBuf;
 
-import com.vethrfolnir.game.entitys.ComponentIndex;
-import com.vethrfolnir.game.entitys.annotation.FetchIndex;
-import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.network.mu.*;
 import com.vethrfolnir.game.network.mu.MuClient.ClientStatus;
 import com.vethrfolnir.game.network.mu.send.Logout;
@@ -31,9 +28,6 @@ import com.vethrfolnir.network.ReadPacket;
  */
 public class RequestLogout extends ReadPacket {
 
-	@FetchIndex
-	private ComponentIndex<Positioning> positioning;
-	
 	@Override
 	public void read(NetworkClient context, ByteBuf buff, Object... params) {
 		int type = readC(buff);
@@ -42,9 +36,6 @@ public class RequestLogout extends ReadPacket {
 		
 		//TODO Checks if he can actually do it?
 
-		Positioning positioning = client.getEntity().get(this.positioning);
-		positioning.getCurrentRegion().exit(client.getEntity());
-		
 		switch (type) {
 			case Logout.Lobby:
 				client.sendPacket(MuPackets.Logout, type);

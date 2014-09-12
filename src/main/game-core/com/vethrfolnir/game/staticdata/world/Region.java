@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 import com.vethrfolnir.game.entitys.*;
 import com.vethrfolnir.game.entitys.components.KnownCreatures;
-import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.network.WritePacket;
 import com.vethrfolnir.tools.Disposable;
@@ -91,7 +90,6 @@ public class Region implements Disposable {
 		players.remove(entity);
 		
 		entity.get(known).forgetAll();
-		broadcastToKnown(entity, MuPackets.DeleteObject, entity);
 	}
 
 	/**

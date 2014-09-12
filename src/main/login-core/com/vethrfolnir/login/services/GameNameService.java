@@ -30,9 +30,8 @@ import com.vethrfolnir.network.NetworkClient;
 import com.vethrfolnir.network.WritePacket;
 import com.vethrfolnir.services.DataMappingService;
 
-import corvus.corax.Corax;
 import corvus.corax.CorvusConfig;
-import corvus.corax.processing.annotation.Initiate;
+import corvus.corax.processing.annotation.Inject;
 
 /**
  * @author Vlad
@@ -46,9 +45,9 @@ public class GameNameService {
 	
 	private AtomicInteger liveServers = new AtomicInteger();
 	
-	@Initiate
-	private void load() {
-		DataMappingService service = Corax.getInstance(DataMappingService.class);
+	@Inject
+	private void load(DataMappingService service) {
+
 		try {
 			ArrayList<MuGameServerTemplate> data = service.asArrayList(MuGameServerTemplate.class, "server-names.json");
 			

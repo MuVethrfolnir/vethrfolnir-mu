@@ -14,24 +14,49 @@
  */
 package com.vethrfolnir.game.module;
 
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 import java.util.HashMap;
 
+import com.vethrfolnir.game.staticdata.NpcData;
 import com.vethrfolnir.game.staticdata.world.Region;
+
+import corvus.corax.Corax;
 
 /**
  * @author Vlad
  * TODO: Complete this. At the moment its just a WIP
  */
-public class Regions {
+public class StaticData {
 	
-	private static HashMap<Integer, Region> regions = new HashMap<Integer, Region>();
+	private static TIntObjectHashMap<Region> regions = new TIntObjectHashMap<Region>();
 
-	public static void loadRegions() {
+	private static NpcData npcData;
+
+	public static void loadData() {
 		regions.put(0, new Region(0, "Lorencia"));
+		
+		npcData = process(new NpcData());
 	}
 	
-	public static Region getRegion(int id) {
-		return regions.get(id);
+	private static <T> T process(T obj) {
+		Corax.pDep(obj);
+		return obj;
+	}
+
+	/**
+	 * @return the npcData
+	 */
+	public static NpcData getNpcData() {
+		return npcData;
+	}
+
+	/**
+	 * @param mapId
+	 * @return
+	 */
+	public static Region getRegion(int mapId) {
+		return regions.get(mapId);
 	}
 	
 }
