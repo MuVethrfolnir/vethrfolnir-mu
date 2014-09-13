@@ -11,7 +11,10 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
+import org.w3c.dom.NodeList;
+
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.vethrfolnir.game.staticdata.world.Region;
 import com.vethrfolnir.game.templates.npc.SpawnTemplate;
 
 /**
@@ -22,7 +25,19 @@ public class GenSpawnlist {
 
 	public static TIntObjectHashMap<String> supportedAreas = new TIntObjectHashMap<String>();
 	static {
-		supportedAreas.put(0, "Lorencia");
+		try {
+			NodeList list = GenWorlds.getDocument(GenWorlds.class.getResourceAsStream("/worlds.xml"));
+			ArrayList<Region> regions = GenWorlds.parseData(list);
+			
+			for (Region region : regions) {
+				supportedAreas.put(region.getRegionId(), region.getRegionName());
+			}
+		}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@SuppressWarnings("unused")
@@ -134,7 +149,8 @@ public class GenSpawnlist {
 			ObjectWriter writer = GenData.getWriter();
 			
 			for(Entry<String, ArrayList<SpawnTemplate>> e: mappedTemplates.entrySet()) {
-				File file = new File(dir, e.getKey()+".json");
+				File file = new File(dir, (e.getKey().replace('/', '-'))+".json");
+				System.out.println("Doing: "+file);
 				file.createNewFile();
 				
 				writer.writeValue(new FileOutputStream(file), e.getValue());

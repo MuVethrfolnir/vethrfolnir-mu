@@ -1,0 +1,110 @@
+[
+  {
+    "NpcId" : 467,
+    "MapId" : 62,
+    "Radius" : 0,
+    "x" : 202,
+    "y" : 41,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 468,
+    "MapId" : 62,
+    "Radius" : 0,
+    "x" : 222,
+    "y" : 24,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 469,
+    "MapId" : 62,
+    "Radius" : 0,
+    "x" : 202,
+    "y" : 33,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 470,
+    "MapId" : 62,
+    "Radius" : 0,
+    "x" : 192,
+    "y" : 24,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 471,
+    "MapId" : 62,
+    "Radius" : 0,
+    "x" : 207,
+    "y" : 9,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 472,
+    "MapId" : 62,
+    "Radius" : 0,
+    "x" : 225,
+    "y" : 11,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 473,
+    "MapId" : 62,
+    "Radius" : 0,
+    "x" : 232,
+    "y" : 13,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 474,
+    "MapId" : 62,
+    "Radius" : 0,
+    "x" : 216,
+    "y" : 19,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 475,
+    "MapId" : 62,
+    "Radius" : 0,
+    "x" : 193,
+    "y" : 27,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  }
+]

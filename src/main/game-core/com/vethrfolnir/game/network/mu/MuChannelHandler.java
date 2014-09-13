@@ -57,6 +57,11 @@ public class MuChannelHandler extends ChannelInboundHandlerAdapter {
 		
 		clientpackets.put(0xD4, new MovedToLocation());
 		clientpackets.put(0x18, new ValidateStateChange());
+
+		// Chat
+		clientpackets.put(0x00, new RequestSay(false));
+		clientpackets.put(0x02, new RequestSay(true));
+
 	}
 	
 	/* (non-Javadoc)

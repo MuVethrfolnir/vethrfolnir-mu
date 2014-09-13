@@ -1,0 +1,74 @@
+[
+  {
+    "NpcId" : 294,
+    "MapId" : 32,
+    "Radius" : 30,
+    "x" : 150,
+    "y" : 115,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : 120,
+    "StartY" : 80,
+    "Count" : 35
+  },
+  {
+    "NpcId" : 60,
+    "MapId" : 32,
+    "Radius" : 30,
+    "x" : 150,
+    "y" : 115,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : 120,
+    "StartY" : 80,
+    "Count" : 35
+  },
+  {
+    "NpcId" : 290,
+    "MapId" : 32,
+    "Radius" : 30,
+    "x" : 151,
+    "y" : 184,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : 122,
+    "StartY" : 152,
+    "Count" : 35
+  },
+  {
+    "NpcId" : 57,
+    "MapId" : 32,
+    "Radius" : 30,
+    "x" : 151,
+    "y" : 184,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : 122,
+    "StartY" : 152,
+    "Count" : 35
+  },
+  {
+    "NpcId" : 434,
+    "MapId" : 32,
+    "Radius" : 30,
+    "x" : 79,
+    "y" : 173,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : 50,
+    "StartY" : 138,
+    "Count" : 35
+  },
+  {
+    "NpcId" : 435,
+    "MapId" : 32,
+    "Radius" : 30,
+    "x" : 79,
+    "y" : 173,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : 50,
+    "StartY" : 138,
+    "Count" : 35
+  }
+]

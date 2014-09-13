@@ -1,0 +1,38 @@
+[
+  {
+    "NpcId" : 546,
+    "MapId" : 79,
+    "Radius" : 0,
+    "x" : 131,
+    "y" : 109,
+    "heading" : 3,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 545,
+    "MapId" : 79,
+    "Radius" : 0,
+    "x" : 113,
+    "y" : 116,
+    "heading" : 3,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 547,
+    "MapId" : 79,
+    "Radius" : 0,
+    "x" : 123,
+    "y" : 140,
+    "heading" : 3,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  }
+]

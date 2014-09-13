@@ -18,8 +18,10 @@ import gnu.trove.iterator.TIntIterator;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.*;
 import com.vethrfolnir.game.entitys.*;
 import com.vethrfolnir.game.entitys.components.*;
+import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.templates.npc.NpcTemplate;
 import com.vethrfolnir.game.templates.npc.SpawnTemplate;
 import com.vethrfolnir.logging.MuLogger;
@@ -38,16 +40,35 @@ public class Region implements Disposable {
 	@SuppressWarnings("unused")
 	private static final MuLogger log = MuLogger.getLogger(Region.class);
 	
-	public final int regionId;
-	public final String regionName;
-	public int x, y;
+	private int regionId;
+	private String regionName;
+	private int moveLevel = -1; // -1 = not movable
 
+	// Spawn point.. we should make it random withing the town or a list with points.. later
+	@JsonProperty("spawnX")
+	private int x;
+	@JsonProperty("spawnY")
+	private int y;
+
+	@JsonIgnore
 	public final ArrayList<GameObject> players = new ArrayList<GameObject>();
+	@JsonIgnore
 	public final ArrayList<GameObject> nonPlayers = new ArrayList<GameObject>();
 	
 	private static final ComponentIndex<KnownCreatures> known = EntityWorld.getComponentIndex(KnownCreatures.class);
 	
+	@JsonIgnore
 	private final EntityWorld entityWorld; 
+	
+	/**
+	 * Un-serialization
+	 */
+	public Region() {
+		if(Corax.instance() != null)
+			entityWorld = Corax.getInstance(EntityWorld.class);
+		else
+			entityWorld = null;
+	}
 	
 	/**
 	 * @param regionId
@@ -56,8 +77,21 @@ public class Region implements Disposable {
 	public Region(int regionId, String regionName) {
 		this.regionId = regionId;
 		this.regionName = regionName;
-		
-		entityWorld = Corax.getInstance(EntityWorld.class);
+
+		//XXX Inside eclipse.. for parsing files. Remove after done importing region based stuff
+		if(Corax.instance() != null)
+			entityWorld = Corax.getInstance(EntityWorld.class);
+		else
+			entityWorld = null;
+	}
+
+	/**
+	 * @param regionId
+	 * @param regionName
+	 * @param geoData
+	 */
+	public Region(int regionId, String regionName, String geoData) { // TODO implement geodata
+		this(regionId, regionName);
 	}
 
 	/**
@@ -72,6 +106,21 @@ public class Region implements Disposable {
 		this.y = startY;
 	}
 
+	/**
+	 * @param regionId
+	 * @param regionName
+	 * @param geoData
+	 * @param moveLevel
+	 * @param startX
+	 * @param startY
+	 */
+	public Region(int regionId, String regionName, String geoData, int moveLevel, int startX, int startY) {
+		this(regionId, regionName);
+		this.x = startX;
+		this.y = startY;
+		this.moveLevel = moveLevel;
+	}
+	
 	/**
 	 * @param entity
 	 */
@@ -93,6 +142,19 @@ public class Region implements Disposable {
 
 		players.remove(entity);
 		entity.get(known).forgetAll();
+	}
+
+	/**
+	 * @param entity
+	 */
+	public void transfer(GameObject entity) {
+		Positioning pos = entity.get(Positioning.class);
+		pos.moveFlag = true;
+		pos.updateRegion(this);
+				
+		pos.getCurrentRegion().exit(entity);
+		entity.sendPacket(MuPackets.PlayerTeleport, this);
+		pos.getCurrentRegion().enter(entity);
 	}
 
 	/**
@@ -164,10 +226,53 @@ public class Region implements Disposable {
 		}
 	}
 	
+	/**
+	 * @return the regionId
+	 */
+	public int getRegionId() {
+		return regionId;
+	}
+	
+	/**
+	 * @return the regionName
+	 */
+	public String getRegionName() {
+		return regionName;
+	}
+	
+	/**
+	 * @return the moveLevel
+	 */
+	public int getMoveLevel() {
+		return moveLevel;
+	}
+	
+	/**
+	 * @return the x
+	 */
+	public int getStartX() {
+		return x;
+	}
+	
+	/**
+	 * @return the y
+	 */
+	public int getStartY() {
+		return y;
+	}
+	
 	@Override
 	public void dispose() {
 		players.clear();
 		nonPlayers.clear();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Region[id="+regionId+" name="+regionName+"]";
 	}
 
 }

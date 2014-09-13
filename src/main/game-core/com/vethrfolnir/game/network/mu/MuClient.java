@@ -45,7 +45,6 @@ import corvus.corax.processing.annotation.Initiate;
  */
 public final class MuClient extends NetworkClient {
 
-	@SuppressWarnings("unused")
 	private static final MuLogger log = MuLogger.getLogger(MuClient.class);
 
 	//TODO: They did this Attribute thingie to conserve memory, if proves slow cause of a menial thing like that, its out the window!
@@ -89,11 +88,26 @@ public final class MuClient extends NetworkClient {
 		entity.commit();
 	}
 	
-	public void clean() {
-		Corax.listen(ListenerKeys.ClientDisconnected, null, this);
-		
-		// Perform cleaning
-		entity.get(Positioning.class).getCurrentRegion().exit(entity);;
+	public void clean(boolean light) {
+		try {
+			if(entity.isVoid() || entity.isInitialized()) {
+				log.warn("Tried saving voided entity["+this+"]!");
+				return;
+			}
+			
+			Corax.listen(ListenerKeys.ClientDisconnected, null, this);
+	
+			// Perform cleaning
+			entity.get(Positioning.class).getCurrentRegion().exit(entity);
+			
+			DatabaseAccess.PlayerAccess().savePlayer(entity);
+		}
+		catch(Exception e) {
+			log.fatal("Failed cleaning character["+toString()+"]!", e);
+		}
+
+		// Goodbye
+		entity.destroy(light);
 	}
 
 	/**
@@ -104,9 +118,10 @@ public final class MuClient extends NetworkClient {
 		this.status = status;
 
 		if(this.status == ClientStatus.Authed && old != ClientStatus.Authed) {
-			if(entity.isInitialized())
-				entity.destroy(true);
-			
+			if(entity.isInitialized()) {
+				clean(true);
+			}
+
 			account.enteredLobby();
 		}
 		else
@@ -129,8 +144,7 @@ public final class MuClient extends NetworkClient {
 	
 	@Override
 	public void close() {
-		clean();
-		entity.destroy(false);
+		clean(false);
 
 		channel().close();
 	}
@@ -190,7 +204,7 @@ public final class MuClient extends NetworkClient {
 	 */
 	@Override
 	public String toString() {
-		String name = account == null? "I/O" : entity == null? account.getAccountName() : account.getAccountName()+"/"+entity.getName();
+		String name = account == null? "I/O" : entity == null ? account.getAccountName() : account.getAccountName()+"/"+entity.getName();
 		return name;
 	}
 	

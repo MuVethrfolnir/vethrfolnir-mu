@@ -1,0 +1,436 @@
+[
+  {
+    "regionId" : 0,
+    "regionName" : "Lorencia",
+    "moveLevel" : 10,
+    "spawnX" : 141,
+    "spawnY" : 133
+  },
+  {
+    "regionId" : 1,
+    "regionName" : "Dungeon",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 2,
+    "regionName" : "Devias",
+    "moveLevel" : 50,
+    "spawnX" : 237,
+    "spawnY" : 36
+  },
+  {
+    "regionId" : 3,
+    "regionName" : "Noria",
+    "moveLevel" : 10,
+    "spawnX" : 171,
+    "spawnY" : 114
+  },
+  {
+    "regionId" : 4,
+    "regionName" : "Lost Tower",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 5,
+    "regionName" : "Exile",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 6,
+    "regionName" : "Arena/Stadium",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 7,
+    "regionName" : "Atlans",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 8,
+    "regionName" : "Tarkan",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 9,
+    "regionName" : "Devil Square 1",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 10,
+    "regionName" : "Icarus",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 11,
+    "regionName" : "Blood Castle 1",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 12,
+    "regionName" : "Blood Castle 2",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 13,
+    "regionName" : "Blood Castle 3",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 14,
+    "regionName" : "Blood Castle 4",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 15,
+    "regionName" : "Blood Castle 5",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 16,
+    "regionName" : "Blood Castle 6",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 17,
+    "regionName" : "Blood Castle 7",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 18,
+    "regionName" : "Chaos Castle 1",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 19,
+    "regionName" : "Chaos Castle 2",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 20,
+    "regionName" : "Chaos Castle 3",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 21,
+    "regionName" : "Chaos Castle 4",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 22,
+    "regionName" : "Chaos Castle 5",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 23,
+    "regionName" : "Chaos Castle 6",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 24,
+    "regionName" : "Kalima 1",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 25,
+    "regionName" : "Kalima 2",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 26,
+    "regionName" : "Kalima 3",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 27,
+    "regionName" : "Kalima 4",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 28,
+    "regionName" : "Kalima 5",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 29,
+    "regionName" : "Kalima 6",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 30,
+    "regionName" : "Valley of Loren",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 31,
+    "regionName" : "Land of Trial",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 32,
+    "regionName" : "Devil Square 2",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 33,
+    "regionName" : "Aida",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 34,
+    "regionName" : "Crywolf",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 36,
+    "regionName" : "Kalima 7",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 37,
+    "regionName" : "Kantru 1",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 38,
+    "regionName" : "Kantru 2",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 39,
+    "regionName" : "Kantru 3",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 40,
+    "regionName" : "Silent",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 41,
+    "regionName" : "Balgass Baracks",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 42,
+    "regionName" : "Balgass Refuge",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 45,
+    "regionName" : "Illusion Temple 1",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 46,
+    "regionName" : "Illusion Temple 2",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 47,
+    "regionName" : "Illusion Temple 3",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 48,
+    "regionName" : "Illusion Temple 4",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 49,
+    "regionName" : "Illusion Temple 5",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 50,
+    "regionName" : "Illusion Temple 6",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 51,
+    "regionName" : "Elbeland",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 52,
+    "regionName" : "BloodCastle 8",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 53,
+    "regionName" : "ChaosCastle 7",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 56,
+    "regionName" : "Swamp of Calmness",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 57,
+    "regionName" : "Raklion",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 58,
+    "regionName" : "Raklion Boss",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 62,
+    "regionName" : "Santa Town",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 63,
+    "regionName" : "Vulcanus",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 64,
+    "regionName" : "DuelArena",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 69,
+    "regionName" : "Unknown",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 70,
+    "regionName" : "Unknown",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 71,
+    "regionName" : "Unknown",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 72,
+    "regionName" : "Unknown",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  },
+  {
+    "regionId" : 79,
+    "regionName" : "Unknown",
+    "moveLevel" : -1,
+    "spawnX" : 0,
+    "spawnY" : 0
+  }
+]

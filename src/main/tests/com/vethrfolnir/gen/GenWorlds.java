@@ -1,0 +1,88 @@
+/*
+ * This file is strictly bounded by the creators of Vethrfolnir and its prohibited
+ * for commercial use, or any use what so ever.
+ * Copyright © Vethrfolnir Project 2013
+ */
+package com.vethrfolnir.gen;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.*;
+
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.vethrfolnir.game.staticdata.world.Region;
+
+import corvus.corax.tools.Tools;
+
+/**
+ * @author Vlad
+ *
+ */
+public class GenWorlds {
+	
+	public static void main(String[] args) throws Exception {
+		NodeList data = getDocument(GenWorlds.class.getResourceAsStream("/worlds.xml"));
+		ArrayList<Region> regions = parseData(data);
+		
+		ObjectWriter writer = GenData.getWriter();
+		writer.writeValue(new FileOutputStream("./dist/GameServer/system/static/world-data.json"), regions);
+		
+		System.out.println("Regions: "+regions);
+	}
+
+	public static NodeList getDocument(InputStream is) throws Exception {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		return builder.parse(is).getChildNodes();
+	}
+	
+	/**
+	 * @param nodes
+	 * @return
+	 */
+	public static ArrayList<Region> parseData(NodeList nodes) throws Exception {
+		ArrayList<Region> regions = new ArrayList<>();
+		
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Node node = nodes.item(i);
+			
+			if(node.getNodeName().startsWith("#"))
+				continue;
+			
+			if(!node.getNodeName().equals("map")) {
+				regions.addAll(parseData(node.getChildNodes()));
+				continue;
+			}
+			//<map id="0" name="Lorencia" allowMove="true" x="141" y="133" moveLevel="10" geodataFile = "Terrain1.att"/>
+			NamedNodeMap attributes = node.getAttributes();
+			int id = getValue(attributes, "id", 0);
+			String name = getValue(attributes, "name", "Unk");
+			int x = getValue(attributes, "x", 0);
+			int y = getValue(attributes, "y", 0);
+			int moveLevel = getValue(attributes, "moveLevel", -1);
+			String geodataFile = getValue(attributes, "geodataFile", null);
+
+			Region region = new Region(id, name, geodataFile, moveLevel, x, y);
+			regions.add(region);
+		}
+		
+		return regions;
+	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> T getValue(NamedNodeMap attributes, String name, T def) {
+		Node obj = attributes.getNamedItem(name);
+		
+		if(obj != null && obj.getNodeValue() != null) {
+			return (T) Tools.parsePrimitiveTypes(def == null ? String.class : def.getClass(), obj.getNodeValue());
+		}
+		
+		return def;
+	}
+
+}

@@ -30,7 +30,7 @@ import corvus.corax.threads.CorvusThreadPool;
  *
  */
 public abstract class ReadPacket {
-	private static final MuLogger log = MuLogger.getLogger(ReadPacket.class);
+	protected static final MuLogger log = MuLogger.getLogger(ReadPacket.class);
 	
 	public abstract void read(NetworkClient context, ByteBuf buff, Object... params);
 	

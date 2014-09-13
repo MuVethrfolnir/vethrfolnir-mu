@@ -151,4 +151,20 @@ public final class EntityWorld implements Updatable {
 	public List<GameObject> getClients() {
 		return Collections.unmodifiableList(clients);
 	}
+
+	/**
+	 * @param name
+	 * @param isPlayer
+	 * @return
+	 */
+	public GameObject findClient(String name, boolean isPlayer) {
+		for (int i = 0; i < clients.size(); i++) {
+			GameObject entity =  clients.get(i);
+			
+			if(entity.getName() != null && entity.getName().equalsIgnoreCase(name)) {
+				return entity;
+			}
+		}
+		return null;
+	}
 }

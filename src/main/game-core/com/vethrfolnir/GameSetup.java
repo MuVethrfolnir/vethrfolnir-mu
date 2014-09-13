@@ -61,7 +61,6 @@ public class GameSetup extends MuSetupTemplate {
 		addSingleton(EntityWorld.class);
 		addSingleton(IdFactory.class);
 		addSingleton(GameController.class);
-		
 	}
 
 	public static void main(String[] args) {

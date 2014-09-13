@@ -14,12 +14,11 @@
  */
 package com.vethrfolnir.game.module;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
-
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.vethrfolnir.game.staticdata.NpcData;
+import com.vethrfolnir.game.staticdata.RegionData;
 import com.vethrfolnir.game.staticdata.world.Region;
 import com.vethrfolnir.game.templates.npc.NpcTemplate;
 import com.vethrfolnir.game.templates.npc.SpawnTemplate;
@@ -40,13 +39,11 @@ public class StaticData {
 
 	private static final MuLogger log = MuLogger.getLogger(StaticData.class);
 	
-	private static TIntObjectHashMap<Region> regions = new TIntObjectHashMap<Region>();
-
+	private static RegionData regionData;
 	private static NpcData npcData;
 
 	public static void loadData() {
-		regions.put(0, new Region(0, "Lorencia"));
-		
+		regionData = process(new RegionData());
 		npcData = process(new NpcData());
 
 		// We dont need them in memory
@@ -118,22 +115,22 @@ public class StaticData {
 	}
 
 	/**
+	 * @return the regionData
+	 */
+	public static RegionData getRegionData() {
+		return regionData;
+	}
+	
+	/**
 	 * @param mapId
 	 * @return
 	 */
 	public static Region getRegion(int mapId) {
-		Region region = regions.get(mapId);
+		Region region = regionData.getRegion(mapId);
 		
 		if(region == null)
 			log.warn("Cannot find region with id "+mapId+"!", new RuntimeException("404: Region not found"));
 		
 		return region;
-	}
-	
-	/**
-	 * @return the regions
-	 */
-	public static TIntObjectHashMap<Region> getRegions() {
-		return regions;
 	}
 }

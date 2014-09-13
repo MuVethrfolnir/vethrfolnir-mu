@@ -79,6 +79,7 @@ public class GameController implements Runnable {
 				//System.out.println("Tick: "+tick +" dt: "+deltaTime);
 				if(tick == 10) {
 		        	tick = 0;
+		        	//System.out.println("System DT: "+deltaTime);
 				}
 			}
 			catch (Exception e) {

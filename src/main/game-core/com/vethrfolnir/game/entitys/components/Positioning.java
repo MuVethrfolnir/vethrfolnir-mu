@@ -26,9 +26,12 @@ import com.vethrfolnir.game.staticdata.world.Region;
  */
 public class Positioning implements Component {
 
-	protected int x, y, oldX, oldY, heading, mapId;
+	protected int x, y, oldX, oldY, heading;
+	private int mapId;
 	private Region currentRegion;
 	private GameObject entity;
+	
+	public volatile boolean moveFlag;
 	
 
 	/**
@@ -50,7 +53,7 @@ public class Positioning implements Component {
 		this.x = x;
 		this.y = y;
 		this.heading = heading;
-		this.mapId = mapId;
+		this.setMapId(mapId);
 		currentRegion = StaticData.getRegion(mapId);
 	}
 
@@ -80,7 +83,14 @@ public class Positioning implements Component {
 		this.heading = heading;
 		//TODO maybe a heads up packet?
 	}
-	
+
+	public void updateRegion(Region region) {
+		currentRegion = region;
+		mapId = region.getRegionId();
+		x = region.getStartX();
+		y = region.getStartY();
+	}
+
 	@Override
 	public void dispose() {
 
@@ -130,12 +140,28 @@ public class Positioning implements Component {
 	public int getMapId() {
 		return mapId;
 	}
-	
+
+	/**
+	 * @param mapId the mapId to set
+	 */
+	public void setMapId(int mapId) {
+		this.mapId = mapId;
+	}
+
 	/**
 	 * @return the currentRegion
 	 */
 	public Region getCurrentRegion() {
 		return currentRegion;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean moveFlag() {
+		boolean val = moveFlag;
+		moveFlag = false;
+		return val;
 	}
 
 }

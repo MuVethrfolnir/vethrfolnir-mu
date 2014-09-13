@@ -110,6 +110,13 @@ public class PlayerState implements Component {
 	}
 	
 	/**
+	 * @return
+	 */
+	public int getCharId() {
+		return charId;
+	}
+
+	/**
 	 * Delecation from MuClient
 	 */
 	public void sendPacket(WritePacket packet, Object... params) {

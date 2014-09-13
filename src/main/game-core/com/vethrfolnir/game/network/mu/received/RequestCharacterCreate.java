@@ -49,8 +49,10 @@ public class RequestCharacterCreate extends ReadPacket {
 		info.name = readConcatS(buff, 10, 0x00);
 		info.classId = readC(buff);
 		
-		if(!ClassId.isValid(info.classId))
-			client.clean();
+		if(!ClassId.isValid(info.classId)) {
+			log.warn("Client["+client+"] sent invalid character create packet!");
+			client.close();
+		}
 		
 		System.out.println("Creating char["+info.name+"] classId: ["+info.classId+" Hex: "+PrintData.fillHex(info.classId, 2)+"]");
 

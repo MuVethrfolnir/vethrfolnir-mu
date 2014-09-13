@@ -15,6 +15,7 @@
 package com.vethrfolnir.game.network.mu;
 
 import com.vethrfolnir.game.network.mu.send.*;
+import com.vethrfolnir.game.network.mu.send.SystemMessage.MessageType;
 
 /**
  * @author Vlad
@@ -136,4 +137,11 @@ public class MuPackets {
 	 * Requires: String message and SystemMessage.{@link MessageType}
 	 */
 	public static final SystemMessage SystemMessage = new SystemMessage();
+
+	/**
+	 * Teleport's the client<br>
+	 * Current use limited only to transport to regions!<br>
+	 * Requires: Region
+	 */
+	public static final PlayerTeleport PlayerTeleport = new PlayerTeleport();
 }

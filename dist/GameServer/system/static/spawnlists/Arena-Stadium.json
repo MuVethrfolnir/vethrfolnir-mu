@@ -1,0 +1,26 @@
+[
+  {
+    "NpcId" : 200,
+    "MapId" : 6,
+    "Radius" : 6,
+    "x" : 63,
+    "y" : 160,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  },
+  {
+    "NpcId" : 239,
+    "MapId" : 6,
+    "Radius" : 6,
+    "x" : 72,
+    "y" : 164,
+    "heading" : 1,
+    "Attackable" : false,
+    "StartX" : -1,
+    "StartY" : -1,
+    "Count" : 0
+  }
+]

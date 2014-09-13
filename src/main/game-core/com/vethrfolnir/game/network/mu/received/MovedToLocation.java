@@ -69,7 +69,7 @@ public class MovedToLocation extends ReadPacket {
 
 		// Cheap yet effective, for now
 		int distance = (int) MuUtils.distanceSquared(positioning.getX(), positioning.getY(), x, y);
-		if(distance > 10) {
+		if(distance > 10 && !positioning.moveFlag()) {
 			client.close();
 		}
 			

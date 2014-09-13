@@ -17,7 +17,13 @@ package com.vethrfolnir.game.services.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.vethrfolnir.game.entitys.GameObject;
+import com.vethrfolnir.game.entitys.components.Positioning;
+import com.vethrfolnir.game.entitys.components.player.PlayerState;
+import com.vethrfolnir.game.entitys.components.player.PlayerStats;
 import com.vethrfolnir.game.templates.PlayerTemplate;
+
+
 
 /**
  * @author Vlad
@@ -62,6 +68,42 @@ public class PlayerDAO extends DAO {
 			}
 			
 			return null;
+		});
+	}
+
+	/**
+	 * @param entity
+	 */
+	public void savePlayer(GameObject entity) {
+		enqueueVoidAndWait((con, buff) -> {
+			PlayerState state = entity.get(PlayerState.class);
+			PlayerStats stats = entity.get(PlayerStats.class);
+			Positioning positioning = entity.get(Positioning.class);
+			
+			int pointer = 1;
+			PreparedStatement st = con.prepareStatement("update characters set level=?, classId=?, currentExperience=?, mapId=?, x=?, y=?, guild=?, guildRank=?, strength=?, agility=?, vitality=?, energy=?, command=?, freePoints=?, masterPoints=?, masterLevel=?, expandedInventory=?, credits=?, zen=?, accessLevel=? where charid=?");
+			st.setInt(pointer++, stats.getLevel());
+			st.setInt(pointer++, state.getClassId().classId);
+			st.setInt(pointer++, (int) stats.getCurrentExperience());
+			st.setInt(pointer++, positioning.getMapId());
+			st.setInt(pointer++, positioning.getX());
+			st.setInt(pointer++, positioning.getY());
+			st.setInt(pointer++, 0); // Guild
+			st.setInt(pointer++, 0); // Guild Rank
+			st.setInt(pointer++, stats.getStrength());
+			st.setInt(pointer++, stats.getAgility());
+			st.setInt(pointer++, stats.getVitality());
+			st.setInt(pointer++, stats.getEnergy());
+			st.setInt(pointer++, stats.getCommand());
+			st.setInt(pointer++, stats.getFreePoints());
+			st.setInt(pointer++, stats.getMasterPoints());
+			st.setInt(pointer++, stats.getMasterLevel());
+			st.setInt(pointer++, state.getInventoryExpanded());
+			st.setInt(pointer++, 0); // Credits
+			st.setInt(pointer++, state.getZen());
+			st.setInt(pointer++, state.getAccessLevel());
+			st.setInt(pointer++, state.getCharId());
+			st.execute();
 		});
 	}
 }

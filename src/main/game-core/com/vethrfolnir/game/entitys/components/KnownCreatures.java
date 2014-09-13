@@ -40,7 +40,7 @@ public class KnownCreatures implements Component, Updatable {
 	@Override
 	public void update(int tick, float deltaTime) {
 
-		if(this.entity.isVoid() || (tick % 5 == 1))
+		if(this.entity.isVoid() || (tick % 8 == 1))
 			return;
 		
 		Region currentRegion = positioning.getCurrentRegion();
@@ -105,6 +105,10 @@ public class KnownCreatures implements Component, Updatable {
 
 	public void forgetAll() {
 		int[] arr = knownIds.toArray();
+
+		DeleteObject packet = new DeleteObject(arr);
+		entity.sendPacket(packet);
+
 		EntityWorld world = entity.getWorld();
 
 		ComponentIndex<KnownCreatures> index = EntityWorld.getComponentIndex(KnownCreatures.class);
@@ -120,9 +124,7 @@ public class KnownCreatures implements Component, Updatable {
 			entity.sendPacket(MuPackets.DeleteObject, this.entity);
 		}
 		
-		DeleteObject packet = new DeleteObject(arr);
 		knownIds.clear();
-		entity.sendPacket(packet);
 	}
 
 	@Override

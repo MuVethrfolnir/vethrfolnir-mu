@@ -27,7 +27,7 @@ public class PlayerSay extends WritePacket {
 		
 		writeArray(buff, 0xC1, 0x00, isPm ? 0x02 : 0x00); // 0x02 - yellow message
 		writeS(buff, actor, 10);
-		writeS(buff, message);
+		writeNS(buff, message);
 		writeC(buff, 0x00);
 	}
 
