@@ -39,9 +39,7 @@ public class GenData {
 	
 	static {
 		defaultPrettyPrinter.indentArraysWith(new Lf2SpacesIndenter());
-	}
 
-	public static ObjectMapper getMapper() {
 		mp.setVisibilityChecker(mp.getDeserializationConfig().getDefaultVisibilityChecker()
 		        .withCreatorVisibility(JsonAutoDetect.Visibility.NONE)
 		        .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
@@ -51,12 +49,6 @@ public class GenData {
 		
 		mp.configure(SerializationFeature.INDENT_OUTPUT, true);
 		
-		return mp;
-	}
-	
-	public static ObjectMapper getBinaryMapper() {
-		
-		
 		bmp.setVisibilityChecker(bmp.getDeserializationConfig().getDefaultVisibilityChecker()
 		        .withCreatorVisibility(JsonAutoDetect.Visibility.NONE)
 		        .withFieldVisibility(JsonAutoDetect.Visibility.ANY)
@@ -65,6 +57,13 @@ public class GenData {
 		        .withSetterVisibility(JsonAutoDetect.Visibility.NONE));
 		
 		bmp.configure(SerializationFeature.INDENT_OUTPUT, true);
+	}
+
+	public static ObjectMapper getMapper() {
+		return mp;
+	}
+	
+	public static ObjectMapper getBinaryMapper() {
 		return bmp;
 	}
 	/**

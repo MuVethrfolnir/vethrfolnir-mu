@@ -20,8 +20,8 @@ import corvus.corax.threads.CorvusThreadPool;
 public class CleanUtil {
 
 	/**
-	 * Will clean later on a diferent thread, use only if the object should be junked.
-	 * Unnecessary considering jvm, but someone might get paranoid.
+	 * Will clean later on a different thread, use only if the object should be junked.
+	 * Unnecessary considering gc, but someone might get paranoid.
 	 * @param obj
 	 */
 	@SuppressWarnings({ "rawtypes" })

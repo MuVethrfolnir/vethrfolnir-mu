@@ -30,12 +30,22 @@ public class Positioning implements Component {
 	private Region currentRegion;
 	private GameObject entity;
 	
+
 	/**
 	 * @param x
 	 * @param y
 	 * @param mapId
 	 */
 	public Positioning(int x, int y, int mapId) {
+		this(x, y, 0, mapId);
+	}
+	
+	/**
+	 * @param x
+	 * @param y
+	 * @param mapId
+	 */
+	public Positioning(int x, int y, int heading, int mapId) {
 		this.x = x;
 		this.y = y;
 		this.mapId = mapId;

@@ -19,12 +19,15 @@ import gnu.trove.iterator.TIntIterator;
 import java.util.ArrayList;
 
 import com.vethrfolnir.game.entitys.*;
-import com.vethrfolnir.game.entitys.components.KnownCreatures;
+import com.vethrfolnir.game.entitys.components.*;
+import com.vethrfolnir.game.templates.npc.NpcTemplate;
+import com.vethrfolnir.game.templates.npc.SpawnTemplate;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.network.WritePacket;
 import com.vethrfolnir.tools.Disposable;
 
 import corvus.corax.Corax;
+import corvus.corax.tools.Rnd;
 
 /**
  * @author Vlad
@@ -32,6 +35,7 @@ import corvus.corax.Corax;
  */
 public class Region implements Disposable {
 	
+	@SuppressWarnings("unused")
 	private static final MuLogger log = MuLogger.getLogger(Region.class);
 	
 	public final int regionId;
@@ -72,24 +76,56 @@ public class Region implements Disposable {
 	 * @param entity
 	 */
 	public void enter(GameObject entity) {
-		if(entity.isPlayer())
-			players.add(entity);
-		else
-			nonPlayers.add(entity);
+		if(!entity.isPlayer()) { // Npc's can't enter regions silly, they belong there
+			return;
+		}
+
+		players.add(entity);
 	}
 
 	/**
 	 * @param entity
 	 */
 	public void exit(GameObject entity) {
-		if(!entity.isPlayer()) {
-			log.info("Npcs cannot exit regions! They are static!", new RuntimeException("Illigal removal!"));
+		if(!entity.isPlayer()) {  // Npc's can't exit regions silly, they belong there
 			return;
 		}
 
 		players.remove(entity);
-		
 		entity.get(known).forgetAll();
+	}
+
+	/**
+	 * @param template
+	 * @param npcTemplate 
+	 */
+	public void spawn(SpawnTemplate template, NpcTemplate npcTemplate) {
+		if(template.Count > 0) {
+			for (int i = 0; i < template.Count; i++) {
+				int x = Rnd.get(template.StartX, template.x);
+				int y = Rnd.get(template.StartY, template.y);
+				spawn(x, y, template.heading, npcTemplate);
+			}
+		}
+		else {
+			spawn(template.x, template.y, template.heading, npcTemplate);
+		}
+	}
+	
+	private void spawn(int x, int y, int heading, NpcTemplate npcTemplate) {
+		GameObject entity = entityWorld.obtain();
+		try {
+			entity.setName(npcTemplate.Name);
+			entity.add(new Positioning(x, y, heading, regionId));
+			entity.add(new CreatureState(npcTemplate));
+			entity.add(new CreatureStats());
+			entity.commit();
+			nonPlayers.add(entity);
+		}
+		catch(Exception e) {
+			entityWorld.free(entity);
+			throw e;
+		}
 	}
 
 	/**

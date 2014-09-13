@@ -18,7 +18,6 @@ import com.vethrfolnir.game.templates.npc.NpcTemplate;
 public class GenMonsters {
 
 	public static void main(String[] args) throws Exception {
-		// Rate Name Lvl HP MP DmgMin DmgMax Def  mDe AttRate BloRate Ran AT AR VR MoSpeed AtSpeed Regen Att IT MR MIL SKI ICE POI LIG FIR
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(Class.class.getResourceAsStream("/Monster.txt")))) {
 			ArrayList<NpcTemplate> templates = new ArrayList<>();
 			while(br.ready()) {

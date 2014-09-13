@@ -29,7 +29,7 @@ public class KnownCreatures implements Component, Updatable {
 	private Positioning positioning;
 
 	private ComponentIndex<Positioning> pos;
-
+	
 	@Override
 	public void initialize(GameObject entity) {
 		this.entity = entity;
@@ -38,15 +38,13 @@ public class KnownCreatures implements Component, Updatable {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public void update(int tick, float deltaTime) {
 
-		if(this.entity.isVoid())
+		if(this.entity.isVoid() || (tick % 5 == 1))
 			return;
 		
 		Region currentRegion = positioning.getCurrentRegion();
 		
-		int nonPlayerCount = currentRegion.nonPlayers.size();
 		int playerCount = currentRegion.players.size();
 		
 		//TODO Profile point.
@@ -77,6 +75,31 @@ public class KnownCreatures implements Component, Updatable {
 			}
 		}
 		
+		for (int i = 0; i < nonPlayers.size(); i++) {
+			GameObject entity = nonPlayers.get(i);
+			Positioning positioning = entity.get(pos);
+			
+			if(entity == this.entity)
+				continue;
+			
+			boolean visibile = entity.isVisable() && (int) MuUtils.distanceSquared(positioning.x, positioning.y, this.positioning.x, this.positioning.y) <= 12;
+			boolean contains = knownIds.contains(entity.getWorldIndex());
+
+			if(visibile && !contains) {
+				this.entity.sendPacket(MuPackets.NpcInfo, entity);
+				knownIds.add(entity.getWorldIndex());
+				System.out.println("Adding Npc: "+entity+" to "+this.entity);
+				continue;
+			}
+			
+			if(!visibile && contains) {
+				System.out.println("Removing Npc: "+entity+" to "+this.entity);
+				this.entity.sendPacket(MuPackets.DeleteObject, entity);
+				knownIds.remove(entity.getWorldIndex());
+			}
+
+		}
+		
 		//XXX Profile point end
 	}
 
@@ -89,6 +112,10 @@ public class KnownCreatures implements Component, Updatable {
 			int objectId = arr[i];
 
 			GameObject entity = world.getEntitys().get(objectId);
+			
+			if(!entity.isPlayer())
+				continue;
+			
 			entity.get(index).knownIds.remove(this.entity.getWorldIndex());
 			entity.sendPacket(MuPackets.DeleteObject, this.entity);
 		}

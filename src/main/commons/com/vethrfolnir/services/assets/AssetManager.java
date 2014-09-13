@@ -22,9 +22,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.services.assets.cache.AssetCache;
+import com.vethrfolnir.services.assets.key.FileKey;
 import com.vethrfolnir.services.assets.locator.*;
 import com.vethrfolnir.services.assets.processors.InputStreamProcessor;
 
+import corvus.corax.CorvusConfig;
 import corvus.corax.processing.annotation.Finalize;
 import corvus.corax.processing.annotation.Initiate;
 
@@ -152,15 +154,23 @@ public final class AssetManager {
 		ArrayList<T> list = new ArrayList<>();
 		final AssetProcessor processor = processors.get(procType);
 		
-		final File root = new File(key.getPath());
+		final File root = new File(CorvusConfig.WorkingDirectory, key.getPath());
 		final String[] files = root.list();
 		
+		if(files == null) { // cant get data!
+			log.warn("Cannot find any file in directory["+root+"] Dir exists ? "+root.exists());
+			return null;
+		}
+
 		ArrayList<Future<AssetLoader>> tasks = new ArrayList<>();
 		
 		for (int i = 0; i < files.length; i++) {
 			String fileName = new String(files[i]);
-			final AssetLoader loader = new AssetLoader(key, fileName);
-			
+			File file = new File(key.getPath(), fileName);
+			FileKey fileKey = new FileKey(file.getPath());
+
+			final AssetLoader loader = new AssetLoader(fileKey, fileName);
+
 			Future<AssetLoader> task = threadPool().submit(new Callable<AssetLoader>() { //TODO a wrapper, maybe, or leave it closure for java 8
 				@Override
 				public AssetLoader call() throws Exception { // get the result
@@ -169,8 +179,7 @@ public final class AssetManager {
 					for (int j = 0; j < locators.size(); j++) {
 						AssetLocator locator = locators.get(j);
 						
-						Object result = locator.locate(AssetManager.this, key, loader, processor);
-						
+						Object result = locator.locate(AssetManager.this, fileKey, loader, processor);
 						if(result != null) {
 							loader.result = result;
 							
@@ -184,7 +193,7 @@ public final class AssetManager {
 					}
 					
 					if(loader.result == null)
-						log.fatal("Failed loading an asset file! File["+key.getPath()+"] not found!");
+						log.fatal("Failed loading an asset file! File["+fileKey.getPath()+"] not found!");
 
 					return loader;
 				}

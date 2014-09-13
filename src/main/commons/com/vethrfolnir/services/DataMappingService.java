@@ -68,6 +68,10 @@ public class DataMappingService {
 
 	public <T> ArrayList<T> asArrayList(Class<? extends T> type, String path) throws Exception {
 		InputStream is = assetManager.loadAsset(FileKey.class, path);
+		return asArrayList(is, type);
+	}
+
+	public <T> ArrayList<T> asArrayList(InputStream is, Class<? extends T> type) throws Exception {
 		return jsonMapper.readValue(is, defaultTypeFactory.constructCollectionType(ArrayList.class, type));
 	}
 	

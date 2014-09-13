@@ -114,6 +114,12 @@ public class MuPackets {
 	public static final PlayerInfo PlayerInfo = new PlayerInfo();
 	
 	/**
+	 * Sends the NpcInfo packet to a client
+	 * Requires: GameObject entity.
+	 */
+	public static final NpcInfo NpcInfo = new NpcInfo();
+	
+	/**
 	 * Sends a text packet
 	 * Requires: String actor and message, and if this is a pm, it should be specified with another boolean argument 
 	 */
