@@ -78,7 +78,6 @@ public class GenSpawnlist {
 						templates.add(template);
 						break;
 					case 1: // 1 : Multiple Mobs
-					case 3:
 						//[Mob] [Map] [Distance] [StartX] [StartY] [EndX] [EndY] [Dir] [Total] [Description]
 						pnt = 0;
 						

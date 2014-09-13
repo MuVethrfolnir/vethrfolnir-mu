@@ -39,15 +39,17 @@ public class Positioning implements Component {
 	public Positioning(int x, int y, int mapId) {
 		this(x, y, 0, mapId);
 	}
-	
+
 	/**
 	 * @param x
 	 * @param y
+	 * @param heading
 	 * @param mapId
 	 */
 	public Positioning(int x, int y, int heading, int mapId) {
 		this.x = x;
 		this.y = y;
+		this.heading = heading;
 		this.mapId = mapId;
 		currentRegion = StaticData.getRegion(mapId);
 	}

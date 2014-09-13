@@ -39,15 +39,13 @@ public class NpcInfo extends WritePacket {
 		writeArray(buff, 0xC2, 0x00, 0x0F, 0x13, 0x01); // size
 		writeSh(buff, entity.getWorldIndex(), ByteOrder.BIG_ENDIAN);
 		writeSh(buff, cs.getNpcId(), ByteOrder.BIG_ENDIAN);
-		//writeC(_newNpc.getNpcId());
-		//writeArray(_newNpc.getX(), _newNpc.getY(), _newNpc.getX(), _newNpc.getY());
 
 		writeC(buff, positioning.getX());
 		writeC(buff, positioning.getY());
 
 		writeC(buff, positioning.getX()); // if moving
 		writeC(buff, positioning.getY());
-		
+
 		writeC(buff, positioning.getHeading() << 4);
 		writeC(buff, cs.getActiveEffect());
 	}
