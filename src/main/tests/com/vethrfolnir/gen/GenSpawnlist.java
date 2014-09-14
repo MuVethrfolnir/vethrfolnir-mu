@@ -37,8 +37,7 @@ public class GenSpawnlist {
 	public static TIntObjectHashMap<String> supportedAreas = new TIntObjectHashMap<String>();
 	static {
 		try {
-			NodeList list = GenWorlds.getDocument(GenWorlds.class.getResourceAsStream("/worlds.xml"));
-			ArrayList<Region> regions = GenWorlds.parseData(list);
+			ArrayList<Region> regions = GenData.asArrayList(new FileInputStream("./dist/GameServer/system/static/world-data.json"), GenData.getMapper(), Region.class);
 			
 			for (Region region : regions) {
 				supportedAreas.put(region.getRegionId(), region.getRegionName());
@@ -165,7 +164,6 @@ public class GenSpawnlist {
 				file.createNewFile();
 				
 				writer.writeValue(new FileOutputStream(file), e.getValue());
-				GenData.asArrayList(new FileInputStream(file), GenData.mp, SpawnTemplate.class);
 			}
 
 		}

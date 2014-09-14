@@ -155,7 +155,7 @@ public class Region implements Disposable {
 		Positioning pos = entity.get(Positioning.class);
 		pos.moveFlag = true;
 		pos.updateRegion(this);
-				
+
 		pos.getCurrentRegion().exit(entity);
 		entity.sendPacket(MuPackets.PlayerTeleport, this);
 		pos.getCurrentRegion().enter(entity);
@@ -184,7 +184,7 @@ public class Region implements Disposable {
 			entity.setName(npcTemplate.Name);
 			entity.add(new Positioning(x, y, heading, regionId));
 			entity.add(new CreatureState(npcTemplate));
-			entity.add(new CreatureStats());
+			entity.add(new CreatureStats(npcTemplate));
 			entity.commit();
 			nonPlayers.add(entity);
 		}

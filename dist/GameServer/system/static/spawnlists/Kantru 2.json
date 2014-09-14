@@ -6,10 +6,7 @@
     "x" : 159,
     "y" : 98,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -18,10 +15,7 @@
     "x" : 100,
     "y" : 97,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -30,10 +24,7 @@
     "x" : 99,
     "y" : 85,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -42,10 +33,7 @@
     "x" : 125,
     "y" : 74,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -54,10 +42,7 @@
     "x" : 113,
     "y" : 96,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -66,10 +51,7 @@
     "x" : 111,
     "y" : 79,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -78,10 +60,7 @@
     "x" : 123,
     "y" : 88,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -90,10 +69,7 @@
     "x" : 140,
     "y" : 76,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -102,10 +78,7 @@
     "x" : 139,
     "y" : 99,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -114,10 +87,7 @@
     "x" : 178,
     "y" : 92,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -126,10 +96,7 @@
     "x" : 198,
     "y" : 121,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -138,10 +105,7 @@
     "x" : 197,
     "y" : 136,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -150,10 +114,7 @@
     "x" : 126,
     "y" : 98,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -162,10 +123,7 @@
     "x" : 135,
     "y" : 88,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -174,10 +132,7 @@
     "x" : 117,
     "y" : 135,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -186,10 +141,7 @@
     "x" : 106,
     "y" : 159,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -198,10 +150,7 @@
     "x" : 110,
     "y" : 140,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -210,10 +159,7 @@
     "x" : 101,
     "y" : 139,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -222,10 +168,7 @@
     "x" : 149,
     "y" : 85,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -234,10 +177,7 @@
     "x" : 153,
     "y" : 78,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -246,10 +186,7 @@
     "x" : 151,
     "y" : 160,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -258,10 +195,7 @@
     "x" : 179,
     "y" : 139,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -270,10 +204,7 @@
     "x" : 187,
     "y" : 145,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -282,10 +213,7 @@
     "x" : 97,
     "y" : 78,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -294,10 +222,7 @@
     "x" : 124,
     "y" : 69,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -306,10 +231,7 @@
     "x" : 138,
     "y" : 67,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -318,10 +240,7 @@
     "x" : 183,
     "y" : 86,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -330,10 +249,7 @@
     "x" : 175,
     "y" : 104,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -342,10 +258,7 @@
     "x" : 168,
     "y" : 94,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -354,10 +267,7 @@
     "x" : 122,
     "y" : 127,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -366,10 +276,7 @@
     "x" : 111,
     "y" : 159,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -378,10 +285,7 @@
     "x" : 105,
     "y" : 133,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -390,10 +294,7 @@
     "x" : 119,
     "y" : 126,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -402,10 +303,7 @@
     "x" : 135,
     "y" : 150,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -414,10 +312,7 @@
     "x" : 177,
     "y" : 129,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -426,10 +321,7 @@
     "x" : 193,
     "y" : 146,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -438,10 +330,7 @@
     "x" : 195,
     "y" : 105,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -450,10 +339,7 @@
     "x" : 163,
     "y" : 82,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -462,10 +348,7 @@
     "x" : 132,
     "y" : 97,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -474,10 +357,7 @@
     "x" : 158,
     "y" : 137,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -486,10 +366,7 @@
     "x" : 171,
     "y" : 141,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -498,10 +375,7 @@
     "x" : 147,
     "y" : 148,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -510,10 +384,7 @@
     "x" : 152,
     "y" : 120,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -522,10 +393,7 @@
     "x" : 199,
     "y" : 131,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -534,10 +402,7 @@
     "x" : 195,
     "y" : 115,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -546,10 +411,7 @@
     "x" : 102,
     "y" : 78,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -558,10 +420,7 @@
     "x" : 128,
     "y" : 69,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -570,10 +429,7 @@
     "x" : 156,
     "y" : 120,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -582,10 +438,7 @@
     "x" : 127,
     "y" : 135,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -594,10 +447,7 @@
     "x" : 140,
     "y" : 162,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -606,10 +456,7 @@
     "x" : 176,
     "y" : 117,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -618,10 +465,7 @@
     "x" : 162,
     "y" : 129,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -630,10 +474,7 @@
     "x" : 167,
     "y" : 129,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -642,10 +483,7 @@
     "x" : 137,
     "y" : 142,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -654,10 +492,7 @@
     "x" : 150,
     "y" : 151,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -666,10 +501,7 @@
     "x" : 106,
     "y" : 154,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -678,10 +510,7 @@
     "x" : 111,
     "y" : 154,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -690,10 +519,7 @@
     "x" : 163,
     "y" : 148,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -702,10 +528,7 @@
     "x" : 177,
     "y" : 150,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 358,
@@ -714,10 +537,7 @@
     "x" : 108,
     "y" : 148,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -726,10 +546,7 @@
     "x" : 152,
     "y" : 110,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 360,
@@ -738,10 +555,7 @@
     "x" : 164,
     "y" : 112,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 359,
@@ -750,10 +564,7 @@
     "x" : 185,
     "y" : 97,
     "heading" : 1,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -762,10 +573,7 @@
     "x" : 141,
     "y" : 155,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -774,10 +582,7 @@
     "x" : 138,
     "y" : 166,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -786,10 +591,7 @@
     "x" : 141,
     "y" : 166,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -798,10 +600,7 @@
     "x" : 144,
     "y" : 166,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -810,10 +609,7 @@
     "x" : 138,
     "y" : 171,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -822,10 +618,7 @@
     "x" : 141,
     "y" : 171,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -834,10 +627,7 @@
     "x" : 144,
     "y" : 171,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -846,10 +636,7 @@
     "x" : 138,
     "y" : 177,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -858,10 +645,7 @@
     "x" : 141,
     "y" : 177,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -870,10 +654,7 @@
     "x" : 144,
     "y" : 177,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -882,10 +663,7 @@
     "x" : 138,
     "y" : 183,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -894,10 +672,7 @@
     "x" : 141,
     "y" : 183,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 106,
@@ -906,10 +681,7 @@
     "x" : 144,
     "y" : 183,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -918,10 +690,7 @@
     "x" : 97,
     "y" : 96,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -930,10 +699,7 @@
     "x" : 97,
     "y" : 78,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -942,10 +708,7 @@
     "x" : 122,
     "y" : 74,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -954,10 +717,7 @@
     "x" : 136,
     "y" : 70,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -966,10 +726,7 @@
     "x" : 152,
     "y" : 78,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -978,10 +735,7 @@
     "x" : 177,
     "y" : 89,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -990,10 +744,7 @@
     "x" : 186,
     "y" : 105,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -1002,10 +753,7 @@
     "x" : 201,
     "y" : 134,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -1014,10 +762,7 @@
     "x" : 150,
     "y" : 152,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -1026,10 +771,7 @@
     "x" : 138,
     "y" : 152,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -1038,10 +780,7 @@
     "x" : 107,
     "y" : 153,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -1050,10 +789,7 @@
     "x" : 111,
     "y" : 153,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -1062,10 +798,7 @@
     "x" : 123,
     "y" : 79,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 105,
@@ -1074,21 +807,13 @@
     "x" : 137,
     "y" : 104,
     "heading" : 8,
-    "Attackable" : true,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "Attackable" : true
   },
   {
     "NpcId" : 367,
     "MapId" : 38,
-    "Radius" : 0,
     "x" : 141,
     "y" : 191,
-    "heading" : 2,
-    "Attackable" : false,
-    "StartX" : -1,
-    "StartY" : -1,
-    "Count" : 0
+    "heading" : 2
   }
 ]

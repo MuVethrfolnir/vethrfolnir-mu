@@ -18,6 +18,12 @@ package com.vethrfolnir.game.entitys.components.creature;
 
 import com.vethrfolnir.game.entitys.Component;
 import com.vethrfolnir.game.entitys.GameObject;
+import com.vethrfolnir.game.network.mu.MuPackets;
+import com.vethrfolnir.game.network.mu.send.StatusInfo;
+import com.vethrfolnir.game.staticdata.world.Region;
+import com.vethrfolnir.game.templates.npc.NpcTemplate;
+
+import corvus.corax.threads.CorvusThreadPool;
 
 /**
  * @author Vlad
@@ -27,19 +33,84 @@ public class CreatureStats implements Component {
 
 	protected GameObject entity;
 
-	protected int maxHealthPoints = 200, maxCombatPoints = 200;
-	protected int maxManaPoints = 200, maxStaminaPoints = 200;
+	protected int maxHealthPoints = 1245, maxCombatPoints = 1245;
+	protected int maxManaPoints = 1245, maxStaminaPoints = 1245;
 
-	protected int healthPoints = 100, combatPoints = 100;
-	protected int manaPoints = 100, staminaPoints = 100;
+	protected int healthPoints = 1200, combatPoints = 1200;
+	protected int manaPoints = 1200, staminaPoints = 1200;
 
 	protected int level;
 	
+	public CreatureStats() { /* Player */ }
+	
+	public CreatureStats(NpcTemplate npcTemplate) {
+		healthPoints = maxHealthPoints = npcTemplate.HP;
+		manaPoints = maxManaPoints = npcTemplate.MP;
+	}
+
 	@Override
 	public void initialize(GameObject entity) {
 		this.entity = entity;
 	}
 
+	/**
+	 * @param attacker
+	 * @param damage
+	 * @return took damage
+	 */
+	public boolean takeDamageHp(GameObject attacker, int damage) {
+
+		if(isDead() || !entity.isVisable())
+			return false;
+
+		healthPoints = Math.max(0, healthPoints - damage);
+
+		if(entity.isPlayer()) {
+			entity.sendPacket(MuPackets.StatusInfo, StatusInfo.STATUS_HPSD, true);
+		}
+
+		if(healthPoints <= 0) {
+			GameObject broadcaster = this.entity.isPlayer() ? entity : attacker; // npcs cant kill each other
+			Region region = entity.get(CreatureMapping.Positioning).getCurrentRegion();
+			region.broadcastToKnown(broadcaster, MuPackets.Death, entity, attacker);
+			broadcaster.sendPacket(MuPackets.Death, entity, attacker);
+			
+			CorvusThreadPool.getInstance().schedule(()-> {
+				entity.setVisible(false); // he's dead qq
+				
+				//TODO Proper resurrect timer
+				CorvusThreadPool.getInstance().schedule(()-> {
+					CreatureStats.this.revive();
+				}, 3000);
+			}, 3500);
+		}
+		
+		return true;
+	}
+
+	private void revive() {
+
+		healthPoints = maxHealthPoints;
+		manaPoints = maxManaPoints;
+		
+		staminaPoints = maxStaminaPoints;
+		combatPoints = maxCombatPoints;
+		
+		if(entity.isPlayer()) {
+			//entity.get(CreatureMapping.Positioning).getCurrentRegion().transfer(entity);
+			
+			entity.sendPacket(MuPackets.PlayerInfo, true);
+			entity.sendPacket(MuPackets.StatusInfo, StatusInfo.STATUS_HPSD, true);
+			entity.sendPacket(MuPackets.StatusInfo, StatusInfo.STATUS_MPST, true);
+		}
+
+		entity.setVisible(true);
+	}
+
+	public boolean isDead() {
+		return healthPoints <= 0;
+	}
+	
 	/**
 	 * @param level
 	 */
@@ -170,4 +241,5 @@ public class CreatureStats implements Component {
 	public void dispose() {
 		entity = null;
 	}
+
 }

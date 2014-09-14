@@ -17,12 +17,16 @@
 package com.vethrfolnir.gen;
 
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Lf2SpacesIndenter;
 import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import de.undercouch.bson4jackson.BsonFactory;
@@ -38,6 +42,8 @@ public class GenData {
 	
 	static ObjectMapper mp = new ObjectMapper();
 	static ObjectMapper bmp = new ObjectMapper(new BsonFactory());
+	public static SimpleBeanPropertyFilter theFilter;
+	
 	
 	static {
 		defaultPrettyPrinter.indentArraysWith(new Lf2SpacesIndenter());
@@ -59,6 +65,37 @@ public class GenData {
 		        .withSetterVisibility(JsonAutoDetect.Visibility.NONE));
 		
 		bmp.configure(SerializationFeature.INDENT_OUTPUT, true);
+		
+		theFilter = new SimpleBeanPropertyFilter() {
+			
+			@Override
+			public void serializeAsField(Object bean, JsonGenerator jgen, SerializerProvider provider, BeanPropertyWriter writer) throws Exception {
+			    if (include(writer)) {
+			    	Field[] fields = bean.getClass().getDeclaredFields();
+			    	for (int i = 0; i < fields.length; i++) {
+						Field field = fields[i];
+						
+						if(field.getType() == Integer.TYPE) {
+							int value = (int) field.get(bean);
+							if(value <= 0) {
+								writer.serializeAsField(bean, jgen, provider);
+							}
+							else
+								super.serializeAsField(bean, jgen, provider, writer);
+						}
+						else {
+							
+						}
+					}
+			    }
+			  }
+
+			  @Override
+			  protected boolean include(BeanPropertyWriter writer) {
+			    return true;
+			  }
+			  
+			};
 	}
 
 	public static ObjectMapper getMapper() {

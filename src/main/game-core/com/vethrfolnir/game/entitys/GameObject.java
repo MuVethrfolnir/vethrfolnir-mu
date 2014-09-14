@@ -84,11 +84,6 @@ public final class GameObject implements Updatable {
 
 	public void add(Component component) {
 		int index = EntityWorld.getComponentIndex(component.getClass()).value;
-
-		if(this.isPlayer())
-			System.out.println("Adding: "+component+ " in index: "+index);
-
-		//components.ensureCapacity(EntityWorld.componentIndexSize);
 		components.set(index, component);
 	}
 	
@@ -107,11 +102,20 @@ public final class GameObject implements Updatable {
 		return (T) components.get(index.value);
 	}
 	
-	@SuppressWarnings("unchecked")
 	public <T extends Component> T get(Class<T> type) {
+		return get(type, false);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T extends Component> T get(Class<T> type, boolean isInstance) {
+		
 		for (int i = 0; i < components.size(); i++) {
 			Component component = components.get(i);
-			if(component != null && component.getClass() == type)
+
+			if(component == null)
+				continue;
+
+			if(component.getClass() == type || isInstance && type.isInstance(component))
 				return (T) component;
 		}
 		

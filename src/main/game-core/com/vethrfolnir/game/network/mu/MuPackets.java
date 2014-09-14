@@ -123,14 +123,27 @@ public class MuPackets {
 	public static final NpcInfo NpcInfo = new NpcInfo();
 	
 	/**
+	 * Sends the damage info to the client<br>
+	 * Requires: GameObject target, int dmg, DamageType and if needed an int with SD-Damage
+	 */
+	public static final DamageInfo DamageInfo = new DamageInfo();
+	
+	/**
 	 * Sends a text packet
 	 * Requires: String actor and message, and if this is a pm, it should be specified with another boolean argument 
 	 */
 	public static final PlayerSay PlayerSay = new PlayerSay();
 	
 	/**
+	 * Teleport's the client<br>
+	 * Current use limited only to transport to regions!<br>
+	 * Requires: Region
+	 */
+	public static final PlayerTeleport PlayerTeleport = new PlayerTeleport();
+
+	/**
 	 * Sends to the world this clients intention
-	 * Requires: ActionUpdate.#TYPE also a target if needed
+	 * Requires: ActionUpdate.#TYPE GameObject animator, GameObject target if needed
 	 */
 	public static final ActionUpdate ActionUpdate = new ActionUpdate();
 	
@@ -141,9 +154,8 @@ public class MuPackets {
 	public static final SystemMessage SystemMessage = new SystemMessage();
 
 	/**
-	 * Teleport's the client<br>
-	 * Current use limited only to transport to regions!<br>
-	 * Requires: Region
+	 * Sends the Death packet
+	 * Requires: GameObject whom died and GameObject killer
 	 */
-	public static final PlayerTeleport PlayerTeleport = new PlayerTeleport();
+	public static final EntityDeath Death = new EntityDeath();
 }

@@ -43,7 +43,7 @@
   },
   {
     "regionId" : 6,
-    "regionName" : "Arena/Stadium",
+    "regionName" : "Stadium",
     "moveLevel" : -1,
     "spawnX" : 0,
     "spawnY" : 0
@@ -407,28 +407,28 @@
   },
   {
     "regionId" : 70,
-    "regionName" : "Unknown",
+    "regionName" : "Unknown1",
     "moveLevel" : -1,
     "spawnX" : 0,
     "spawnY" : 0
   },
   {
     "regionId" : 71,
-    "regionName" : "Unknown",
+    "regionName" : "Unknown2",
     "moveLevel" : -1,
     "spawnX" : 0,
     "spawnY" : 0
   },
   {
     "regionId" : 72,
-    "regionName" : "Unknown",
+    "regionName" : "Unknown3",
     "moveLevel" : -1,
     "spawnX" : 0,
     "spawnY" : 0
   },
   {
     "regionId" : 79,
-    "regionName" : "Unknown",
+    "regionName" : "Unknown4",
     "moveLevel" : -1,
     "spawnX" : 0,
     "spawnY" : 0

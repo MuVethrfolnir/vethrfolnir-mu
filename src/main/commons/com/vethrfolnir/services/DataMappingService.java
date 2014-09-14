@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.core.JsonParser.Feature;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter.Lf2SpacesIndenter;
 import com.fasterxml.jackson.databind.*;
@@ -62,7 +63,7 @@ public class DataMappingService {
 		        .withIsGetterVisibility(JsonAutoDetect.Visibility.NONE)
 		        .withSetterVisibility(JsonAutoDetect.Visibility.NONE));
 		
-		jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+		jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true).configure(Feature.ALLOW_COMMENTS, true);
 		
 		defaultPrettyPrinter = new DefaultPrettyPrinter();
 		defaultPrettyPrinter.indentArraysWith(new Lf2SpacesIndenter());

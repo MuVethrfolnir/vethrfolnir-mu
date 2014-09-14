@@ -6,7 +6,6 @@
     "x" : 150,
     "y" : 115,
     "heading" : 1,
-    "Attackable" : false,
     "StartX" : 119,
     "StartY" : 80,
     "Count" : 35
@@ -18,7 +17,6 @@
     "x" : 150,
     "y" : 115,
     "heading" : 1,
-    "Attackable" : false,
     "StartX" : 119,
     "StartY" : 80,
     "Count" : 35
@@ -30,7 +28,6 @@
     "x" : 151,
     "y" : 184,
     "heading" : 1,
-    "Attackable" : false,
     "StartX" : 121,
     "StartY" : 152,
     "Count" : 35
@@ -42,7 +39,6 @@
     "x" : 151,
     "y" : 184,
     "heading" : 1,
-    "Attackable" : false,
     "StartX" : 121,
     "StartY" : 152,
     "Count" : 35
@@ -54,7 +50,6 @@
     "x" : 79,
     "y" : 173,
     "heading" : 1,
-    "Attackable" : false,
     "StartX" : 49,
     "StartY" : 138,
     "Count" : 35
@@ -66,7 +61,6 @@
     "x" : 79,
     "y" : 173,
     "heading" : 1,
-    "Attackable" : false,
     "StartX" : 49,
     "StartY" : 138,
     "Count" : 35
@@ -78,7 +72,6 @@
     "x" : 83,
     "y" : 109,
     "heading" : 1,
-    "Attackable" : false,
     "StartX" : 53,
     "StartY" : 74,
     "Count" : 35
@@ -90,7 +83,6 @@
     "x" : 83,
     "y" : 109,
     "heading" : 1,
-    "Attackable" : false,
     "StartX" : 53,
     "StartY" : 74,
     "Count" : 35

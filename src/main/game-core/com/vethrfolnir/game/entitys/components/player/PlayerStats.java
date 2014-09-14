@@ -78,7 +78,6 @@ public class PlayerStats extends CreatureStats {
 	
 	public void addExperiance(long xp)
 	{
-		System.out.println("Adding xp: "+xp);
 		currentExperience += xp;
 		int o_level = this.level;
 		int n_level = o_level;
