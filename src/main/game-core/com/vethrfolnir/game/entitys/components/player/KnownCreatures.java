@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.vethrfolnir.game.entitys.components;
+package com.vethrfolnir.game.entitys.components.player;
 
 import gnu.trove.set.hash.TIntHashSet;
 
 import java.util.ArrayList;
 
 import com.vethrfolnir.game.entitys.*;
+import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.network.mu.send.DeleteObject;
 import com.vethrfolnir.game.staticdata.world.Region;
@@ -39,13 +40,10 @@ public class KnownCreatures implements Component, Updatable {
 	private GameObject entity;
 	private Positioning positioning;
 
-	private ComponentIndex<Positioning> pos;
-	
 	@Override
 	public void initialize(GameObject entity) {
 		this.entity = entity;
-		pos = EntityWorld.getComponentIndex(Positioning.class);
-		positioning = this.entity.get(pos);
+		positioning = this.entity.get(Positioning.class);
 	}
 
 	@Override
@@ -64,12 +62,12 @@ public class KnownCreatures implements Component, Updatable {
 		
 		for (int i = 0; i < players.length; i++) {
 			GameObject entity = players[i];
-			Positioning positioning = entity.get(pos);
+			Positioning positioning = entity.get(PlayerMapping.Positioning);
 			
 			if(entity == this.entity || entity.isVoid())
 				continue;
 			
-			boolean visibile = entity.isVisable() && (int) MuUtils.distanceSquared(positioning.x, positioning.y, this.positioning.x, this.positioning.y) <= 12;
+			boolean visibile = entity.isVisable() && (int) MuUtils.distanceSquared(positioning.getX(), positioning.getY(), this.positioning.getX(), this.positioning.getY()) <= 12;
 			boolean contains = knownIds.contains(entity.getWorldIndex());
 			
 			if(visibile && !contains) {
@@ -88,12 +86,12 @@ public class KnownCreatures implements Component, Updatable {
 		
 		for (int i = 0; i < nonPlayers.size(); i++) {
 			GameObject entity = nonPlayers.get(i);
-			Positioning positioning = entity.get(pos);
+			Positioning positioning = entity.get(PlayerMapping.Positioning);
 			
 			if(entity == this.entity)
 				continue;
 			
-			boolean visibile = entity.isVisable() && (int) MuUtils.distanceSquared(positioning.x, positioning.y, this.positioning.x, this.positioning.y) <= 12;
+			boolean visibile = entity.isVisable() && (int) MuUtils.distanceSquared(positioning.getX(), positioning.getY(), this.positioning.getX(), this.positioning.getY()) <= 12;
 			boolean contains = knownIds.contains(entity.getWorldIndex());
 
 			if(visibile && !contains) {
@@ -122,7 +120,6 @@ public class KnownCreatures implements Component, Updatable {
 
 		EntityWorld world = entity.getWorld();
 
-		ComponentIndex<KnownCreatures> index = EntityWorld.getComponentIndex(KnownCreatures.class);
 		for (int i = 0; i < arr.length; i++) {
 			int objectId = arr[i];
 
@@ -131,7 +128,7 @@ public class KnownCreatures implements Component, Updatable {
 			if(!entity.isPlayer())
 				continue;
 			
-			entity.get(index).knownIds.remove(this.entity.getWorldIndex());
+			entity.get(PlayerMapping.KnownCreatures).knownIds.remove(this.entity.getWorldIndex());
 			entity.sendPacket(MuPackets.DeleteObject, this.entity);
 		}
 		

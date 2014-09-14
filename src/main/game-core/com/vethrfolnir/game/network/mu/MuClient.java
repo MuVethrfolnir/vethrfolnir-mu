@@ -24,10 +24,8 @@ import java.nio.ByteOrder;
 
 import com.vethrfolnir.game.entitys.EntityWorld;
 import com.vethrfolnir.game.entitys.GameObject;
-import com.vethrfolnir.game.entitys.components.KnownCreatures;
 import com.vethrfolnir.game.entitys.components.Positioning;
-import com.vethrfolnir.game.entitys.components.player.PlayerState;
-import com.vethrfolnir.game.entitys.components.player.PlayerStats;
+import com.vethrfolnir.game.entitys.components.player.*;
 import com.vethrfolnir.game.module.DatabaseAccess;
 import com.vethrfolnir.game.module.MuAccount;
 import com.vethrfolnir.game.network.mu.crypt.MuEncoder;
@@ -91,8 +89,14 @@ public final class MuClient extends NetworkClient {
 	}
 	
 	public void clean(boolean light) {
+		
+		if(!entity.isInitialized()) {
+			log.warn("Tried cleaning a non entity["+this+"]!");
+			return;
+		}
+		
 		try {
-			if(entity.isVoid() || entity.isInitialized()) {
+			if(entity.isVoid()) {
 				log.warn("Tried saving voided entity["+this+"]!");
 				return;
 			}
@@ -100,7 +104,7 @@ public final class MuClient extends NetworkClient {
 			Corax.listen(ListenerKeys.ClientDisconnected, null, this);
 	
 			// Perform cleaning
-			entity.get(Positioning.class).getCurrentRegion().exit(entity);
+			entity.get(PlayerMapping.Positioning).getCurrentRegion().exit(entity);
 			
 			DatabaseAccess.PlayerAccess().savePlayer(entity);
 		}
@@ -120,7 +124,8 @@ public final class MuClient extends NetworkClient {
 		this.status = status;
 
 		if(this.status == ClientStatus.Authed && old != ClientStatus.Authed) {
-			if(entity.isInitialized()) {
+			
+			if(entity.isInitialized() && old == ClientStatus.InGame) {
 				clean(true);
 			}
 
@@ -189,7 +194,7 @@ public final class MuClient extends NetworkClient {
 	 * @param writePacket
 	 */
 	public void sendPacket(WritePacket writePacket, Object... params) {
-		ByteBuf buff = channel().alloc().heapBuffer().order(ByteOrder.LITTLE_ENDIAN); // Why??
+		ByteBuf buff = channel().alloc().heapBuffer().order(ByteOrder.LITTLE_ENDIAN);
 
 		writePacket.write(this, buff, params);
 		writePacket.markLength(buff);

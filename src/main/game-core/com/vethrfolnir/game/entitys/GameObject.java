@@ -28,7 +28,7 @@ import com.vethrfolnir.tools.Updatable;
 public final class GameObject implements Updatable {
 
 	private final EntityWorld world;
-	private final SimpleArray<Component> components = new SimpleArray<>();
+	private final SimpleArray<Component> components = new SimpleArray<>(7);
 	
 	private String name;
 	private MuClient client;
@@ -52,7 +52,7 @@ public final class GameObject implements Updatable {
 	public void commit() {
 		
 		if(!initialized) {
-			for (int i = 0; i < components.size(); i++) {
+			for (int i = 0; i < components.getCapacity(); i++) {
 				Component component = components.get(i);
 
 				if(component != null)
@@ -74,8 +74,9 @@ public final class GameObject implements Updatable {
 		if(!initialized)
 			return;
 		
-		for (int i = 0; i < components.size(); i++) {
+		for (int i = 0; i < components.getCapacity(); i++) {
 			Component component = components.get(i);
+			
 			if(component != null && component instanceof Updatable)
 				((Updatable) component).update(tick, deltaTime);
 		}
@@ -83,6 +84,9 @@ public final class GameObject implements Updatable {
 
 	public void add(Component component) {
 		int index = EntityWorld.getComponentIndex(component.getClass()).value;
+
+		if(this.isPlayer())
+			System.out.println("Adding: "+component+ " in index: "+index);
 
 		//components.ensureCapacity(EntityWorld.componentIndexSize);
 		components.set(index, component);

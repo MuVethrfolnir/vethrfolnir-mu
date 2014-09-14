@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.annotation.*;
 import com.vethrfolnir.game.entitys.*;
 import com.vethrfolnir.game.entitys.components.*;
+import com.vethrfolnir.game.entitys.components.creature.CreatureState;
+import com.vethrfolnir.game.entitys.components.creature.CreatureStats;
+import com.vethrfolnir.game.entitys.components.player.KnownCreatures;
+import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.templates.npc.NpcTemplate;
 import com.vethrfolnir.game.templates.npc.SpawnTemplate;
@@ -56,8 +60,6 @@ public class Region implements Disposable {
 	public final ArrayList<GameObject> players = new ArrayList<GameObject>();
 	@JsonIgnore
 	public final ArrayList<GameObject> nonPlayers = new ArrayList<GameObject>();
-	
-	private static final ComponentIndex<KnownCreatures> known = EntityWorld.getComponentIndex(KnownCreatures.class);
 	
 	@JsonIgnore
 	private final EntityWorld entityWorld; 
@@ -143,7 +145,7 @@ public class Region implements Disposable {
 		}
 
 		players.remove(entity);
-		entity.get(known).forgetAll();
+		entity.get(PlayerMapping.KnownCreatures).forgetAll();
 	}
 
 	/**
@@ -217,7 +219,7 @@ public class Region implements Disposable {
 	}
 
 	public void broadcastToKnown(GameObject broadcaster, WritePacket packet, Object... params) {
-		KnownCreatures knownCreatures = broadcaster.get(Region.known);
+		KnownCreatures knownCreatures = broadcaster.get(PlayerMapping.KnownCreatures);
 		TIntIterator iter = knownCreatures.knownIds.iterator();
 		
 		while(iter.hasNext()) {

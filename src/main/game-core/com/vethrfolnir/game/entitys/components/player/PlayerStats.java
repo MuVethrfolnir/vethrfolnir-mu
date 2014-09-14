@@ -17,7 +17,7 @@
 package com.vethrfolnir.game.entitys.components.player;
 
 import com.vethrfolnir.game.entitys.GameObject;
-import com.vethrfolnir.game.entitys.components.CreatureStats;
+import com.vethrfolnir.game.entitys.components.creature.CreatureStats;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.templates.PlayerTemplate;
 

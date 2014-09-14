@@ -23,8 +23,8 @@ import java.nio.ByteOrder;
 import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.annotation.FetchIndex;
-import com.vethrfolnir.game.entitys.components.CreatureState;
 import com.vethrfolnir.game.entitys.components.Positioning;
+import com.vethrfolnir.game.entitys.components.creature.CreatureState;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 

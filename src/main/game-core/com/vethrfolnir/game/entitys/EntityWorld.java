@@ -35,7 +35,7 @@ public final class EntityWorld implements Updatable {
 	private static final long ExpireTime = TimeUnit.HOURS.toMillis(1);
 
 	private static final HashMap<Class<?>, ComponentIndex<?>> componentIndexes = new HashMap<Class<?>, ComponentIndex<?>>();
-	protected static int componentIndexSize;
+	protected static volatile int componentIndexSize;
 	
 	private final ArrayList<GameObject> clients = new ArrayList<>();
 	private final ArrayList<GameObject> entitys = new ArrayList<>();
@@ -92,8 +92,9 @@ public final class EntityWorld implements Updatable {
 		for (int i = 0; i < entitys.size(); i++) {
 			GameObject entity = entitys.get(i);
 
-			if(entity.isVoid)
+			if(entity.isVoid) {
 				continue;
+			}
 				
 			entity.update(tick, deltaTime);
 		}
@@ -119,6 +120,7 @@ public final class EntityWorld implements Updatable {
 			}
 		}
 
+		log.info("Destroying "+garbage.size()+" unused entity(s).");
 		for (int i = 0; i < garbage.size(); i++) {
 			GameObject obj = garbage.get(i);
 			free.remove(obj.freeIndex);
