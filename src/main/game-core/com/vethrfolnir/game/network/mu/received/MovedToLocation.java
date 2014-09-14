@@ -21,15 +21,14 @@ import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.util.MuUtils;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
 
 /**
  * @author Vlad
  * This.. this is just wrong.
  */
-public class MovedToLocation extends ReadPacket {
+public class MovedToLocation extends MuReadPacket {
 
 	private static final short stepDirections[] = { -1, -1, 0, -1, 1, -1, 1, 0, 1, 1, 0, 1, -1, 1, -1, 0 };
 
@@ -37,9 +36,7 @@ public class MovedToLocation extends ReadPacket {
 	private ComponentIndex<Positioning> pos;
 	
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
-
-		MuClient client = as(context);
+	public void read(MuClient client, ByteBuf buff, Object... params) {
 		GameObject entity = client.getEntity();
 		Positioning positioning = entity.get(pos);
 
