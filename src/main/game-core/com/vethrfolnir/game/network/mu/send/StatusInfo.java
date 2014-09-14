@@ -14,22 +14,21 @@
  */
 package com.vethrfolnir.game.network.mu.send;
 
-import java.nio.ByteOrder;
-
 import io.netty.buffer.ByteBuf;
+
+import java.nio.ByteOrder;
 
 import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.player.PlayerStats;
 import com.vethrfolnir.game.network.mu.MuClient;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
 /**
  * @author Vlad
  *
  */
-public class StatusInfo extends WritePacket {
+public class StatusInfo extends MuWritePacket {
 
 	public static final int STATUS_HPSD = 0x01;
 	public static final int STATUS_MPST = 0x02;
@@ -41,11 +40,11 @@ public class StatusInfo extends WritePacket {
 	 * @see com.vethrfolnir.network.WritePacket#write(com.vethrfolnir.network.NetworkClient, io.netty.buffer.ByteBuf, java.lang.Object[])
 	 */
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		int type = as(params[0]);
 		boolean current = as(params[1]);
 		
-		PlayerStats stats = as(context, MuClient.class).getEntity().get(this.stats);
+		PlayerStats stats = client.getEntity().get(this.stats);
 		
 		switch (type)
 		{

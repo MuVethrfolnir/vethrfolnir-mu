@@ -14,14 +14,14 @@ import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.CreatureState;
 import com.vethrfolnir.game.entitys.components.Positioning;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
 /**
  * @author Vlad
  *
  */
-public class NpcInfo extends WritePacket {
+public class NpcInfo extends MuWritePacket {
 
 	@FetchIndex
 	private ComponentIndex<Positioning> pos;
@@ -30,7 +30,7 @@ public class NpcInfo extends WritePacket {
 	private ComponentIndex<CreatureState> state;
 	
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		GameObject entity = as(params[0]);
 
 		Positioning positioning = entity.get(pos);

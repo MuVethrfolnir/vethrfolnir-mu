@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import com.vethrfolnir.game.network.MuNetworkServer;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.network.mu.received.*;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.network.ReadPacket;
@@ -39,7 +40,7 @@ public class MuChannelHandler extends ChannelInboundHandlerAdapter {
 
 	private static final MuLogger log = MuLogger.getLogger(MuChannelHandler.class);
 	
-	private static final TIntObjectHashMap<ReadPacket> clientpackets = new TIntObjectHashMap<>();
+	private static final TIntObjectHashMap<MuReadPacket> clientpackets = new TIntObjectHashMap<>();
 	
 	@Inject
 	private MuNetworkServer networkServer;

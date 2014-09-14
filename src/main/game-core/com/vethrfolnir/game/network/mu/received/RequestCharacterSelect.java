@@ -18,22 +18,20 @@ import io.netty.buffer.ByteBuf;
 
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.MuPackets;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
 
 /**
  * @author Vlad
  *
  */
-public class RequestCharacterSelect extends ReadPacket {
+public class RequestCharacterSelect extends MuReadPacket {
 
 	/* (non-Javadoc)
 	 * @see com.vethrfolnir.network.ReadPacket#read(com.vethrfolnir.network.NetworkClient, io.netty.buffer.ByteBuf, java.lang.Object[])
 	 */
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
-		MuClient client = as(context);
+	public void read(MuClient client, ByteBuf buff, Object... params) {
 		String name = readS(buff, 10);
 		
 		AccountCharacterInfo info = client.getAccount().getLobbyCharacter(name);

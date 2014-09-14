@@ -19,12 +19,11 @@ import io.netty.buffer.ByteBuf;
 import com.vethrfolnir.game.module.DatabaseAccess;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.MuPackets;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.services.IdFactory;
 import com.vethrfolnir.game.services.dao.AccountDAO;
 import com.vethrfolnir.game.staticdata.ClassId;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
 
 import corvus.corax.processing.annotation.Inject;
 import corvus.corax.tools.PrintData;
@@ -33,7 +32,7 @@ import corvus.corax.tools.PrintData;
  * @author Vlad
  *
  */
-public class RequestCharacterCreate extends ReadPacket {
+public class RequestCharacterCreate extends MuReadPacket {
 
 	@Inject
 	private IdFactory idFactory;
@@ -42,11 +41,10 @@ public class RequestCharacterCreate extends ReadPacket {
 	 * @see com.vethrfolnir.network.ReadPacket#read(com.vethrfolnir.network.NetworkClient, io.netty.buffer.ByteBuf, java.lang.Object[])
 	 */
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
-		MuClient client = as(context, MuClient.class);
+	public void read(MuClient client, ByteBuf buff, Object... params) {
 		AccountCharacterInfo info = new AccountCharacterInfo();
 		
-		info.name = readConcatS(buff, 10, 0x00);
+		info.name = readS(buff, 10);
 		info.classId = readC(buff);
 		
 		if(!ClassId.isValid(info.classId)) {

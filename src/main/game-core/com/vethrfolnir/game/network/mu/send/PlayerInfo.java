@@ -14,9 +14,9 @@
  */
 package com.vethrfolnir.game.network.mu.send;
 
-import java.nio.ByteOrder;
-
 import io.netty.buffer.ByteBuf;
+
+import java.nio.ByteOrder;
 
 import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.GameObject;
@@ -24,15 +24,14 @@ import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
 
 /**
  * @author Vlad
  *
  */
-public class PlayerInfo extends WritePacket {
+public class PlayerInfo extends MuWritePacket {
 
 	@FetchIndex
 	private ComponentIndex<Positioning> pos;
@@ -41,8 +40,7 @@ public class PlayerInfo extends WritePacket {
 	private ComponentIndex<PlayerState> state;
 	
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
-		MuClient client = as(context);
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		boolean toSelf = as(params[0]);
 
 		if(params.length > 1 && params[1] != null) {

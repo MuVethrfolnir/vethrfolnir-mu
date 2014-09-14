@@ -19,8 +19,7 @@ import io.netty.buffer.ByteBuf;
 import java.nio.ByteOrder;
 
 import com.vethrfolnir.game.network.mu.MuClient;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
 import corvus.corax.processing.annotation.Config;
 
@@ -28,7 +27,7 @@ import corvus.corax.processing.annotation.Config;
  * @author Vlad
  *
  */
-public class HelloClient extends WritePacket {
+public class HelloClient extends MuWritePacket {
 
 	@Config(key = "Client.Version", value = "-1")
 	private int version;
@@ -37,11 +36,11 @@ public class HelloClient extends WritePacket {
 	 * @see com.vethrfolnir.network.WritePacket#write(com.vethrfolnir.network.NetworkClient, io.netty.buffer.ByteBuf, java.lang.Object[])
 	 */
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		writeArray(buff, 0xC1, 0x0C, 0xF1, 0x00, 0x01);
 		
-		writeSh(buff, as(context, MuClient.class).getClientId(), ByteOrder.BIG_ENDIAN); // Client Unique ID! 
+		writeSh(buff, client.getClientId(), ByteOrder.BIG_ENDIAN); // Client Unique ID! 
 		
-		writeNS(buff, String.valueOf(version)); // server version byte string lol
+		writeS(buff, String.valueOf(version)); // server version byte string lol
 	}
 }

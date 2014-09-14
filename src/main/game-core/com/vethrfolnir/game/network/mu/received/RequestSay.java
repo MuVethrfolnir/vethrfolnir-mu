@@ -16,19 +16,17 @@ import com.vethrfolnir.game.entitys.components.player.PlayerStats;
 import com.vethrfolnir.game.module.StaticData;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.MuPackets;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.network.mu.send.SystemMessage.MessageType;
 import com.vethrfolnir.game.staticdata.world.Region;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
 
 import corvus.corax.Corax;
 
 
 /**
  * @author Vlad
- *
- */
-public class RequestSay extends ReadPacket {
+ * */
+public class RequestSay extends MuReadPacket {
 
 	private final boolean isPrivate;
 
@@ -65,7 +63,7 @@ public class RequestSay extends ReadPacket {
 	}
 	
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
+	public void read(MuClient client, ByteBuf buff, Object... params) {
 		String from = readS(buff, 10).trim();
 		String message = readS(buff, buff.readableBytes());
 
@@ -73,7 +71,6 @@ public class RequestSay extends ReadPacket {
 			return;
 		
 		boolean isNormal = Character.isLetter(message.charAt(0));
-		MuClient client = (MuClient) context;
 		
 		if(isPrivate) {
 			

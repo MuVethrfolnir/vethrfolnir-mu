@@ -18,8 +18,7 @@ import io.netty.buffer.ByteBuf;
 
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.MuPackets;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 
 import corvus.corax.CorvusConfig;
 
@@ -27,14 +26,13 @@ import corvus.corax.CorvusConfig;
  * @author Vlad
  *
  */
-public final class RequestCharacterList extends ReadPacket {
+public final class RequestCharacterList extends MuReadPacket {
 
 	/* (non-Javadoc)
 	 * @see com.vethrfolnir.network.ReadPacket#read(com.vethrfolnir.network.NetworkClient, io.netty.buffer.ByteBuf, java.lang.Object[])
 	 */
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
-		MuClient client = as(context);
+	public void read(MuClient client, ByteBuf buff, Object... params) {
 		
 		// TODO When to allow Summoner
 		boolean allow = CorvusConfig.getProperty("ForceAllowSummoner", true);

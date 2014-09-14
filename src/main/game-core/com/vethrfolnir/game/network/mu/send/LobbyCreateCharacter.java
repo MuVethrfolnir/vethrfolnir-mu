@@ -16,18 +16,18 @@ package com.vethrfolnir.game.network.mu.send;
 
 import io.netty.buffer.ByteBuf;
 
+import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
 
 /**
  * @author Vlad
  *
  */
-public class LobbyCreateCharacter extends WritePacket {
+public class LobbyCreateCharacter extends MuWritePacket {
 
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		boolean success = as(params[0]);
 		AccountCharacterInfo info = as(params[1]);
 		

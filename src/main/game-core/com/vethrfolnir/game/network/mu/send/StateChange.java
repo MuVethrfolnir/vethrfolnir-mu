@@ -22,14 +22,13 @@ import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.network.mu.MuClient;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
 /**
  * @author Vlad
  *
  */
-public class StateChange extends WritePacket {
+public class StateChange extends MuWritePacket {
 
 	public static final int StateGM = 0x1c;
 	
@@ -40,8 +39,7 @@ public class StateChange extends WritePacket {
 	 * @see com.vethrfolnir.network.WritePacket#write(com.vethrfolnir.network.NetworkClient, io.netty.buffer.ByteBuf, java.lang.Object[])
 	 */
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
-		MuClient client = as(context);
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		int effect = as(params[0]);
 		
 		writeArray(buff, 0xC1, 0x18, 0x07);

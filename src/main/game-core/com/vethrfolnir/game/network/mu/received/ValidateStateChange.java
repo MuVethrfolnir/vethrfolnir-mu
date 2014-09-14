@@ -23,15 +23,14 @@ import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.MuPackets;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.staticdata.world.Region;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
 
 /**
  * @author Vlad
  *
  */
-public class ValidateStateChange extends ReadPacket {
+public class ValidateStateChange extends MuReadPacket {
 
 	@FetchIndex
 	private ComponentIndex<PlayerState> state;
@@ -40,11 +39,11 @@ public class ValidateStateChange extends ReadPacket {
 	private ComponentIndex<Positioning> positioning;
 
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
+	public void read(MuClient client, ByteBuf buff, Object... params) {
 		int heading = readC(buff);
 		int status = readC(buff); //XXX check, should we care about status replays from client? like sitting on a fence
 
-		GameObject entity = as(context, MuClient.class).getEntity();
+		GameObject entity = client.getEntity();
 		Positioning positioning = entity.get(this.positioning);
 		positioning.updateHeading(heading);
 
@@ -53,7 +52,7 @@ public class ValidateStateChange extends ReadPacket {
 		if(region != null)
 			region.broadcastToKnown(entity, MuPackets.ActionUpdate, status);
 		else
-			context.close();
+			client.close();
 	}
 
 }

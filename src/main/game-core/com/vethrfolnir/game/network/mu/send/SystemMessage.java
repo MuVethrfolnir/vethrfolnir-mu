@@ -7,14 +7,14 @@ package com.vethrfolnir.game.network.mu.send;
 
 import io.netty.buffer.ByteBuf;
 
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
 /**
  * @author Vlad
  * TODO This packet needs more mining
  */
-public class SystemMessage extends WritePacket {
+public class SystemMessage extends MuWritePacket {
 
 	public enum MessageType {
 		Admin,
@@ -23,7 +23,7 @@ public class SystemMessage extends WritePacket {
 	}
 	
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		String message = as(params[0]);
 		int type = as(params[1], MessageType.class).ordinal();
 		

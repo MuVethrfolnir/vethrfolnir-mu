@@ -25,11 +25,10 @@ import com.vethrfolnir.game.network.MuNetworkServer;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.network.mu.crypt.MuCryptUtils;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.network.mu.send.ExClientAuthAnswer.AuthResult;
 import com.vethrfolnir.game.services.dao.AccountDAO;
 import com.vethrfolnir.game.templates.AccountInfo;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
 
 import corvus.corax.processing.annotation.Config;
 import corvus.corax.processing.annotation.Inject;
@@ -38,7 +37,7 @@ import corvus.corax.processing.annotation.Inject;
  * @author Vlad
  *
  */
-public final class ExRequestAuth extends ReadPacket {
+public final class ExRequestAuth extends MuReadPacket {
 
 	@Config(key = "Client.Version", value = "No Version")
 	private String version;
@@ -55,14 +54,10 @@ public final class ExRequestAuth extends ReadPacket {
 	@Inject
 	private EntityWorld entityWorld;
 	
-	/* (non-Javadoc)
-	 * @see com.vethrfolnir.network.ReadPacket#read(com.vethrfolnir.network.NetworkClient, io.netty.buffer.ByteBuf, java.lang.Object[])
-	 */
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
+	public void read(MuClient client, ByteBuf buff, Object... params) {
 		
 		if(MuNetworkServer.onlineClients() >= capacity) {
-			MuClient client = as(params[0]);
 			invalidate(buff);
 			
 			client.sendPacket(MuPackets.ExAuthAnswer, AuthResult.ServerIsFull);
@@ -83,8 +78,8 @@ public final class ExRequestAuth extends ReadPacket {
 
 		buff.readerIndex(4);
 		
-		String user = readConcatS(buff, 10, 0x00);
-		String password = readConcatS(buff, 10, 0x00);
+		String user = readS(buff, 10);
+		String password = readS(buff, 10);
 
 		buff.readerIndex(38);
 		
@@ -92,7 +87,7 @@ public final class ExRequestAuth extends ReadPacket {
 		String mainSerial = readS(buff, 16);
 		System.out.println("user: [" + user + "] pass[" + password + "] - "+" Version:["+version+"] "+" Serial: ["+mainSerial+"]");
 		
-		enqueue(context, user, password, version, mainSerial);
+		enqueue(client, user, password, version, mainSerial);
 	}
 	
 	/* (non-Javadoc)

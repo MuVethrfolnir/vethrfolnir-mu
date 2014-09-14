@@ -21,12 +21,11 @@ import java.security.MessageDigest;
 import com.vethrfolnir.game.module.DatabaseAccess;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.MuPackets;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.services.IdFactory;
 import com.vethrfolnir.game.services.dao.AccountDAO;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
 import com.vethrfolnir.logging.MuLogger;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
 
 import corvus.corax.processing.annotation.Inject;
 
@@ -34,19 +33,18 @@ import corvus.corax.processing.annotation.Inject;
  * @author Vlad
  *
  */
-public class RequestCharacterDelete extends ReadPacket {
+public class RequestCharacterDelete extends MuReadPacket {
 
 	@Inject
 	private IdFactory idFactory;
 
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
+	public void read(MuClient client, ByteBuf buff, Object... params) {
 		String name = readS(buff, 10);
 		String pws = readS(buff, 10);
 
 		AccountDAO dao = DatabaseAccess.AccountAccess();
 
-		MuClient client = as(context, MuClient.class);
 		byte[] pwsHash = dao.getPassword(client.getAccount().getAccountName());
 
 		if(pwsHash == null) // Smth wierd i cant stop thinking about

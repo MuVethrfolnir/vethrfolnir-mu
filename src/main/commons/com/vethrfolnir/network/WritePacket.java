@@ -16,9 +16,6 @@ package com.vethrfolnir.network;
 
 import io.netty.buffer.ByteBuf;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteOrder;
-
 import com.vethrfolnir.logging.MuLogger;
 
 import corvus.corax.Corax;
@@ -30,7 +27,7 @@ import corvus.corax.tools.Tools;
  */
 public abstract class WritePacket {
 	
-	private static final MuLogger log = MuLogger.getLogger(WritePacket.class); 
+	protected static final MuLogger log = MuLogger.getLogger(WritePacket.class); 
 	
 	public abstract void write(NetworkClient context, ByteBuf buff, Object... params);
 	
@@ -48,20 +45,6 @@ public abstract class WritePacket {
 	
 	public void writeSh(ByteBuf buff, int value) {
 		buff.writeShort(value);
-	}
-	
-	public void writeD(ByteBuf buff, int value, ByteOrder order) {
-		ByteBuf buf = buff.alloc().buffer(4,4).order(order);
-		buf.writeInt(value);
-		buff.writeBytes(buf);
-		buf.release();
-	}
-	
-	public void writeSh(ByteBuf buff, int value, ByteOrder order) {
-		ByteBuf buf = buff.alloc().buffer(2,2).order(order);
-		buf.writeShort(value);
-		buff.writeBytes(buf);
-		buf.release();
 	}
 	
 	public void writeArray(ByteBuf buff, int... vals) {
@@ -102,32 +85,6 @@ public abstract class WritePacket {
 		catch (Exception e) {
 			log.warn("Failed writing string!", e);
 		}
-	}
-
-	public void writeNS(ByteBuf buff, String value) {
-		writeS(buff, value, value.length());
-	}
-	
-	public void writeS(ByteBuf buff, String value, int max) {
-		if(value == null)
-			throw new RuntimeException("Value is null!");
-		
-		try {
-			int l = value.length();
-			buff.writeBytes(value.getBytes("ISO-8859-1"));
-			for(int i = l; i < max; i++)
-				buff.writeByte(0x00);
-		}
-		catch (UnsupportedEncodingException e) {
-			log.warn("Failed writing string!", e);
-		}
-	}
-
-	public void shiftC(ByteBuf buff, int pos) {
-		byte b = buff.array()[pos];
-		b &= 0x7F;
-		b |= 0x80;
-		buff.array()[pos] = b;
 	}
 
 	@SuppressWarnings("unchecked")

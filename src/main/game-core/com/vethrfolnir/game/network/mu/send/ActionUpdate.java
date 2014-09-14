@@ -14,23 +14,22 @@
  */
 package com.vethrfolnir.game.network.mu.send;
 
-import java.nio.ByteOrder;
-
 import io.netty.buffer.ByteBuf;
+
+import java.nio.ByteOrder;
 
 import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.network.mu.MuClient;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
 /**
  * @author Vlad
  *
  */
-public class ActionUpdate extends WritePacket {
+public class ActionUpdate extends MuWritePacket {
 
 	public static final int AttackTarget = 0x78;
 	public static final int SitDown = 0x80;
@@ -43,8 +42,7 @@ public class ActionUpdate extends WritePacket {
 	
 	
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
-		MuClient client = (MuClient) context;
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		int type = as(params[0]);
 		
 		GameObject target = null;

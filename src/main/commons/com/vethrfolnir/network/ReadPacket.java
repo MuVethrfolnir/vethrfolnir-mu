@@ -16,8 +16,6 @@ package com.vethrfolnir.network;
 
 import io.netty.buffer.ByteBuf;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteOrder;
 import java.util.ArrayList;
 
 import com.vethrfolnir.logging.MuLogger;
@@ -38,36 +36,16 @@ public abstract class ReadPacket {
 		Corax.pDep(this);
 	}
 
-	protected final short readC(ByteBuf buff) {
+	protected short readC(ByteBuf buff) {
 		return buff.readUnsignedByte();
 	}
 	
-	protected final int readD(ByteBuf buff) {
+	protected int readD(ByteBuf buff) {
 		return buff.readInt();
 	}
 	
-	protected final int readSh(ByteBuf buff) {
+	protected int readSh(ByteBuf buff) {
 		return buff.readUnsignedShort();
-	}
-	
-	protected final int readD(ByteBuf buff, ByteOrder order) {
-		ByteBuf buf = buff.alloc().buffer(4,4).order(order);
-		buf.writeBytes(buff.readBytes(buf));
-		
-		int rezult = buf.readInt();
-		buf.release();
-		
-		return rezult;
-	}
-	
-	protected final long writeSh(ByteBuf buff, ByteOrder order) {
-		ByteBuf buf = buff.alloc().buffer(2,2).order(order);
-		buf.writeBytes(buff.readBytes(buf));
-		
-		long rezult = buf.readUnsignedShort();
-		buf.release();
-
-		return rezult;
 	}
 	
 	/**
@@ -75,7 +53,7 @@ public abstract class ReadPacket {
 	 * @param buff
 	 * @return
 	 */
-	protected final ByteBuf readArray(ByteBuf buff) {
+	protected ByteBuf readArray(ByteBuf buff) {
 		return buff.readBytes(buff.readableBytes());
 	}
 
@@ -85,16 +63,16 @@ public abstract class ReadPacket {
 	 * @param len
 	 * @return
 	 */
-	protected final ByteBuf readArray(ByteBuf buff, int len) {
+	protected ByteBuf readArray(ByteBuf buff, int len) {
 		return buff.readBytes(len);
 	}
 	
 	/**
-	 * This is only for LS <-> GS Communication, do not use it for clients!
+	 * This is only for LS <-> GS Communication, do not use it for clients! Unless overriden and managed
 	 * @param buff
 	 * @return
 	 */
-	protected final String readS(ByteBuf buff) {
+	protected String readS(ByteBuf buff) {
 		try {
 			ArrayList<Character> ins = new ArrayList<>();
 			
@@ -118,56 +96,17 @@ public abstract class ReadPacket {
 		return null;
 	}
 
-	protected final String readS(ByteBuf buff, int max) {
-		try {
-			ByteBuf copy = buff.readBytes(max);
-			String str = new String(copy.array(), "ISO-8859-1");
-			copy.release();
-			return str.trim();
-		}
-		catch (UnsupportedEncodingException e) {
-			log.warn("Failed reading string!", e);
-		}
-
-		return null;
-	}
-
-	protected final String readConcatS(ByteBuf buff, int max, int offCode) {
-		try {
-			ByteBuf copy = buff.readBytes(max);
-			String str = new String(copy.array(), "ISO-8859-1");
-			
-			if (str.indexOf(offCode) != -1)
-				str = str.substring(0, str.indexOf(offCode));
-			
-			copy.release();
-			return str;
-		}
-		catch (UnsupportedEncodingException e) {
-			log.warn("Failed reading string!", e);
-		}
-
-		return null;
-	}
-
-	protected final void shiftC(ByteBuf buff, int pos) {
-		byte b = buff.array()[pos];
-		b &= 0x7F;
-		b |= 0x80;
-		buff.array()[pos] = b;
-	}
-
 	@SuppressWarnings("unchecked")
-	protected final <T> T as(Object obj) {
+	protected <T> T as(Object obj) {
 		return (T)obj;
 	}
 
 	@SuppressWarnings("unchecked")
-	protected final <T> T as(Object obj, Class<T> type) {
+	protected <T> T as(Object obj, Class<T> type) {
 		return (T)obj;
 	}
 	
-	protected final void invalidate(ByteBuf buff) {
+	protected void invalidate(ByteBuf buff) {
 		buff.readerIndex(buff.writerIndex());
 	}
 	

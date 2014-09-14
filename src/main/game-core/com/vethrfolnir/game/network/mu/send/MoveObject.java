@@ -22,20 +22,20 @@ import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.Positioning;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
 /**
  * @author Vlad
  *
  */
-public class MoveObject extends WritePacket {
+public class MoveObject extends MuWritePacket {
 
 	@FetchIndex
 	private ComponentIndex<Positioning> pos;
 
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		GameObject entity = as(params[0]);
 		Positioning positioning = entity.get(pos);
 		

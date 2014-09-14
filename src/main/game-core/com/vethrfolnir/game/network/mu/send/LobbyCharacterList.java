@@ -21,10 +21,9 @@ import java.util.List;
 import com.vethrfolnir.game.module.DatabaseAccess;
 import com.vethrfolnir.game.module.MuAccount;
 import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 import com.vethrfolnir.game.services.dao.AccountDAO;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
 
 import corvus.corax.CorvusConfig;
 
@@ -32,12 +31,12 @@ import corvus.corax.CorvusConfig;
  * @author Vlad
  *
  */
-public class LobbyCharacterList extends WritePacket {
+public class LobbyCharacterList extends MuWritePacket {
 	
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 
-		MuAccount account = as(context, MuClient.class).getAccount();
+		MuAccount account = client.getAccount();
 		AccountDAO dao = DatabaseAccess.AccountAccess();
 		
 		int count = dao.getLobbyCharacterSize(account.getAccountName()); // character count

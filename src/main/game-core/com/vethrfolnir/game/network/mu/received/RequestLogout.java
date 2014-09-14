@@ -18,21 +18,18 @@ import io.netty.buffer.ByteBuf;
 
 import com.vethrfolnir.game.network.mu.*;
 import com.vethrfolnir.game.network.mu.MuClient.ClientStatus;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.network.mu.send.Logout;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
 
 /**
  * @author Vlad
  *
  */
-public class RequestLogout extends ReadPacket {
+public class RequestLogout extends MuReadPacket {
 
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
+	public void read(MuClient client, ByteBuf buff, Object... params) {
 		int type = readC(buff);
-		
-		MuClient client = as(context);
 		
 		//TODO Checks if he can actually do it?
 

@@ -10,14 +10,14 @@ import io.netty.buffer.ByteBuf;
 import java.nio.ByteOrder;
 
 import com.vethrfolnir.game.entitys.GameObject;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
 /**
  * @author Vlad
  *
  */
-public class DeleteObject extends WritePacket {
+public class DeleteObject extends MuWritePacket {
 
 	private int[] knwonList;
 
@@ -28,9 +28,8 @@ public class DeleteObject extends WritePacket {
 	}
 
 	@Override
-	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+	public void write(MuClient client, ByteBuf buff, Object... params) {
 		if(knwonList != null) {
-
 			writeArray(buff, 0xC1, 0x06, 0x14);
 			writeC(buff, knwonList.length); // Count of ids to forget
 
