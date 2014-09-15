@@ -75,13 +75,15 @@ public class CreatureStats implements Component {
 			region.broadcastToKnown(broadcaster, MuPackets.Death, entity, attacker);
 			broadcaster.sendPacket(MuPackets.Death, entity, attacker);
 			
+			final long regenTime = entity.isPlayer() ? 3000 : (entity.get(CreatureMapping.CreatureState).getRegenTime() * 1000);
+			
 			CorvusThreadPool.getInstance().schedule(()-> {
-				entity.setVisible(false); // he's dead qq
+				entity.setVisible(false); // he's dead qn
 				
-				//TODO Proper resurrect timer
+				//TODO Proper resurrect timer for players.
 				CorvusThreadPool.getInstance().schedule(()-> {
 					CreatureStats.this.revive();
-				}, 3000);
+				}, regenTime);
 			}, 3500);
 		}
 		

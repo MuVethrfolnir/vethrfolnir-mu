@@ -48,6 +48,13 @@ public class CreatureState implements Component {
 		return template.NpcId;
 	}
 	
+	/**
+	 * @return
+	 */
+	public int getRegenTime() {
+		return template.RegenTime;
+	}
+
 	@Override
 	public void dispose() {
 		template = null;
