@@ -24,12 +24,12 @@ import com.vethrfolnir.game.staticdata.RegionData;
 import com.vethrfolnir.game.staticdata.world.Region;
 import com.vethrfolnir.game.templates.npc.NpcTemplate;
 import com.vethrfolnir.game.templates.npc.SpawnTemplate;
-import com.vethrfolnir.game.util.CleanUtil;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.services.DataMappingService;
 import com.vethrfolnir.services.assets.AssetManager;
 import com.vethrfolnir.services.assets.key.FileKey;
 import com.vethrfolnir.services.assets.processors.InputStreamProcessor;
+import com.vethrfolnir.tools.Disposable;
 
 import corvus.corax.Corax;
 
@@ -92,12 +92,12 @@ public class StaticData {
 						count += template.Count;
 					}
 					
-					CleanUtil.dispose(templates);
+					Disposable.dispose(templates);
 				}
 			}
 			
 			log.info("Spawned "+count+" npc(s) and skipped "+skipped);
-			CleanUtil.dispose(streams);
+			Disposable.dispose(streams);
 		}
 		catch (Exception e) {
 			log.fatal("Failed parsing spawnlists!", e);

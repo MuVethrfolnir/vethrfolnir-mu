@@ -18,10 +18,10 @@ package com.vethrfolnir.game.network.mu.received;
 
 import io.netty.buffer.ByteBuf;
 
-import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.GameObject;
-import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.Positioning;
+import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
+import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.util.MuUtils;
@@ -34,13 +34,10 @@ public class MovedToLocation extends MuReadPacket {
 
 	private static final short stepDirections[] = { -1, -1, 0, -1, 1, -1, 1, 0, 1, 1, 0, 1, -1, 1, -1, 0 };
 
-	@FetchIndex
-	private ComponentIndex<Positioning> pos;
-	
 	@Override
 	public void read(MuClient client, ByteBuf buff, Object... params) {
 		GameObject entity = client.getEntity();
-		Positioning positioning = entity.get(pos);
+		Positioning positioning = entity.get(PlayerMapping.Positioning);
 
 		int origianlX = readC(buff);
 		int origianlY = readC(buff);
@@ -65,10 +62,13 @@ public class MovedToLocation extends MuReadPacket {
 			x += stepDirections [ TableIndex * 2 ];
 			y += stepDirections [ TableIndex * 2 + 1 ];
 		}
-
+		
+		PlayerState state = entity.get(PlayerMapping.PlayerState);
+		
 		// Cheap yet effective, for now
 		int distance = (int) MuUtils.distanceSquared(positioning.getX(), positioning.getY(), x, y);
-		if(distance > 10 && !positioning.moveFlag()) {
+		
+		if(!state.isGM() && (distance > 10 && !positioning.moveFlag())) {
 			client.close();
 		}
 			

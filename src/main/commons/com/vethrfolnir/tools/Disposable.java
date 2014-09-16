@@ -16,6 +16,11 @@
  */
 package com.vethrfolnir.tools;
 
+import java.util.Collection;
+import java.util.Map;
+
+import corvus.corax.threads.CorvusThreadPool;
+
 /**
  * @author Vlad
  *
@@ -23,4 +28,24 @@ package com.vethrfolnir.tools;
 public interface Disposable {
 
 	public void dispose();
+	
+	/**
+	 * Will clean later on a different thread, use only if the object should be junked.
+	 * Unnecessary considering gc, but someone might get paranoid.
+	 * @param obj
+	 */
+	@SuppressWarnings({ "rawtypes" })
+	public static void dispose(final Object obj) {
+		CorvusThreadPool.getInstance().execute(()-> {
+			if(obj instanceof Disposable)
+				((Disposable) obj).dispose();
+			
+			if(obj instanceof Collection)
+				((Collection) obj).clear();
+
+			if(obj instanceof Map)
+				((Map) obj).clear();
+		});
+	}
+
 }

@@ -21,9 +21,9 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import java.util.ArrayList;
 
 import com.vethrfolnir.game.templates.npc.NpcTemplate;
-import com.vethrfolnir.game.util.CleanUtil;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.services.DataMappingService;
+import com.vethrfolnir.tools.Disposable;
 
 import corvus.corax.processing.annotation.Inject;
 
@@ -48,7 +48,7 @@ public class NpcData {
 			}
 			
 			log.info("Loaded "+templates.size()+" Npc Template(s).");
-			CleanUtil.dispose(templates);
+			Disposable.dispose(templates);
 		}
 		catch (Exception e) {
 			log.fatal("Failed loading npc templates!", e);

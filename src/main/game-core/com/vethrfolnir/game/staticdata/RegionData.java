@@ -21,9 +21,9 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import java.util.ArrayList;
 
 import com.vethrfolnir.game.staticdata.world.Region;
-import com.vethrfolnir.game.util.CleanUtil;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.services.DataMappingService;
+import com.vethrfolnir.tools.Disposable;
 
 import corvus.corax.processing.annotation.Inject;
 
@@ -47,7 +47,7 @@ public class RegionData {
 			}
 			
 			log.info("Loaded "+regions.size()+" region(s)");
-			CleanUtil.dispose(data);
+			Disposable.dispose(data);
 		}
 		catch (Exception e) {
 			log.fatal("Failed loading regions!", e);

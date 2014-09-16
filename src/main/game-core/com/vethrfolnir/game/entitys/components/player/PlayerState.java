@@ -114,6 +114,13 @@ public class PlayerState implements Component {
 	/**
 	 * @return
 	 */
+	public boolean isGM() {
+		return getAccessLevel() > 0;
+	}
+
+	/**
+	 * @return
+	 */
 	public int getCharId() {
 		return charId;
 	}

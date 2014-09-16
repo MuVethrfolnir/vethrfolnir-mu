@@ -77,8 +77,8 @@ public class LobbyCharacterList extends MuWritePacket {
 			writeC(buff, info.slot); // position - starts from 0
 			writeS(buff, info.name, 10);
 			writeC(buff, 0x00); // Name Split
-			writeSh(buff, info.level); // big endien
-			writeC(buff, info.access >= 20 ? 0x20 : 0x00); // Ctl Code :D aka access lvl
+			writeSh(buff, info.level);
+			writeC(buff, info.access); // Ctl Code :D aka access lvl
 			writeC(buff, info.classId << 1);
 			writeArray(buff, info.wearBytes);
 			writeC(buff, 0xFF); // guild Status

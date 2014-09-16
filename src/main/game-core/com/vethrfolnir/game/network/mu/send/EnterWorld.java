@@ -86,7 +86,7 @@ public class EnterWorld extends WritePacket {
 		writeD(buff, state.getZen()); // money
 		
 		writeC(buff, 0x03); // pk level
-		writeC(buff, state.getAccessLevel() > 0 ? 0x20 : 0x00); // ctl code
+		writeC(buff, state.getAccessLevel()); // ctl code
 		
 		writeSh(buff, 0x00); // fruits used
 		writeSh(buff, 0x00); // fruits that can be used
