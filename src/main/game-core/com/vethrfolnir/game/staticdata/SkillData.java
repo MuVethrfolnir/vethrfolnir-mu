@@ -16,9 +16,15 @@
  */
 package com.vethrfolnir.game.staticdata;
 
+import gnu.trove.map.hash.TIntObjectHashMap;
+
+import java.util.ArrayList;
+
+import com.vethrfolnir.game.module.MuSkill;
 import com.vethrfolnir.game.templates.SkillTemplate;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.services.DataMappingService;
+import com.vethrfolnir.tools.Disposable;
 
 import corvus.corax.processing.annotation.Inject;
 
@@ -30,12 +36,29 @@ public class SkillData {
 
 	private static final MuLogger log = MuLogger.getLogger(SkillData.class);
 	
+	private TIntObjectHashMap<MuSkill> skills = new TIntObjectHashMap<>();
+	
 	@Inject
 	private void load(DataMappingService dms) {
 		try {
-			dms.asArrayList(SkillTemplate.class, "system/static/skills/skills.json");
+			ArrayList<SkillTemplate> data =  dms.asArrayList(SkillTemplate.class, "system/static/skills/skills.json");
+			for (int i = 0; i < data.size(); i++) {
+				SkillTemplate st = data.get(i);
+				skills.put(st.SkillId, new MuSkill(st));
+			}
+			log.info("Loaded "+skills.size()+" Skill(s)");
+			Disposable.dispose(data);
 		}
 		catch (Exception e) {
+			log.fatal("Failed loading skills!", e);
 		}
+	}
+
+	/**
+	 * @param skillid
+	 * @return
+	 */
+	public MuSkill getSkill(int skillid) {
+		return skills.get(skillid);
 	}
 }

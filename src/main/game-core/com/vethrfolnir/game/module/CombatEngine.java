@@ -18,6 +18,7 @@ package com.vethrfolnir.game.module;
 
 import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.GameObject;
+import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
 import com.vethrfolnir.game.entitys.components.creature.CreatureStats;
 import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
@@ -77,7 +78,35 @@ public class CombatEngine {
 		target.sendPacket(MuPackets.DamageInfo, target, rndDmg, DamageType.NormalDamage);
 	}
 	
-	public static final void useSkill(GameObject entity, int skillid) {
+	public static final void useSkill(GameObject entity, int skillid, GameObject target) {
+
+		MuSkill skill = StaticData.getSkill(skillid);
 		
+		if(skill == null)
+			return;
+
+		ComponentIndex<?> index = target.isPlayer() ? PlayerMapping.PlayerStats : CreatureMapping.CreatureStats;
+		CreatureStats targetStats = (CreatureStats) target.get(index);
+
+		int rndDmg = target.isPlayer() ? Rnd.get(20, 500) : Rnd.get(1, 50);
+
+		if(!targetStats.takeDamageHp(entity, rndDmg))
+			return;
+
+		Positioning positioning = entity.get(CreatureMapping.Positioning);
+		Region region = positioning.getCurrentRegion();
+
+		if(skill.isMassSkill()) {
+			region.broadcastToKnown(entity, MuPackets.MassSkillUse, entity, skillid);
+			entity.sendPacket(MuPackets.MassSkillUse, entity, skillid);
+		}
+		else {
+			region.broadcastToKnown(entity, MuPackets.SkillUse, skillid, entity.getWorldIndex(), target.getWorldIndex());
+			entity.sendPacket(MuPackets.SkillUse, skillid, entity.getWorldIndex(), target.getWorldIndex());
+		}
+		
+		entity.sendPacket(MuPackets.DamageInfo, target, rndDmg, rndDmg > 30 ? DamageType.CriticalDamage : DamageType.NormalDamage);
+		target.sendPacket(MuPackets.DamageInfo, target, rndDmg, DamageType.NormalDamage);
+
 	}
 }

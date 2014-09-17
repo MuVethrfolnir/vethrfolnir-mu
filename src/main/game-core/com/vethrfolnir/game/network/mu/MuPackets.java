@@ -31,7 +31,7 @@ public class MuPackets {
 	public static final HelloClient HelloClient = new HelloClient();
 	
 	/**
-	 * Sends the result of the Auth attempt
+	 * Sends the result of the Auth attempt<br>
 	 * @param authResult[AuthResult:0]
 	 */
 	public static final ExClientAuthAnswer ExAuthAnswer = new ExClientAuthAnswer();
@@ -59,13 +59,13 @@ public class MuPackets {
 	public static final LobbyDeleteCharacter CharacterDeleteAnswer = new LobbyDeleteCharacter();
 	
 	/**
-	 * Sends the answer that the character was selected, prepare to enter the fray!
+	 * Sends the answer that the character was selected, prepare to enter the fray!<br>
 	 * Requires: A boolean and a AccountCharacterInfo
 	 */
 	public static final LobbyCharacterSelected CharacterSelectedAnswer = new LobbyCharacterSelected();
 	
 	/**
-	 * Sends the enter world packet
+	 * Sends the enter world packet<br>
 	 */
 	public static final EnterWorld EnterWorld = new EnterWorld();
 	
@@ -82,30 +82,30 @@ public class MuPackets {
 	public static final UserLevelUp LevelUp = new UserLevelUp();
 	
 	/**
-	 * Sends the full inventory packet
+	 * Sends the full inventory packet<br>
 	 */
 	public static final InventoryInfo InventoryInfo = new InventoryInfo();
 	
 	/**
-	 * Send the status info of hp/sd and mana/whatever
+	 * Send the status info of hp/sd and mana/whatever<br>
 	 * Requires StatusInfo.TYPE and a boolean for current hp or maxhp
 	 */
 	public static final StatusInfo StatusInfo = new StatusInfo();
 
 	/**
-	 * Send the state change packet, for an entity, it includes active effects
+	 * Send the state change packet, for an entity, it includes active effects<br>
 	 * Requires: Effect Id
 	 */
 	public static final StateChange StateChange = new StateChange();
 	
 	/**
-	 * Moves the object
+	 * Moves the object<br>
 	 * Requires: GameObject Entity
 	 */
 	public static final MoveObject MoveObject = new MoveObject();
 
 	/**
-	 * Deletes the object
+	 * Deletes the object<br>
 	 * Requires: GameObject Entity
 	 */
 	public static final DeleteObject DeleteObject = new DeleteObject();
@@ -117,7 +117,7 @@ public class MuPackets {
 	public static final PlayerInfo PlayerInfo = new PlayerInfo();
 	
 	/**
-	 * Sends the NpcInfo packet to a client
+	 * Sends the NpcInfo packet to a client<br>
 	 * Requires: GameObject entity.
 	 */
 	public static final NpcInfo NpcInfo = new NpcInfo();
@@ -129,7 +129,7 @@ public class MuPackets {
 	public static final DamageInfo DamageInfo = new DamageInfo();
 	
 	/**
-	 * Sends a text packet
+	 * Sends a text packet<br>
 	 * Requires: String actor and message, and if this is a pm, it should be specified with another boolean argument 
 	 */
 	public static final PlayerSay PlayerSay = new PlayerSay();
@@ -142,20 +142,32 @@ public class MuPackets {
 	public static final PlayerTeleport PlayerTeleport = new PlayerTeleport();
 
 	/**
-	 * Sends to the world this clients intention
+	 * Sends to the world this clients intention<br>
 	 * Requires: ActionUpdate.#TYPE GameObject animator, GameObject target if needed
 	 */
 	public static final ActionUpdate ActionUpdate = new ActionUpdate();
 	
 	/**
-	 * Sends a system message
+	 * Sends a system message<br>
 	 * Requires: String message and SystemMessage.{@link MessageType}
 	 */
 	public static final SystemMessage SystemMessage = new SystemMessage();
 
 	/**
-	 * Sends the Death packet
+	 * Sends the Death packet<br>
 	 * Requires: GameObject whom died and GameObject killer
 	 */
 	public static final EntityDeath Death = new EntityDeath();
+	
+	/**
+	 * Someone used a skill<br>
+	 * Requires: SkillId CasterId TargetId
+	 */
+	public static final SkillUse SkillUse = new SkillUse();
+	
+	/**
+	 * Someone used a skill<br>
+	 * Require: GameObject entity, SkillId
+	 */
+	public static final MassSkillUse MassSkillUse = new MassSkillUse();
 }
