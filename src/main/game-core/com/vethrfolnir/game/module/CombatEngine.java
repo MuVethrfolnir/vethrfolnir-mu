@@ -25,8 +25,7 @@ import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.network.mu.send.ActionUpdate;
 import com.vethrfolnir.game.staticdata.world.Region;
-
-import corvus.corax.tools.Rnd;
+import com.vethrfolnir.tools.Rnd;
 
 /**
  * @author Vlad

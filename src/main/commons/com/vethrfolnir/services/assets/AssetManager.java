@@ -28,9 +28,8 @@ import com.vethrfolnir.services.assets.key.FileKey;
 import com.vethrfolnir.services.assets.locator.*;
 import com.vethrfolnir.services.assets.processors.InputStreamProcessor;
 
-import corvus.corax.CorvusConfig;
-import corvus.corax.processing.annotation.Finalize;
-import corvus.corax.processing.annotation.Initiate;
+import corvus.corax.config.CorvusConfig;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -48,7 +47,7 @@ public final class AssetManager {
 	private AtomicInteger threadsInUse = new AtomicInteger(0);
 	private int nrOfThreads = Runtime.getRuntime().availableProcessors();
 	
-	@Initiate
+	@Inject
 	private void load() {
 		locators.add(new ClassLocator());
 		locators.add(new FileLocator());
@@ -255,8 +254,8 @@ public final class AssetManager {
 		return list;
 	}
 	
-	@Finalize
-	private void clean() {
+	//TODO: @Finalize
+	public void clean() {
 		locators.clear();
 		processors.clear();
 		

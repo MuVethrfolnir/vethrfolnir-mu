@@ -29,7 +29,7 @@ import com.vethrfolnir.game.services.dao.AccountDAO;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
 import com.vethrfolnir.logging.MuLogger;
 
-import corvus.corax.processing.annotation.Inject;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad

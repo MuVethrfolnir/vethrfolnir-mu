@@ -28,7 +28,7 @@ import org.w3c.dom.*;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.vethrfolnir.game.staticdata.world.Region;
 
-import corvus.corax.tools.Tools;
+import corvus.corax.util.Tools;
 
 /**
  * @author Vlad

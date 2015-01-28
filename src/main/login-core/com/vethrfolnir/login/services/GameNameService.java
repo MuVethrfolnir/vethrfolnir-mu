@@ -32,8 +32,8 @@ import com.vethrfolnir.network.NetworkClient;
 import com.vethrfolnir.network.WritePacket;
 import com.vethrfolnir.services.DataMappingService;
 
-import corvus.corax.CorvusConfig;
-import corvus.corax.processing.annotation.Inject;
+import corvus.corax.Corax;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -67,7 +67,7 @@ public class GameNameService {
 	}
 	
 	public void registerNewServer(GameServer gns, String password) {
-		String serverPws = CorvusConfig.getProperty("GameServer.Password", "root");
+		String serverPws = Corax.config().getProperty("GameServer.Password", "root");
 
 		boolean allow = serverPws.equals(password);
 		

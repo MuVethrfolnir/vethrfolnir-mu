@@ -28,7 +28,7 @@ import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.staticdata.world.Region;
 
-import corvus.corax.processing.annotation.Inject;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad

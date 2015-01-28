@@ -19,7 +19,9 @@ package com.vethrfolnir.tools;
 import java.util.Collection;
 import java.util.Map;
 
-import corvus.corax.threads.CorvusThreadPool;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
+
+import corvus.corax.Corax;
 
 /**
  * @author Vlad
@@ -36,7 +38,7 @@ public interface Disposable {
 	 */
 	@SuppressWarnings({ "rawtypes" })
 	public static void dispose(final Object obj) {
-		CorvusThreadPool.getInstance().execute(()-> {
+		Corax.fetch(CorvusThreadPool.class).execute(()-> {
 			if(obj instanceof Disposable)
 				((Disposable) obj).dispose();
 			

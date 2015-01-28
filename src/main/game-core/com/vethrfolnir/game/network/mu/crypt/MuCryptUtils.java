@@ -16,8 +16,9 @@
  */
 package com.vethrfolnir.game.network.mu.crypt;
 
-import corvus.corax.tools.PrintData;
 import io.netty.buffer.ByteBuf;
+
+import com.vethrfolnir.tools.PrintData;
 
 /**
  * @author Vlad

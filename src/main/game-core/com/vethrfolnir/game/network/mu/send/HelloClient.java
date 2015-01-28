@@ -23,7 +23,7 @@ import java.nio.ByteOrder;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
-import corvus.corax.processing.annotation.Config;
+import corvus.corax.config.Config;
 
 /**
  * @author Vlad

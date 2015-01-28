@@ -19,7 +19,7 @@ package com.vethrfolnir;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import corvus.corax.tools.PrintData;
+import com.vethrfolnir.tools.PrintData;
 
 /**
  * @author Vlad

@@ -21,18 +21,15 @@ import org.fusesource.jansi.AnsiConsole;
 import com.vethrfolnir.logging.MelloriLogHandler;
 import com.vethrfolnir.services.DataMappingService;
 import com.vethrfolnir.services.assets.AssetManager;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
 
-import corvus.corax.Corax;
-import corvus.corax.CoraxSetupTemplate;
-import corvus.corax.processing.ConfigAnnotations;
-import corvus.corax.processing.PrimeAnnotations;
-import corvus.corax.threads.CorvusThreadPool;
+import corvus.corax.*;
 
 /**
  * @author Vlad
  *
  */
-public abstract class MuSetupTemplate extends CoraxSetupTemplate {
+public abstract class MuSetupTemplate extends CoraxBinder {
 	static { // Default Logging
 		AnsiConsole.systemInstall();
 
@@ -45,35 +42,21 @@ public abstract class MuSetupTemplate extends CoraxSetupTemplate {
 		logger.addHandler(new MelloriLogHandler());
 	}
 
-	/* (non-Javadoc)
-	 * @see corvus.corax.CoraxSetupTemplate#action()
-	 */
 	@Override
-	public final void action() {
-		installCorvusConfig("./config/");
+	public final void build(Corax corax) {
+		Corax.config().loadDirectory("./config/");
 
-		installProcessor(new ConfigAnnotations());
-		installProcessor(new PrimeAnnotations());
-
-		addSingleton(AssetManager.class);
-		addSingleton(DataMappingService.class);
-		addSingleton(CorvusThreadPool.class);
+		bind(AssetManager.class).as(Scope.Singleton);
+		bind(CorvusThreadPool.class).as(Scope.Singleton);
+		bind(DataMappingService.class).as(Scope.Singleton);
 		setupAction();
 	}
 	
-	/* (non-Javadoc)
-	 * @see corvus.corax.CoraxSetupTemplate#clean()
-	 */
 	@Override
 	public void clean() {
-		Corax corax = Corax.instance();
-		corax.disposeInstance(CorvusThreadPool.class);
-		corax.disposeInstance(CorvusThreadPool.class);
-		corax.disposeInstance(AssetManager.class);
-		shutdown(corax);
+		shutdown(Corax.instance());
 	}
 	
 	public abstract void setupAction();
 	public abstract void shutdown(Corax corax);
-
 }

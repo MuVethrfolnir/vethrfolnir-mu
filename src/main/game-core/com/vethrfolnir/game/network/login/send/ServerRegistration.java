@@ -21,7 +21,8 @@ import io.netty.buffer.ByteBuf;
 import com.vethrfolnir.network.NetworkClient;
 import com.vethrfolnir.network.WritePacket;
 
-import corvus.corax.CorvusConfig;
+import corvus.corax.Corax;
+import corvus.corax.config.CorvusConfig;
 
 /**
  * @author Vlad
@@ -34,15 +35,15 @@ public class ServerRegistration extends WritePacket {
 	 */
 	@Override
 	public void write(NetworkClient context, ByteBuf buff, Object... params) {
+		CorvusConfig config = Corax.config();
+		String host = config.getProperty("Game.External", "0.0.0.0");
 
-		String host = CorvusConfig.getProperty("Game.External", "0.0.0.0");
+		int port = config.getProperty("Game.Port", -1);
+		int capacity = config.getProperty("Game.OnlineCount", -1);
 
-		int port = CorvusConfig.getProperty("Game.Port", -1);
-		int capacity = CorvusConfig.getProperty("Game.OnlineCount", -1);
-
-		int serverId = CorvusConfig.getProperty("LoginServer.ServerId", -1);
-		String password = CorvusConfig.getProperty("LoginServer.Password", "root");
-		boolean acceptAnyId = CorvusConfig.getProperty("LoginServer.AcceptAnyId", false);
+		int serverId = config.getProperty("LoginServer.ServerId", -1);
+		String password = config.getProperty("LoginServer.Password", "root");
+		boolean acceptAnyId = config.getProperty("LoginServer.AcceptAnyId", false);
 		
 		writeC(buff, 0x0A);
 		writeD(buff, serverId);

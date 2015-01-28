@@ -20,14 +20,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.Unmarshaller.Listener;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
-import corvus.corax.interfaces.AfterUnmarshal;
 
 /**
  * @author Vlad
@@ -70,16 +68,13 @@ public class TestJsonAfterUnmarshal {
 		System.out.println("Got: "+tsts);
 	}
 	
-	public static class TestThing implements AfterUnmarshal {
+	public static class TestThing extends Listener {
 
 		protected int id = 2;
 		protected String name = "def";
-		
-		/* (non-Javadoc)
-		 * @see corvus.corax.interfaces.AfterUnmarshal#afterUnmarshal(javax.xml.bind.Unmarshaller, java.lang.Object)
-		 */
+
 		@Override
-		public void afterUnmarshal(Unmarshaller u, Object parent) {
+		public void afterUnmarshal(Object target, Object parent) {
 			System.out.println("called!");
 		}
 		

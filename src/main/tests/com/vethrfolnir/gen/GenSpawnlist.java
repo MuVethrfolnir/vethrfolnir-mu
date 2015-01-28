@@ -22,8 +22,6 @@ import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
 
-import org.w3c.dom.NodeList;
-
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.vethrfolnir.game.staticdata.world.Region;
 import com.vethrfolnir.game.templates.npc.SpawnTemplate;

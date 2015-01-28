@@ -19,11 +19,12 @@ package com.vethrfolnir.game.services;
 import java.util.ArrayList;
 
 import com.vethrfolnir.logging.MuLogger;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
 import com.vethrfolnir.tools.Updatable;
 
-import corvus.corax.processing.annotation.Config;
-import corvus.corax.processing.annotation.Initiate;
-import corvus.corax.threads.CorvusThreadPool;
+import corvus.corax.Corax;
+import corvus.corax.config.Config;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -43,7 +44,7 @@ public class GameController implements Runnable {
 	 */
 	private float deltaTime = 0;
 	
-	@Initiate
+	@Inject
 	private void load() {
 		GameTicks = 1000 / GameTicks; // XXX Find out what has the best precision.
 		log.info("Initialized.");
@@ -101,7 +102,7 @@ public class GameController implements Runnable {
 
 	public void start() {
 		active = true;
-		CorvusThreadPool.getInstance().execute(this);
+		Corax.fetch(CorvusThreadPool.class).execute(this);
 		log.info("Started.");
 	}
 	

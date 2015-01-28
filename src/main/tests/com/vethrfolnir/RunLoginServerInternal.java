@@ -16,7 +16,9 @@
  */
 package com.vethrfolnir;
 
-import corvus.corax.CorvusConfig;
+import java.io.File;
+
+import corvus.corax.config.CorvusConfig;
 
 /**
  * @author Vlad
@@ -25,7 +27,7 @@ import corvus.corax.CorvusConfig;
 public class RunLoginServerInternal {
 
 	public static void main(String[] args) {
-		CorvusConfig.WorkingDirectory = "./dist/LoginServer/";
+		CorvusConfig.WorkingDirectory = new File("./dist/LoginServer/");
 		LoginSetup.main(args);
 	}
 }

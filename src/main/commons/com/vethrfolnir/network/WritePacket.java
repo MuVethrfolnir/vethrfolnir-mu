@@ -21,7 +21,7 @@ import io.netty.buffer.ByteBuf;
 import com.vethrfolnir.logging.MuLogger;
 
 import corvus.corax.Corax;
-import corvus.corax.tools.Tools;
+import corvus.corax.util.Tools;
 
 /**
  * @author Vlad
@@ -34,7 +34,7 @@ public abstract class WritePacket {
 	public abstract void write(NetworkClient context, ByteBuf buff, Object... params);
 	
 	public WritePacket() {
-		Corax.pDep(this);
+		Corax.process(this);
 	}
 	
 	public void writeC(ByteBuf buff, int value) {

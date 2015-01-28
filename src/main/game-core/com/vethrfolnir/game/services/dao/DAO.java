@@ -22,10 +22,10 @@ import java.util.concurrent.*;
 import com.vethrfolnir.database.DatabaseFactory;
 import com.vethrfolnir.game.services.DatabaseService;
 import com.vethrfolnir.logging.MuLogger;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Inject;
-import corvus.corax.threads.CorvusThreadPool;
+import corvus.corax.inject.Inject;
 
 
 /**
@@ -71,7 +71,7 @@ public abstract class DAO {
 	}
 	
 	protected Future<?> enqueue(final VoidProcedure proc, final Object... buff) {
-		ThreadPoolExecutor exec = Corax.getInstance(CorvusThreadPool.class).getImidiatExecutor();
+		ThreadPoolExecutor exec = Corax.fetch(CorvusThreadPool.class).getImidiatExecutor();
 		
 		Future<?> f = exec.submit(new Callable<Object>() {
 			
@@ -99,7 +99,7 @@ public abstract class DAO {
 	 */
 	protected Future<?> enqueue(final Procedure<?> proc, final Object... buff) {
 
-		ThreadPoolExecutor exec = Corax.getInstance(CorvusThreadPool.class).getImidiatExecutor();
+		ThreadPoolExecutor exec = Corax.fetch(CorvusThreadPool.class).getImidiatExecutor();
 		
 		Future<?> f = exec.submit(new Callable<Object>() {
 			

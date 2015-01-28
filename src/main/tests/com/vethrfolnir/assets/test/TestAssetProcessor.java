@@ -18,9 +18,7 @@ package com.vethrfolnir.assets.test;
 
 import java.io.InputStream;
 
-import com.vethrfolnir.services.assets.AssetKey;
-import com.vethrfolnir.services.assets.AssetManager;
-import com.vethrfolnir.services.assets.AssetProcessor;
+import com.vethrfolnir.services.assets.*;
 import com.vethrfolnir.services.assets.AssetManager.AssetLoader;
 
 /**

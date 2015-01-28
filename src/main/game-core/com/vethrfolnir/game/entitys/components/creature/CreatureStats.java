@@ -22,8 +22,9 @@ import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.network.mu.send.StatusInfo;
 import com.vethrfolnir.game.staticdata.world.Region;
 import com.vethrfolnir.game.templates.npc.NpcTemplate;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
 
-import corvus.corax.threads.CorvusThreadPool;
+import corvus.corax.Corax;
 
 /**
  * @author Vlad
@@ -76,12 +77,13 @@ public class CreatureStats implements Component {
 			broadcaster.sendPacket(MuPackets.Death, entity, attacker);
 			
 			final long regenTime = entity.isPlayer() ? 3000 : (entity.get(CreatureMapping.CreatureState).getRegenTime() * 1000);
-			
-			CorvusThreadPool.getInstance().schedule(()-> {
+
+			final CorvusThreadPool threadPool = Corax.fetch(CorvusThreadPool.class);
+			threadPool.schedule(()-> {
 				entity.setVisible(false); // he's dead qn
 				
 				//TODO Proper resurrect timer for players.
-				CorvusThreadPool.getInstance().schedule(()-> {
+				threadPool.schedule(()-> {
 					CreatureStats.this.revive();
 				}, regenTime);
 			}, 3500);

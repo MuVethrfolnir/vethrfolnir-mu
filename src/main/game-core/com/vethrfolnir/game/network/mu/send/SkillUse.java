@@ -16,9 +16,9 @@
  */
 package com.vethrfolnir.game.network.mu.send;
 
-import java.nio.ByteOrder;
-
 import io.netty.buffer.ByteBuf;
+
+import java.nio.ByteOrder;
 
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.packets.MuWritePacket;

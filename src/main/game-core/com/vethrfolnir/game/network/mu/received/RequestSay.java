@@ -71,7 +71,7 @@ public class RequestSay extends MuReadPacket {
 	
 	public RequestSay(boolean isPrivate) {
 		this.isPrivate = isPrivate;
-		entityWorld = Corax.getInstance(EntityWorld.class);
+		entityWorld = Corax.fetch(EntityWorld.class);
 	}
 	
 	@Override

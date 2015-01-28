@@ -21,8 +21,8 @@ import java.io.File;
 import com.vethrfolnir.login.LoginServerApplication;
 import com.vethrfolnir.login.services.GameNameService;
 
-import corvus.corax.Corax;
-import corvus.corax.CorvusConfig;
+import corvus.corax.*;
+import corvus.corax.config.CorvusConfig;
 
 /**
  * @author Vlad
@@ -33,35 +33,26 @@ public class LoginSetup extends MuSetupTemplate implements Runnable{
 	//Test purpose
 	static {
 		if(!new File("config").exists()) {
-			CorvusConfig.WorkingDirectory = "./dist/LoginServer";
+			CorvusConfig.WorkingDirectory = new File("./dist/LoginServer");
 		}
 	}
 	
-	/* (non-Javadoc)
-	 * @see com.vethrfolnir.MuSetupTemplate#setupAction()
-	 */
 	@Override
 	public void setupAction() {
-		addSingleton(GameNameService.class);
-		addSingleton(LoginServerApplication.class);
+		bind(GameNameService.class).as(Scope.Singleton);;
+		bind(LoginServerApplication.class).as(Scope.EagerSingleton);
 		Runtime.getRuntime().addShutdownHook(new Thread(this));
 	}
 
 	public static void main(String[] args) {
-		Corax.create(new LoginSetup()).getInstanceImpl(LoginServerApplication.class);
+		Corax.Install(new LoginSetup());
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vethrfolnir.MuSetupTemplate#shutdown(corvus.corax.Corax)
-	 */
 	@Override
 	public void shutdown(Corax corax) {
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
 	public void run() {
 		clean(); // meh

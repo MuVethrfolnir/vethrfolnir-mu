@@ -19,7 +19,8 @@ package com.vethrfolnir.game.network.mu.crypt;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteOrder;
 
 import com.vethrfolnir.logging.MuLogger;
@@ -51,7 +52,7 @@ public class MuKeyFactory {
 
 	private static void readFile(String path, long[] out_dat) {
 
-		AssetManager assetManager = Corax.getInstance(AssetManager.class);
+		AssetManager assetManager = Corax.fetch(AssetManager.class);
 
 		ByteBuf buff = Unpooled.buffer().order(ByteOrder.LITTLE_ENDIAN);
 

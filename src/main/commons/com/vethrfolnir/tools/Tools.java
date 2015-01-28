@@ -22,7 +22,7 @@ import java.io.File;
 import java.net.*;
 import java.util.ArrayList;
 
-import corvus.corax.interfaces.AfterUnmarshal;
+import javax.xml.bind.Unmarshaller.Listener;
 
 /**
  * @author  Setekh
@@ -171,12 +171,12 @@ public class Tools
 
 	public static synchronized void afterUnmarshal(ArrayList<?> list) {
 		for (Object object : list) {
-			if(object instanceof AfterUnmarshal)
-				((AfterUnmarshal) object).afterUnmarshal(null, null);
+			if(object instanceof Listener)
+				((Listener) object).afterUnmarshal(null, null);
 		}
 	}
 	public static synchronized void afterUnmarshal(Object object) {
-		if(object instanceof AfterUnmarshal)
-			((AfterUnmarshal) object).afterUnmarshal(null, null);
+		if(object instanceof Listener)
+			((Listener) object).afterUnmarshal(null, null);
 	}
 }

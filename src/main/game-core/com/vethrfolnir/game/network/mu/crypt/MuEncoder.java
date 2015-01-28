@@ -20,12 +20,13 @@ import static com.vethrfolnir.game.network.mu.crypt.MuCryptUtils.GetHeaderSize;
 import static com.vethrfolnir.game.network.mu.crypt.MuCryptUtils.GetPacketSize;
 import io.netty.buffer.*;
 
+import java.io.File;
 import java.nio.ByteOrder;
 
 import com.vethrfolnir.services.assets.AssetManager;
 
 import corvus.corax.*;
-import corvus.corax.processing.PrimeAnnotations;
+import corvus.corax.config.CorvusConfig;
 
 /**
  * @author Vlad
@@ -262,14 +263,13 @@ public final class MuEncoder {
 
     
     public static void main(String[] args) {
-    	Corax.create(new CoraxSetupTemplate() {
-
+    	Corax.Install(new CoraxBinder() {
+			
 			@Override
-			public void action() {
-				installCorvusConfig("./dist/GameServer/config");
-				CorvusConfig.WorkingDirectory = "./dist/GameServer";
-				installProcessor(new PrimeAnnotations());
-				addSingleton(AssetManager.class);
+			protected void build(Corax corax) {
+				CorvusConfig.WorkingDirectory = new File("./dist/GameServer");
+				Corax.config().loadDirectory("/config");
+				bind(AssetManager.class).as(Scope.Singleton);;
 			}
     	});
     	

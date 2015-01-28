@@ -29,8 +29,8 @@ import com.vethrfolnir.game.services.*;
 import com.vethrfolnir.tools.Tools;
 
 import corvus.corax.Corax;
-import corvus.corax.CorvusConfig;
-import corvus.corax.processing.annotation.Initiate;
+import corvus.corax.config.CorvusConfig;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -38,9 +38,10 @@ import corvus.corax.processing.annotation.Initiate;
  */
 public class GameServerApplication implements Runnable {
 
-	@Initiate
+	@Inject
 	private void load() {
-		
+		Runtime.getRuntime().addShutdownHook(new Thread(this));
+
 		try {
 			File file = new File(CorvusConfig.WorkingDirectory, "./cache/");
 			if(!file.exists()) { // first installment
@@ -53,14 +54,14 @@ public class GameServerApplication implements Runnable {
 		}
 
 		Tools.printSection("Database");
-		Corax.getInstance(DatabaseFactory.class);
+		Corax.fetch(DatabaseFactory.class);
 		
 		Tools.printSection("Services");
-		Corax.getInstance(IdFactory.class);
-		Corax.getInstance(DatabaseService.class);
+		Corax.fetch(IdFactory.class);
+		Corax.fetch(DatabaseService.class);
 		
-		EntityWorld world = Corax.getInstance(EntityWorld.class);
-		GameController gc = Corax.getInstance(GameController.class);
+		EntityWorld world = Corax.fetch(EntityWorld.class);
+		GameController gc = Corax.fetch(GameController.class);
 		gc.subscribe(world);
 		
 		Tools.printSection("Static Data");
@@ -70,8 +71,8 @@ public class GameServerApplication implements Runnable {
 		Tools.printSection("Scripts");
 		
 		Tools.printSection("Network");
-		LoginServerClient client = Corax.getInstance(LoginServerClient.class);
-		MuNetworkServer server = Corax.getInstance(MuNetworkServer.class);
+		LoginServerClient client = Corax.fetch(LoginServerClient.class);
+		MuNetworkServer server = Corax.fetch(MuNetworkServer.class);
 
 		Tools.printSection("Status");
 		client.start();
@@ -91,6 +92,6 @@ public class GameServerApplication implements Runnable {
 	@Override
 	public void run() { // shutdown
 		// Clean and save factorys
-		Corax.clean();
+		Corax.instance().destroy();
 	}
 }

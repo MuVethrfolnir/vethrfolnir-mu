@@ -26,9 +26,9 @@ import com.vethrfolnir.game.services.IdFactory;
 import com.vethrfolnir.game.services.dao.AccountDAO;
 import com.vethrfolnir.game.staticdata.ClassId;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
+import com.vethrfolnir.tools.PrintData;
 
-import corvus.corax.processing.annotation.Inject;
-import corvus.corax.tools.PrintData;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad

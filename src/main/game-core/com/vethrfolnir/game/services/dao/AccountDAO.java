@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import com.vethrfolnir.game.module.MuAccount;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.crypt.MuCryptUtils;
-import com.vethrfolnir.game.templates.*;
+import com.vethrfolnir.game.templates.AccountCharacterInfo;
+import com.vethrfolnir.game.templates.AccountInfo;
 
 /**
  * @author Vlad

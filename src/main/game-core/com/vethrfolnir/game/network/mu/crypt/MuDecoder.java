@@ -22,8 +22,7 @@ import io.netty.buffer.*;
 import java.nio.ByteOrder;
 
 import com.vethrfolnir.logging.MuLogger;
-
-import corvus.corax.tools.PrintData;
+import com.vethrfolnir.tools.PrintData;
 
 /**
  * @author Vlad

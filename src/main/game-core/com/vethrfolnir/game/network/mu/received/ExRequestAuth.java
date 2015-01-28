@@ -32,8 +32,8 @@ import com.vethrfolnir.game.network.mu.send.ExClientAuthAnswer.AuthResult;
 import com.vethrfolnir.game.services.dao.AccountDAO;
 import com.vethrfolnir.game.templates.AccountInfo;
 
-import corvus.corax.processing.annotation.Config;
-import corvus.corax.processing.annotation.Inject;
+import corvus.corax.config.Config;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad

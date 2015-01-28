@@ -24,7 +24,7 @@ import com.vethrfolnir.services.assets.*;
 import com.vethrfolnir.services.assets.AssetManager.AssetLoader;
 import com.vethrfolnir.tools.Tools;
 
-import corvus.corax.CorvusConfig;
+import corvus.corax.config.CorvusConfig;
 
 /**
  * @author Vlad
@@ -37,7 +37,7 @@ public class FileLocator implements AssetLocator {
 	private final File root;
 
 	public FileLocator() {
-		root = new File(CorvusConfig.WorkingDirectory);
+		root = CorvusConfig.WorkingDirectory;
 	}
 	
 	public FileLocator(File root) {

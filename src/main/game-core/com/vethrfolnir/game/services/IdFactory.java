@@ -25,7 +25,7 @@ import com.vethrfolnir.database.DatabaseFactory;
 import com.vethrfolnir.logging.MuLogger;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Initiate;
+import corvus.corax.inject.Inject;
 
 /**
  * This class is Thread-Safe.<br>
@@ -50,9 +50,9 @@ public class IdFactory {
 	 */
 	private int nextMinId = 0;
 
-	@Initiate
+	@Inject
 	private void load() {
-		DatabaseFactory factory = Corax.getInstance(DatabaseFactory.class);
+		DatabaseFactory factory = Corax.fetch(DatabaseFactory.class);
 		
 		try (Connection con = factory.getConnection()) {
 			PreparedStatement st = con.prepareStatement("select charId from characters");

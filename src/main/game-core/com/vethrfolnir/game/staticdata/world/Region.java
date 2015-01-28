@@ -20,9 +20,11 @@ import gnu.trove.iterator.TIntIterator;
 
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.annotation.*;
-import com.vethrfolnir.game.entitys.*;
-import com.vethrfolnir.game.entitys.components.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.vethrfolnir.game.entitys.EntityWorld;
+import com.vethrfolnir.game.entitys.GameObject;
+import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.entitys.components.creature.CreatureState;
 import com.vethrfolnir.game.entitys.components.creature.CreatureStats;
 import com.vethrfolnir.game.entitys.components.player.KnownCreatures;
@@ -33,9 +35,9 @@ import com.vethrfolnir.game.templates.npc.SpawnTemplate;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.network.WritePacket;
 import com.vethrfolnir.tools.Disposable;
+import com.vethrfolnir.tools.Rnd;
 
 import corvus.corax.Corax;
-import corvus.corax.tools.Rnd;
 
 /**
  * @author Vlad
@@ -69,7 +71,7 @@ public class Region implements Disposable {
 	 */
 	public Region() {
 		if(Corax.instance() != null)
-			entityWorld = Corax.getInstance(EntityWorld.class);
+			entityWorld = Corax.fetch(EntityWorld.class);
 		else
 			entityWorld = null;
 	}
@@ -84,7 +86,7 @@ public class Region implements Disposable {
 
 		//XXX Inside eclipse.. for parsing files. Remove after done importing region based stuff
 		if(Corax.instance() != null)
-			entityWorld = Corax.getInstance(EntityWorld.class);
+			entityWorld = Corax.fetch(EntityWorld.class);
 		else
 			entityWorld = null;
 	}

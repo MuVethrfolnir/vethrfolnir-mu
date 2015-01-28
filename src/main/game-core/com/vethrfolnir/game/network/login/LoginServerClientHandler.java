@@ -24,8 +24,7 @@ import com.vethrfolnir.game.network.LoginServerClient;
 import com.vethrfolnir.game.network.login.received.ReceivedNewId;
 import com.vethrfolnir.game.network.login.received.ServerKilled;
 import com.vethrfolnir.logging.MuLogger;
-
-import corvus.corax.tools.PrintData;
+import com.vethrfolnir.tools.PrintData;
 
 /**
  * @author Vlad

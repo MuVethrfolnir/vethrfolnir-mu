@@ -19,7 +19,6 @@ package com.vethrfolnir.gen;
 import java.io.*;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vethrfolnir.game.templates.SkillTemplate;
 
 /**

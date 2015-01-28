@@ -16,20 +16,20 @@
  */
 package com.vethrfolnir.login.network.game;
 
-import java.io.IOException;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+
+import java.io.IOException;
 
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.login.network.NetworkGameServer;
 import com.vethrfolnir.login.network.game.received.RequestServerRegistration;
 import com.vethrfolnir.login.services.GameNameService;
+import com.vethrfolnir.tools.PrintData;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Inject;
-import corvus.corax.tools.PrintData;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -56,7 +56,7 @@ public class GameChannelHandler extends ChannelInboundHandlerAdapter {
 	 */
 	public GameChannelHandler(NetworkGameServer networkGameServer) {
 		netInterface = networkGameServer;
-		Corax.pDep(this);
+		Corax.process(this);
 	}
 
 	/* (non-Javadoc)

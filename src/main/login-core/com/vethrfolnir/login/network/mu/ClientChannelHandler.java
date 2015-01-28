@@ -28,10 +28,10 @@ import com.vethrfolnir.login.network.mu.send.SendServerInfo;
 import com.vethrfolnir.login.network.mu.send.SendServerLists;
 import com.vethrfolnir.login.services.GameNameService;
 import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.tools.PrintData;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Inject;
-import corvus.corax.tools.PrintData;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -119,5 +119,5 @@ public class ClientChannelHandler extends ChannelInboundHandlerAdapter {
 		log.fatal("Uncaught exception!", cause);
 	}
 
-	public ClientChannelHandler() { Corax.pDep(this); }
+	public ClientChannelHandler() { Corax.process(this); }
 }

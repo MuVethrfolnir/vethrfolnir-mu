@@ -22,7 +22,7 @@ import com.vethrfolnir.game.services.dao.*;
 import com.vethrfolnir.logging.MuLogger;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Initiate;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -34,7 +34,7 @@ public class DatabaseService {
 	
 	private final HashMap<Class<? extends DAO>, DAO> daos = new HashMap<>();
 	
-	@Initiate //XXX Awaiting Move -> DP
+	@Inject //XXX Awaiting Move -> DP
 	private void laod() {
 		
 		addDAO(new AccountDAO());
@@ -43,7 +43,7 @@ public class DatabaseService {
 	}
 
 	public void addDAO(DAO dao) {
-		Corax.pDep(dao);
+		Corax.process(dao);
 		daos.put(dao.getClass(), dao);
 	}
 	

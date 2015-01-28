@@ -27,7 +27,8 @@ import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 import com.vethrfolnir.game.services.dao.AccountDAO;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
 
-import corvus.corax.CorvusConfig;
+import corvus.corax.Corax;
+import corvus.corax.config.CorvusConfig;
 
 /**
  * @author Vlad
@@ -42,10 +43,11 @@ public class LobbyCharacterList extends MuWritePacket {
 		AccountDAO dao = DatabaseAccess.AccountAccess();
 		
 		int count = dao.getLobbyCharacterSize(account.getAccountName()); // character count
-		
-		boolean rf = CorvusConfig.getProperty("ForceAllowRageFighter", false);
-		boolean mg = CorvusConfig.getProperty("ForceAllowMagicGladiator", false);
-		boolean dl = CorvusConfig.getProperty("ForceAllowDarkLord", false);
+
+		CorvusConfig config = Corax.config();
+		boolean rf = config.getProperty("ForceAllowRageFighter", false);
+		boolean mg = config.getProperty("ForceAllowMagicGladiator", false);
+		boolean dl = config.getProperty("ForceAllowDarkLord", false);
 		
 		int allowed = 0x01; // default 0
 		// calculate here how many to show

@@ -31,13 +31,12 @@ import com.vethrfolnir.game.module.MuAccount;
 import com.vethrfolnir.game.network.mu.crypt.MuEncoder;
 import com.vethrfolnir.game.templates.AccountCharacterInfo;
 import com.vethrfolnir.game.templates.PlayerTemplate;
-import com.vethrfolnir.game.util.ListenerKeys;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.network.NetworkClient;
 import com.vethrfolnir.network.WritePacket;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Initiate;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -66,11 +65,11 @@ public final class MuClient extends NetworkClient {
 		super(channel);
 		channel.attr(ClientKey).set(this);
 		
-		EntityWorld world = Corax.getInstance(EntityWorld.class);
+		EntityWorld world = Corax.fetch(EntityWorld.class);
 		entity = world.obtain(this);
 	}
 
-	@Initiate
+	@Inject
 	private void initiate() {
 		// Prepare getting info from mysql
 	}
@@ -101,8 +100,6 @@ public final class MuClient extends NetworkClient {
 				return;
 			}
 			
-			Corax.listen(ListenerKeys.ClientDisconnected, null, this);
-	
 			// Perform cleaning
 			entity.get(PlayerMapping.Positioning).getCurrentRegion().exit(entity);
 			

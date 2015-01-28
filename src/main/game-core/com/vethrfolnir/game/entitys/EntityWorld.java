@@ -23,7 +23,7 @@ import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.tools.Updatable;
 
-import corvus.corax.processing.annotation.Initiate;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -43,7 +43,7 @@ public final class EntityWorld implements Updatable {
 
 	private int tickAcum;
 	
-	@Initiate
+	@Inject
 	public void initialize() {
 		log.info("Initialized");
 		obtain(); // Dummy, id's cant be 0

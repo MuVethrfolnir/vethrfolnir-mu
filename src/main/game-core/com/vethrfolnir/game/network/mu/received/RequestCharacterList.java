@@ -22,7 +22,7 @@ import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 
-import corvus.corax.CorvusConfig;
+import corvus.corax.config.Config;
 
 /**
  * @author Vlad
@@ -30,16 +30,13 @@ import corvus.corax.CorvusConfig;
  */
 public final class RequestCharacterList extends MuReadPacket {
 
-	/* (non-Javadoc)
-	 * @see com.vethrfolnir.network.ReadPacket#read(com.vethrfolnir.network.NetworkClient, io.netty.buffer.ByteBuf, java.lang.Object[])
-	 */
+	// TODO When to allow Summoner
+	@Config(key = "ForceAllowSummoner", value = "true")
+	private boolean forceSummoner;
+	
 	@Override
 	public void read(MuClient client, ByteBuf buff, Object... params) {
-		
-		// TODO When to allow Summoner
-		boolean allow = CorvusConfig.getProperty("ForceAllowSummoner", true);
-
-		client.sendPacket(MuPackets.AllowSummonerCreation, allow);
+		client.sendPacket(MuPackets.AllowSummonerCreation, forceSummoner);
 		client.sendPacket(MuPackets.EnterLobby);
 	}
 

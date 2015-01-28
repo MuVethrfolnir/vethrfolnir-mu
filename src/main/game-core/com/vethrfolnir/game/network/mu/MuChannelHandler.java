@@ -29,10 +29,10 @@ import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.game.network.mu.received.*;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.network.ReadPacket;
+import com.vethrfolnir.tools.PrintData;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Inject;
-import corvus.corax.tools.PrintData;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -154,6 +154,6 @@ public class MuChannelHandler extends ChannelInboundHandlerAdapter {
 		log.fatal("Uncaught exception!", cause);
 	}
 
-	public MuChannelHandler() { Corax.pDep(this); }
+	public MuChannelHandler() { Corax.process(this); }
 	
 }

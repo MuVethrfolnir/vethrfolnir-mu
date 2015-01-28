@@ -55,8 +55,8 @@ public class StaticData {
 	
 	private static void spawnNpcs() {
 		try {
-			AssetManager assetManager = Corax.getInstance(AssetManager.class);
-			DataMappingService dms = Corax.getInstance(DataMappingService.class);
+			AssetManager assetManager = Corax.fetch(AssetManager.class);
+			DataMappingService dms = Corax.fetch(DataMappingService.class);
 			
 			int skipped = 0, count = 0;
 			ArrayList<InputStream> streams = assetManager.loadAssets(new FileKey("system/static/spawnlists/"), InputStreamProcessor.class, false);
@@ -106,7 +106,7 @@ public class StaticData {
 	}
 
 	private static <T> T process(T obj) {
-		Corax.pDep(obj);
+		Corax.process(obj);
 		return obj;
 	}
 

@@ -26,7 +26,7 @@ import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.services.DataMappingService;
 import com.vethrfolnir.tools.Disposable;
 
-import corvus.corax.processing.annotation.Inject;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad

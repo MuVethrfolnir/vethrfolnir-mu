@@ -16,16 +16,15 @@
  */
 package com.vethrfolnir.login;
 
-import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.login.network.NetworkClientServer;
 import com.vethrfolnir.login.network.NetworkGameServer;
 import com.vethrfolnir.login.services.GameNameService;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
 import com.vethrfolnir.tools.Tools;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Initiate;
-import corvus.corax.processing.annotation.Provide;
-import corvus.corax.threads.CorvusThreadPool;
+import corvus.corax.inject.Inject;
+import corvus.corax.provide.Provide;
 
 /**
  * @author Vlad
@@ -33,21 +32,18 @@ import corvus.corax.threads.CorvusThreadPool;
  */
 public class LoginServerApplication {
 
-	private static final MuLogger log = MuLogger.getLogger(LoginServerApplication.class);
-	
 	private NetworkGameServer gameServer;
 	private NetworkClientServer clientServer;
 	
-	@Initiate
+	@Inject
 	private void load() {
 		Tools.printSection("Services");
-		Corax.getInstance(GameNameService.class);
-		Corax.getInstance(CorvusThreadPool.class);
+		Corax.fetch(GameNameService.class);
+		Corax.fetch(CorvusThreadPool.class);
 		
 		Tools.printSection("Networking");
-
-		Corax.pDep(gameServer = new NetworkGameServer(),
-				clientServer = new NetworkClientServer());
+		Corax.process(gameServer = new NetworkGameServer());
+		Corax.process(clientServer = new NetworkClientServer());
 
 		Tools.printSection("Status");
 		System.gc();

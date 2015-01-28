@@ -24,8 +24,9 @@ import com.jolbox.bonecp.BoneCP;
 import com.jolbox.bonecp.BoneCPConfig;
 import com.vethrfolnir.logging.MuLogger;
 
-import corvus.corax.CorvusConfig;
-import corvus.corax.processing.annotation.Initiate;
+import corvus.corax.Corax;
+import corvus.corax.config.CorvusConfig;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -38,13 +39,14 @@ public class DatabaseFactory {
 	private BoneCP _connectionPool = null;
 
 	
-	@Initiate
+	@Inject
 	private void load() {
+		CorvusConfig config = Corax.config(); // TODO: FUGLY
 		
 		try
 		{
 			// load the database driver
-			Class.forName(CorvusConfig.getProperty("Database.Driver", "com.mysql.jdbc.Driver"));
+			Class.forName(config.getProperty("Database.Driver", "com.mysql.jdbc.Driver"));
 		}
 		catch (Exception e)
 		{
@@ -53,23 +55,23 @@ public class DatabaseFactory {
 		}
 
 		try {
-			BoneCPConfig config = new BoneCPConfig();
+			BoneCPConfig CPconfig = new BoneCPConfig();
 			
 			/**
 			 * Sets the JDBC connection URL.
 			 */
-			config.setJdbcUrl(CorvusConfig.getProperty("Database.Url", "jdbc:mysql://localhost/") +
-					CorvusConfig.getProperty("Database.Name", "vethrfolniremu"));
+			CPconfig.setJdbcUrl(config.getProperty("Database.Url", "jdbc:mysql://localhost/") +
+					config.getProperty("Database.Name", "vethrfolniremu"));
 			
 			/**
 			 * Sets username to use for connections.
 			 */
-			config.setUsername(CorvusConfig.getProperty("Database.User", "root"));
+			CPconfig.setUsername(config.getProperty("Database.User", "root"));
 			
 			/**
 			 * Sets password to use for connections.
 			 */
-			config.setPassword(CorvusConfig.getProperty("Database.Password", ""));
+			CPconfig.setPassword(config.getProperty("Database.Password", ""));
 			
 			/**
 			 * Sets the acquireIncrement property. When the available connections are about to run
@@ -77,7 +79,7 @@ public class DatabaseFactory {
 			 * many new connections to create in one go (up to a maximum of
 			 * maxConnectionsPerPartition). Note: This is a per partition setting.
 			 */
-			config.setAcquireIncrement(2);
+			CPconfig.setAcquireIncrement(2);
 			
 			/**
 			 * Sets number of partitions to use. In order to reduce lock contention and thus improve
@@ -88,12 +90,12 @@ public class DatabaseFactory {
 			 * negative effect on performance (and only for the case when connections on a partition
 			 * start running out). Default: 2, minimum: 1, recommended: 2-4
 			 */
-			config.setPartitionCount(CorvusConfig.getProperty("Database.PartitionCount", 2));
+			CPconfig.setPartitionCount(config.getProperty("Database.PartitionCount", 2));
 			
 			/**
 			 * Sets the minimum number of connections that will be contained in every partition.
 			 */
-			config.setMinConnectionsPerPartition(CorvusConfig.getProperty("Database.MinConnections", 2));
+			CPconfig.setMinConnectionsPerPartition(config.getProperty("Database.MinConnections", 2));
 			
 			/**
 			 * Sets the maximum number of connections that will be contained in every partition.
@@ -102,7 +104,7 @@ public class DatabaseFactory {
 			 * go but rather start off with minConnectionsPerPartition and gradually increase
 			 * connections as required.
 			 */
-			config.setMaxConnectionsPerPartition(CorvusConfig.getProperty("Database.MaxConnections", 10));
+			CPconfig.setMaxConnectionsPerPartition(config.getProperty("Database.MaxConnections", 10));
 			
 			/**
 			 * Sets the idleConnectionTestPeriod. This sets the time (in minutes), for a connection
@@ -110,7 +112,7 @@ public class DatabaseFactory {
 			 * from timing out connections on its end. Do not use aggressive values here! Default:
 			 * 240 min, set to 0 to disable
 			 */
-			config.setIdleConnectionTestPeriodInMinutes(240);
+			CPconfig.setIdleConnectionTestPeriodInMinutes(240);
 			
 			/**
 			 * Sets the idleConnectionTestPeriod. This sets the time (in seconds), for a connection
@@ -118,7 +120,7 @@ public class DatabaseFactory {
 			 * from timing out connections on its end. Do not use aggressive values here! Default:
 			 * 240 min, set to 0 to disable
 			 */
-			config.setIdleConnectionTestPeriodInSeconds(14400);
+			CPconfig.setIdleConnectionTestPeriodInSeconds(14400);
 			
 			/**
 			 * Sets Idle max age (in min). The time (in minutes), for a connection to remain unused
@@ -137,7 +139,7 @@ public class DatabaseFactory {
 			/**
 			 * Sets statementsCacheSize setting. The number of statements to cache.
 			 */
-			config.setStatementsCacheSize(0);
+			CPconfig.setStatementsCacheSize(0);
 			
 			/**
 			 * Sets number of helper threads to create that will handle releasing a connection. When
@@ -158,40 +160,40 @@ public class DatabaseFactory {
 			 * create a new thread for each call to getConnection(). Enabling this option will have
 			 * a big negative impact on pool performance.
 			 */
-			config.setCloseConnectionWatch(false);
+			CPconfig.setCloseConnectionWatch(false);
 			
 			/**
 			 * If enabled, log SQL statements being executed.
 			 */
-			config.setLogStatementsEnabled(false);
+			CPconfig.setLogStatementsEnabled(false);
 			
 			/**
 			 * Sets the number of ms to wait before attempting to obtain a connection again after a
 			 * failure.
 			 */
-			config.setAcquireRetryDelayInMs(7000);
+			CPconfig.setAcquireRetryDelayInMs(7000);
 			
 			/**
 			 * Set to true to force the connection pool to obtain the initial connections lazily.
 			 */
-			config.setLazyInit(false);
+			CPconfig.setLazyInit(false);
 			
 			/**
 			 * Set to true to enable recording of all transaction activity and replay the
 			 * transaction automatically in case of a connection failure.
 			 */
-			config.setTransactionRecoveryEnabled(false);
+			CPconfig.setTransactionRecoveryEnabled(false);
 			
 			/**
 			 * After attempting to acquire a connection and failing, try to connect these many times
 			 * before giving up. Default 5.
 			 */
-			config.setAcquireRetryAttempts(5);
+			CPconfig.setAcquireRetryAttempts(5);
 			
 			/**
 			 * Queries taking longer than this limit to execute are logged.
 			 */
-			config.setQueryExecuteTimeLimitInMs(0);
+			CPconfig.setQueryExecuteTimeLimitInMs(0);
 			
 			/**
 			 * Sets the Pool Watch thread threshold. The pool watch thread attempts to maintain a
@@ -204,7 +206,7 @@ public class DatabaseFactory {
 			 * application may have to wait for new connections to be obtained at times. Default:
 			 * 20.
 			 */
-			config.setPoolAvailabilityThreshold(20);
+			CPconfig.setPoolAvailabilityThreshold(20);
 			
 			/**
 			 * If set to true, the pool will not monitor connections for proper closure. Enable this
@@ -212,20 +214,20 @@ public class DatabaseFactory {
 			 * release the connection back to the pool (eg Spring's jdbcTemplate, some kind of
 			 * transaction manager, etc).
 			 */
-			config.setDisableConnectionTracking(false);
+			CPconfig.setDisableConnectionTracking(false);
 			
 			/**
 			 * Sets the maximum time (in milliseconds) to wait before a call to getConnection is
 			 * timed out. Setting this to zero is similar to setting it to Long.MAX_VALUE Default: 0
 			 * ( = wait forever )
 			 */
-			config.setConnectionTimeoutInMs(0);
+			CPconfig.setConnectionTimeoutInMs(0);
 			
 			/**
 			 * Sets the no of ms to wait when close connection watch threads are enabled. 0 = wait
 			 * forever.
 			 */
-			config.setCloseConnectionWatchTimeoutInMs(0);
+			CPconfig.setCloseConnectionWatchTimeoutInMs(0);
 			
 			/**
 			 * Sets number of statement helper threads to create that will handle releasing a
@@ -243,12 +245,12 @@ public class DatabaseFactory {
 			 * closed off whether it is idle or not. Connections currently in use will not be
 			 * affected until they are returned to the pool.
 			 */
-			config.setMaxConnectionAgeInSeconds(0);
+			CPconfig.setMaxConnectionAgeInSeconds(0);
 			
 			
-			config.setDefaultAutoCommit(true);
+			CPconfig.setDefaultAutoCommit(true);
 			
-			_connectionPool = new BoneCP(config);
+			_connectionPool = new BoneCP(CPconfig);
 		}
 		catch(Exception e) {
 			log.log(Level.SEVERE, "Failed initializing BoneCP!", e);

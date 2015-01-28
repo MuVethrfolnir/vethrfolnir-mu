@@ -18,24 +18,19 @@ package com.vethrfolnir.game.network;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInitializer;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import com.vethrfolnir.game.network.login.LoginServerClientHandler;
 import com.vethrfolnir.logging.MuLogger;
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.NetworkServerInterface;
-import com.vethrfolnir.network.WritePacket;
+import com.vethrfolnir.network.*;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Config;
-import corvus.corax.processing.annotation.Initiate;
-import corvus.corax.threads.CorvusThreadPool;
+import corvus.corax.config.Config;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -60,7 +55,7 @@ public final class LoginServerClient extends NetworkClient implements NetworkSer
 		super(null);
 	}
 	
-	@Initiate
+	@Inject
 	private void load() {
 		log.info("Preparing To connect to login! Info[Host: "+host+", Port: "+port+"]");
 		try {
@@ -94,21 +89,15 @@ public final class LoginServerClient extends NetworkClient implements NetworkSer
 			load();
 		}
 
-		Corax.getInstance(CorvusThreadPool.class).executeLongRunning(this);
+		Corax.fetch(CorvusThreadPool.class).executeLongRunning(this);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vethrfolnir.login.network.NetworkServerInterface#stop()
-	 */
 	@Override
 	public void stop() {
 		if(channelFuture != null)
 			channelFuture.channel().close();
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
 	public void run() {
 		try {

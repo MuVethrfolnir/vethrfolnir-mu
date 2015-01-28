@@ -17,7 +17,7 @@
 package com.vethrfolnir.game.config;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Config;
+import corvus.corax.config.Config;
 
 /**
  * @author Vlad
@@ -32,6 +32,6 @@ public class PlayerConfig {
 	public static boolean TeleportNoRestriction = false;
 
 	static {
-		Corax.pDep(new PlayerConfig());
+		Corax.process(new PlayerConfig());
 	}
 }

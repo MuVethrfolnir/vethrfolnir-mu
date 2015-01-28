@@ -22,9 +22,8 @@ import java.lang.reflect.ParameterizedType;
 import com.vethrfolnir.game.entitys.*;
 import com.vethrfolnir.logging.MuLogger;
 
-import corvus.corax.Corax;
-import corvus.corax.CoraxProcessor;
-import corvus.corax.tools.Tools;
+import corvus.corax.*;
+import corvus.corax.util.Tools;
 
 /**
  * @author Vlad
@@ -32,11 +31,9 @@ import corvus.corax.tools.Tools;
  */
 public class EntitySystemProcessor implements CoraxProcessor {
 
-	/* (non-Javadoc)
-	 * @see corvus.corax.CoraxProcessor#process(java.lang.Object, corvus.corax.Corax)
-	 */
 	@Override
-	public void process(Object obj, Corax corax) {
+	public void process(Describer describer, Corax corax) {
+		Object obj = describer.value;
 		Class<?> type = obj.getClass();
 		
 		Field[] fields = Tools.getFieldsWithAnnotation(FetchIndex.class, type);
@@ -71,5 +68,10 @@ public class EntitySystemProcessor implements CoraxProcessor {
 				MuLogger.f("Failed to parse component index annotation!", e);
 			}
 		}
+	}
+	
+	@Override
+	public boolean isInitializer() {
+		return false;
 	}
 }

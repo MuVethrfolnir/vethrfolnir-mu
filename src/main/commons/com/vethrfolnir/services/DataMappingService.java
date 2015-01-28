@@ -30,9 +30,8 @@ import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.services.assets.AssetManager;
 import com.vethrfolnir.services.assets.key.FileKey;
 
-import corvus.corax.CorvusConfig;
-import corvus.corax.processing.annotation.Initiate;
-import corvus.corax.processing.annotation.Inject;
+import corvus.corax.config.CorvusConfig;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -48,7 +47,7 @@ public class DataMappingService {
 	private DefaultPrettyPrinter defaultPrettyPrinter;
 	private TypeFactory defaultTypeFactory;
 	
-	@Initiate
+	@Inject
 	private void load() {
 		if(assetManager == null) {
 			throw new RuntimeException("AssetManaget has not been set in your setup! Mapping service cannot be performed!");

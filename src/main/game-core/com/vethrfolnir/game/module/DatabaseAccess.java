@@ -48,7 +48,7 @@ public class DatabaseAccess {
 
 	private static DatabaseService getDatabaseService() {
 		if(service == null)
-			service = Corax.getInstance(DatabaseService.class);
+			service = Corax.fetch(DatabaseService.class);
 		
 		return service;
 	}

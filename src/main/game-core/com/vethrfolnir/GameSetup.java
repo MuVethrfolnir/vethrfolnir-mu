@@ -27,8 +27,8 @@ import com.vethrfolnir.game.network.MuNetworkServer;
 import com.vethrfolnir.game.services.*;
 
 import corvus.corax.Corax;
-import corvus.corax.CorvusConfig;
-import corvus.corax.threads.CorvusThreadPool;
+import corvus.corax.Scope;
+import corvus.corax.config.CorvusConfig;
 
 /**
  * @author Vlad
@@ -39,7 +39,7 @@ public class GameSetup extends MuSetupTemplate {
 	//Test purpose
 	static {
 		if(!new File("config").exists()) {
-			CorvusConfig.WorkingDirectory = "./dist/GameServer";
+			CorvusConfig.WorkingDirectory = new File("./dist/GameServer");
 		}
 	}
 
@@ -48,38 +48,26 @@ public class GameSetup extends MuSetupTemplate {
 	 */
 	@Override
 	public void setupAction() {
+		Corax.instance().addProcessor(new EntitySystemProcessor());
 		
-		installProcessor(new EntitySystemProcessor());
+		bind(MuNetworkServer.class).as(Scope.Singleton);;
+		bind(DatabaseService.class).as(Scope.Singleton);;
+		bind(DatabaseFactory.class).as(Scope.Singleton);;
+		bind(LoginServerClient.class).as(Scope.Singleton);;
 		
-		CorvusThreadPool pool = getEngine().getInstanceImpl(CorvusThreadPool.class);
-		getEngine().openMonitor(pool.getLongExecutor(), pool.getScheduleExecutor());
-		
-		addSingleton(MuNetworkServer.class);
-		addSingleton(DatabaseService.class);
-		addSingleton(DatabaseFactory.class);
-		addSingleton(LoginServerClient.class);
-		addSingleton(GameServerApplication.class);
-		
-		addSingleton(EntityWorld.class);
-		addSingleton(IdFactory.class);
-		addSingleton(GameController.class);
+		bind(EntityWorld.class).as(Scope.Singleton);;
+		bind(IdFactory.class).as(Scope.Singleton);;
+		bind(GameController.class).as(Scope.Singleton);;
+
+		bind(GameServerApplication.class).as(Scope.EagerSingleton);;
 	}
 
 	public static void main(String[] args) {
-		GameServerApplication app = Corax.create(new GameSetup()).getInstanceImpl(GameServerApplication.class);
-		Runtime.getRuntime().addShutdownHook(new Thread(app));
+		Corax.Install(new GameSetup());
 	}
 
-	/* (non-Javadoc)
-	 * @see com.vethrfolnir.MuSetupTemplate#shutdown(corvus.corax.Corax)
-	 */
 	@Override
 	public void shutdown(Corax corax) {
-		corax.disposeInstance(MuNetworkServer.class);
-		corax.disposeInstance(DatabaseService.class);
-		corax.disposeInstance(DatabaseFactory.class);
-		corax.disposeInstance(LoginServerClient.class);
-		corax.disposeInstance(GameServerApplication.class);
 	}
 	
 }

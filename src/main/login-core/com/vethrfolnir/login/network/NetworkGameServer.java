@@ -17,9 +17,7 @@
 package com.vethrfolnir.login.network;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
+import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -27,11 +25,11 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.login.network.game.GameChannelHandler;
 import com.vethrfolnir.network.NetworkServerInterface;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
 
 import corvus.corax.Corax;
-import corvus.corax.processing.annotation.Config;
-import corvus.corax.processing.annotation.Initiate;
-import corvus.corax.threads.CorvusThreadPool;
+import corvus.corax.config.Config;
+import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
@@ -49,7 +47,7 @@ public class NetworkGameServer implements NetworkServerInterface, Runnable {
 	private ServerBootstrap bootstrap;
 	private ChannelFuture channelFuture;
 	
-	@Initiate
+	@Inject
 	private void load() {
 		log.info("Preparing Game server listening! Info[Host: "+host+", Port: "+port+"]");
 		try {
@@ -86,7 +84,7 @@ public class NetworkGameServer implements NetworkServerInterface, Runnable {
 			load();
 		}
 
-		Corax.getInstance(CorvusThreadPool.class).executeLongRunning(this);
+		Corax.fetch(CorvusThreadPool.class).executeLongRunning(this);
 	}
 
 	/* (non-Javadoc)
