@@ -29,7 +29,7 @@ import corvus.corax.*;
  * @author Vlad
  *
  */
-public abstract class MuSetupTemplate extends CoraxBinder {
+public abstract class MuSetupTemplate extends CoraxBuilder {
 	static { // Default Logging
 		AnsiConsole.systemInstall();
 
@@ -46,9 +46,12 @@ public abstract class MuSetupTemplate extends CoraxBinder {
 	public final void build(Corax corax) {
 		Corax.config().loadDirectory("./config/");
 
-		bind(AssetManager.class).as(Scope.Singleton);
-		bind(CorvusThreadPool.class).as(Scope.Singleton);
-		bind(DataMappingService.class).as(Scope.Singleton);
+		setDefaultScope(Scope.Singleton);
+		bind(AssetManager.class);
+		bind(CorvusThreadPool.class);
+		bind(DataMappingService.class);
+		clearDefaults();
+
 		setupAction();
 	}
 	

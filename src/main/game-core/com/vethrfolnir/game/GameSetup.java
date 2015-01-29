@@ -19,29 +19,56 @@ package com.vethrfolnir.game;
 import java.io.File;
 import java.io.IOException;
 
+import com.vethrfolnir.MuSetupTemplate;
 import com.vethrfolnir.database.DatabaseFactory;
 import com.vethrfolnir.game.entitys.EntityWorld;
+import com.vethrfolnir.game.entitys.annotation.EntitySystemProcessor;
 import com.vethrfolnir.game.module.StaticData;
 import com.vethrfolnir.game.network.LoginServerClient;
 import com.vethrfolnir.game.network.MuNetworkServer;
 import com.vethrfolnir.game.network.mu.crypt.MuKeyFactory;
 import com.vethrfolnir.game.services.*;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
 import com.vethrfolnir.tools.Tools;
 
 import corvus.corax.Corax;
+import corvus.corax.Scope;
 import corvus.corax.config.CorvusConfig;
-import corvus.corax.inject.Inject;
 
 /**
  * @author Vlad
  *
  */
-public class GameServerApplication implements Runnable {
+public class GameSetup extends MuSetupTemplate {
 
-	@Inject
-	private void load() {
-		Runtime.getRuntime().addShutdownHook(new Thread(this));
+	//Test purpose
+	static {
+		if(!new File("config").exists()) {
+			CorvusConfig.WorkingDirectory = new File("./dist/GameServer");
+		}
+	}
 
+	@Override
+	public void setupAction() {
+		Corax.instance().addProcessor(new EntitySystemProcessor());
+
+		setDefaultScope(Scope.Singleton);
+		bind(MuNetworkServer.class);
+		bind(DatabaseService.class);
+		bind(DatabaseFactory.class);
+		bind(LoginServerClient.class);
+		
+		bind(EntityWorld.class);
+		bind(IdFactory.class);
+		bind(GameController.class);
+
+		Runtime.getRuntime().addShutdownHook(new Thread(()-> {
+			Corax.instance().destroy();
+		}));
+	}
+
+	@Override
+	public void ready() {
 		try {
 			File file = new File(CorvusConfig.WorkingDirectory, "./cache/");
 			if(!file.exists()) { // first installment
@@ -81,17 +108,15 @@ public class GameServerApplication implements Runnable {
 	}
 	
 	private void firstInstall(File cacheDir) throws IOException {
-//		DataMappingService service = Corax.getInstance(DataMappingService.class);
-//		File file = new File(CorvusConfig.WorkingDirectory, EntityFactory.EntityStatistics);
-//		
-//		if(!file.exists()) {
-//			service.saveSimple(new Statistics(), EntityFactory.EntityStatistics);
-//		}
+	}
+	
+	public static void main(String[] args) {
+		Corax.Install(new GameSetup());
 	}
 
 	@Override
-	public void run() { // shutdown
-		// Clean and save factorys
-		Corax.instance().destroy();
+	public void shutdown(Corax corax) {
+		corax.getInstance(CorvusThreadPool.class).shutdown();
 	}
+	
 }

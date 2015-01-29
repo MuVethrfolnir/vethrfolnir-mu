@@ -263,7 +263,7 @@ public final class MuEncoder {
 
     
     public static void main(String[] args) {
-    	Corax.Install(new CoraxBinder() {
+    	Corax.Install(new CoraxBuilder() {
 			
 			@Override
 			protected void build(Corax corax) {

@@ -14,21 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.vethrfolnir;
+package com.vethrfolnir.login;
 
 import java.io.File;
 
-import com.vethrfolnir.login.LoginServerApplication;
+import com.vethrfolnir.MuSetupTemplate;
+import com.vethrfolnir.login.network.NetworkClientServer;
+import com.vethrfolnir.login.network.NetworkGameServer;
 import com.vethrfolnir.login.services.GameNameService;
+import com.vethrfolnir.services.threads.CorvusThreadPool;
+import com.vethrfolnir.tools.Tools;
 
-import corvus.corax.*;
+import corvus.corax.Corax;
+import corvus.corax.Scope;
 import corvus.corax.config.CorvusConfig;
 
 /**
  * @author Vlad
  *
  */
-public class LoginSetup extends MuSetupTemplate implements Runnable{
+public class LoginSetup extends MuSetupTemplate implements Runnable {
 
 	//Test purpose
 	static {
@@ -39,22 +44,38 @@ public class LoginSetup extends MuSetupTemplate implements Runnable{
 	
 	@Override
 	public void setupAction() {
-		bind(GameNameService.class).as(Scope.Singleton);;
-		bind(LoginServerApplication.class).as(Scope.EagerSingleton);
-		Runtime.getRuntime().addShutdownHook(new Thread(this));
+		Tools.printSection("Services");
+		bind(GameNameService.class).as(Scope.EagerSingleton);;
 	}
 
+	@Override
+	public void ready() {
+		Tools.printSection("Networking");
+		NetworkGameServer gameServer = new NetworkGameServer();
+		NetworkClientServer clientServer = new NetworkClientServer();
+
+		Corax.process(gameServer);
+		Corax.process(clientServer);
+
+		Tools.printSection("Status");
+		System.gc();
+
+		gameServer.start();
+		clientServer.start();
+		Runtime.getRuntime().addShutdownHook(new Thread(this));
+	}
+	
 	public static void main(String[] args) {
 		Corax.Install(new LoginSetup());
 	}
 
 	@Override
 	public void shutdown(Corax corax) {
-		
+		corax.getInstance(CorvusThreadPool.class).shutdown();
 	}
 
 	@Override
 	public void run() {
-		clean(); // meh
+		Corax.instance().destroy();
 	}
 }

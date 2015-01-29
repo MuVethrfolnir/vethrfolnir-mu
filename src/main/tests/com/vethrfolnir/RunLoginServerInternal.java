@@ -18,6 +18,8 @@ package com.vethrfolnir;
 
 import java.io.File;
 
+import com.vethrfolnir.login.LoginSetup;
+
 import corvus.corax.config.CorvusConfig;
 
 /**
