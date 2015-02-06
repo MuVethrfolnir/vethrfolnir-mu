@@ -14,20 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.vethrfolnir.game.templates;
+package com.vethrfolnir.game.network.mu.send;
 
+import io.netty.buffer.ByteBuf;
 
-public class AccountCharacterInfo {
-	public int charId;
-	public int slot;
-	public String name;
-	public int level;
-	public int access;
-	public int classId;
-	public int[] wearBytes = new int[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xF3, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0xF0, 0xFF, 0xFF, 0xFF, 0x00, 0x00 };
+import com.vethrfolnir.game.module.item.MuItem;
+import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
-	public int[] getWearBytes() {
-		return wearBytes;
+/**
+ * @author Seth
+ */
+public class ExInventoryDeleteItem extends MuWritePacket {
+
+	@Override
+	public void write(MuClient client, ByteBuf buff, Object... params) {
+		MuItem item = (MuItem) params[0];
+		writeArray(buff, 0xC1, 0x05, 0x23, 0x01, item.getSlot() + item.getInventoryOffset()); 
 	}
+
 	
 }

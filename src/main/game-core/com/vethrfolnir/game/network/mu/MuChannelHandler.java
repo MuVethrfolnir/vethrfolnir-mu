@@ -69,6 +69,17 @@ public class MuChannelHandler extends ChannelInboundHandlerAdapter {
 		clientpackets.put(0x00, new RequestSay(false));
 		clientpackets.put(0x02, new RequestSay(true));
 
+		// Inventory
+		clientpackets.put(0x22, new ExInventoryPickUpItem());
+		clientpackets.put(0x23, new ExInventoryDropItem());
+		clientpackets.put(0x24, new ExInventoryMoveItem());
+//		clientpackets.put(0x26, new UseItem());
+		
+		// Item Utils and shops
+//		clientpackets.put(0x32, new ExBuyItem());
+//		clientpackets.put(0x33, new ExSellItem());
+		clientpackets.put(0x34, new ExInventoryRepairItem());
+
 	}
 	
 	/* (non-Javadoc)

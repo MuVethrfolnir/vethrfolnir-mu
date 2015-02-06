@@ -19,6 +19,7 @@ package com.vethrfolnir.game.entitys.components.creature;
 import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.EntityWorld;
 import com.vethrfolnir.game.entitys.components.Positioning;
+import com.vethrfolnir.game.entitys.components.inventory.Inventory;
 
 /**
  * @author Vlad
@@ -30,4 +31,5 @@ public class CreatureMapping {
 	public static final ComponentIndex<Positioning> Positioning = EntityWorld.getComponentIndex(Positioning.class);
 	public static final ComponentIndex<CreatureState> CreatureState = EntityWorld.getComponentIndex(CreatureState.class);
 	public static final ComponentIndex<CreatureStats> CreatureStats = EntityWorld.getComponentIndex(CreatureStats.class);
+	public static final ComponentIndex<Inventory> Inventory = EntityWorld.getComponentIndex(Inventory.class);
 }

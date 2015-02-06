@@ -70,6 +70,7 @@ public class RequestCharacterDelete extends MuReadPacket {
 
 			client.sendPacket(MuPackets.CharacterDeleteAnswer, true);
 			dao.deleteCharacter(name);
+			DatabaseAccess.InventoryAccess().deleteInventory(character.charId);
 		}
 		catch(Exception e) {
 			MuLogger.e("Failed deleting character!", e);

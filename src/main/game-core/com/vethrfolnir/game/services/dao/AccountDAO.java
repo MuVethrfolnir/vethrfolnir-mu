@@ -113,7 +113,8 @@ public class AccountDAO extends DAO {
 				account.getSlots().set(info.slot, true);
 				
 				//TODO Get Inventory Info with charId
-
+				
+								
 				infos.add(info);
 			}
 		});

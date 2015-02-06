@@ -147,7 +147,7 @@ public final class LoginServerClient extends NetworkClient implements NetworkSer
 	 * @param ctx
 	 */
 	public void create(final ChannelHandlerContext ctx) {
-		client = new NetworkClient(channel()) {
+		client = new NetworkClient(ctx.channel()) {
 
 		@Override
 		public void sendPacket(WritePacket packet, Object... params) {

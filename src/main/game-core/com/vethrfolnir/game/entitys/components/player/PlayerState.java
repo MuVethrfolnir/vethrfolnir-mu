@@ -16,20 +16,12 @@
  */
 package com.vethrfolnir.game.entitys.components.player;
 
-import javax.xml.transform.Templates;
-
 import com.vethrfolnir.game.entitys.Component;
 import com.vethrfolnir.game.entitys.GameObject;
-import com.vethrfolnir.game.module.DatabaseAccess;
 import com.vethrfolnir.game.network.mu.MuClient;
-import com.vethrfolnir.game.services.DatabaseService;
-import com.vethrfolnir.game.services.dao.PlayerDAO;
 import com.vethrfolnir.game.staticdata.ClassId;
-import com.vethrfolnir.game.templates.AccountCharacterInfo;
 import com.vethrfolnir.game.templates.PlayerTemplate;
 import com.vethrfolnir.network.WritePacket;
-
-import corvus.corax.Corax;
 
 /**
  * @author Vlad

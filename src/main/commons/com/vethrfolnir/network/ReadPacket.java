@@ -59,6 +59,12 @@ public abstract class ReadPacket {
 		return buff.readBytes(buff.readableBytes());
 	}
 
+	protected byte[] readByteArray(ByteBuf buff) {
+		byte[] arr = new byte[buff.readableBytes()];
+		buff.readBytes(arr);
+		return arr;
+	}
+
 	/**
 	 * Don't forget to release the buffer
 	 * @param buff

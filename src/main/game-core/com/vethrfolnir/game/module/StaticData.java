@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import com.vethrfolnir.game.staticdata.*;
 import com.vethrfolnir.game.staticdata.world.Region;
+import com.vethrfolnir.game.templates.item.ItemTemplate;
 import com.vethrfolnir.game.templates.npc.NpcTemplate;
 import com.vethrfolnir.game.templates.npc.SpawnTemplate;
 import com.vethrfolnir.logging.MuLogger;
@@ -43,11 +44,13 @@ public class StaticData {
 	private static NpcData npcData;
 	private static SkillData skillData;
 	private static RegionData regionData;
-
+	private static ItemData itemData;
+	
 	public static void loadData() {
 		regionData = process(new RegionData());
 		npcData = process(new NpcData());
 		skillData = process(new SkillData());
+		itemData = process(new ItemData());
 		
 		// We dont need them in memory
 		spawnNpcs();
@@ -123,6 +126,13 @@ public class StaticData {
 	public static RegionData getRegionData() {
 		return regionData;
 	}
+
+	/**
+	 * @return the itemData
+	 */
+	public static ItemData getItemData() {
+		return itemData;
+	}
 	
 	/**
 	 * @param mapId
@@ -143,5 +153,13 @@ public class StaticData {
 	 */
 	public static MuSkill getSkill(int skillid) {
 		return skillData.getSkill(skillid);
+	}
+
+	/**
+	 * @param uniqueId
+	 * @return
+	 */
+	public static ItemTemplate getItemTemplate(int uniqueId) {
+		return itemData.getTemplate(uniqueId);
 	}
 }

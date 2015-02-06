@@ -55,12 +55,10 @@ public class IdFactory {
 		DatabaseFactory factory = Corax.fetch(DatabaseFactory.class);
 		
 		try (Connection con = factory.getConnection()) {
-			PreparedStatement st = con.prepareStatement("select charId from characters");
-			ResultSet rs = st.executeQuery();
 			ArrayList<Integer> ids = new ArrayList<Integer>();
 
-			while(rs.next())
-				ids.add(rs.getInt(1));
+			loadCharacterIds(con, ids);
+			loadItemIds(con, ids);
 			
 			lockIds(ids);
 			log.info("Locked "+ids.size()+" id(s). Limit "+Integer.MAX_VALUE);
@@ -71,6 +69,22 @@ public class IdFactory {
 		}
 	}
 	
+	private void loadItemIds(Connection con, ArrayList<Integer> ids) throws SQLException {
+		try (PreparedStatement st = con.prepareStatement("select objectId from character_items")) {
+			ResultSet rs = st.executeQuery();
+			while(rs.next())
+				ids.add(rs.getInt(1));
+		}
+	}
+
+	private void loadCharacterIds(Connection con, ArrayList<Integer> ids) throws SQLException {
+		try (PreparedStatement st = con.prepareStatement("select charId from characters")) {
+			ResultSet rs = st.executeQuery();
+			while(rs.next())
+				ids.add(rs.getInt(1));
+		}
+	}
+
 	/**
 	 * Returns next free id.
 	 * 

@@ -18,6 +18,13 @@ package com.vethrfolnir.game.network.mu.send;
 
 import io.netty.buffer.ByteBuf;
 
+import com.vethrfolnir.game.entitys.GameObject;
+import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
+import com.vethrfolnir.game.entitys.components.inventory.Inventory;
+import com.vethrfolnir.game.entitys.components.player.Appearance;
+import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
+import com.vethrfolnir.game.module.item.MuItem;
+import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.network.NetworkClient;
 import com.vethrfolnir.network.WritePacket;
 
@@ -27,13 +34,27 @@ import com.vethrfolnir.network.WritePacket;
  */
 public class InventoryInfo extends WritePacket {
 
-	/* (non-Javadoc)
-	 * @see com.vethrfolnir.network.WritePacket#write(com.vethrfolnir.network.NetworkClient, io.netty.buffer.ByteBuf, java.lang.Object[])
-	 */
 	@Override
 	public void write(NetworkClient context, ByteBuf buff, Object... params) {
 		writeArray(buff, 0xC4, 0x00, 0x2D, 0xF3, 0x10);
-		writeArray(buff, 0x03, 0x00, 0x00, 0x00, 0x12, 0x00, 0x00, 0x10, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0C, 0x14, 0x08, 0x1E, 0x00, 0x00, 0xD0, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0D, 0x14, 0x10, 0x1E, 0x00, 0x00, 0xD0, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF); // content
+		
+		GameObject e = as(params[0]) == null ? ((MuClient)context).getEntity() : (GameObject) params[0];
+		Inventory inv = e.get(CreatureMapping.Inventory);
+		Appearance app = e.get(PlayerMapping.Appearance);
+		
+		writeC(buff, inv.itemSize());
+		for(MuItem item : app.getPaperdolls().values()) {
+			writeC(buff, item.getSlot());
+			writeArray(buff, item.toCode());
+		}
+		
+		for (int i = 0; i < inv.getItems().size(); i++) {
+			MuItem item = inv.getItems().get(i);
+			writeC(buff, item.getSlot());
+			writeArray(buff, item.toCode());
+		}
+		
+		//writeArray(buff, 0x03, 0x00, 0x00, 0x00, 0x12, 0x00, 0x00, 0x10, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0C, 0x14, 0x08, 0x1E, 0x00, 0x00, 0xD0, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x0D, 0x14, 0x10, 0x1E, 0x00, 0x00, 0xD0, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF); // content
 	}
 
 }

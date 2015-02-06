@@ -23,14 +23,14 @@ import corvus.corax.Corax;
 
 /**
  * @author Vlad
- * Faster to have them mapped like this
+ * Easier to have them mapped like this
  */
 public class DatabaseAccess {
 
 	private static DatabaseService service;
 
 	//XXX Awaiting interfaces
-	private static DAO player, account;
+	private static DAO player, account, inventory;
 
 	public static PlayerDAO PlayerAccess() {
 		if(player == null)
@@ -44,6 +44,13 @@ public class DatabaseAccess {
 			account = getDatabaseService().getDAO(AccountDAO.class);
 					
 		return (AccountDAO) account;
+	}
+
+	public  static InventoryDAO InventoryAccess() {
+		if(inventory == null)
+			inventory = getDatabaseService().getDAO(InventoryDAO.class);
+					
+		return (InventoryDAO) inventory;
 	}
 
 	private static DatabaseService getDatabaseService() {

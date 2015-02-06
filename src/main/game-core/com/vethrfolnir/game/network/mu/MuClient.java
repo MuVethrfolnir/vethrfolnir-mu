@@ -25,6 +25,8 @@ import java.nio.ByteOrder;
 import com.vethrfolnir.game.entitys.EntityWorld;
 import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.components.Positioning;
+import com.vethrfolnir.game.entitys.components.inventory.Inventory;
+import com.vethrfolnir.game.entitys.components.inventory.WindowType;
 import com.vethrfolnir.game.entitys.components.player.*;
 import com.vethrfolnir.game.module.DatabaseAccess;
 import com.vethrfolnir.game.module.MuAccount;
@@ -80,10 +82,13 @@ public final class MuClient extends NetworkClient {
 		entity.setName(template.name);
 		
 		entity.add(new Positioning(template.x, template.y, template.mapId));
+		entity.add(new Inventory(WindowType.InventoryWindow));
 		entity.add(new KnownCreatures());
+		entity.add(new Appearance());
 		
 		entity.add(new PlayerState(template));
 		entity.add(new PlayerStats(template));
+		
 		entity.commit();
 	}
 	
@@ -104,6 +109,7 @@ public final class MuClient extends NetworkClient {
 			entity.get(PlayerMapping.Positioning).getCurrentRegion().exit(entity);
 			
 			DatabaseAccess.PlayerAccess().savePlayer(entity);
+			DatabaseAccess.InventoryAccess().writeInventory(entity);
 		}
 		catch(Exception e) {
 			log.fatal("Failed cleaning character["+toString()+"]!", e);

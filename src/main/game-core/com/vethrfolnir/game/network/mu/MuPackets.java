@@ -87,6 +87,42 @@ public class MuPackets {
 	public static final InventoryInfo InventoryInfo = new InventoryInfo();
 	
 	/**
+	 * Sends the confirmation that the item has been deleted from the inventory
+	 * Requires: MuItem
+	 */
+	public static final ExInventoryDeleteItem ExInventoryDeleteItem = new ExInventoryDeleteItem();
+	
+	/**
+	 * Sends the confirmation that an item has been placed in the inventory
+	 * Requires: MuItem
+	 */
+	public static final ExInventoryPlaceItem ExInventoryPlaceItem = new ExInventoryPlaceItem();
+
+	/**
+	 * Sends the confirmation that the item has been moved inside a window
+	 * Requires: MuItem, WindowType
+	 */
+	public static final ExInventoryMovedItem ExInventoryMovedItem = new ExInventoryMovedItem();
+	
+	/**
+	 * Sends information about a item's durability.
+	 * Requires: MuItem
+	 */
+	public static final ExDurabilityChange ExDurabilityChange = new ExDurabilityChange(); 
+	
+	/**
+	 * Sends information of the item's level
+	 * Requires: MuItem
+	 */
+	public static final ExItemLevelUpdate ExItemLevelUpdate = new ExItemLevelUpdate();
+	
+	/**
+	 * Sends the information about the zen a player has in his inventory & warehouse
+	 * Requires: player's inventory zen[int] and warehouse zen[int]
+	 */
+	public static final ExFullZenUpdate ExFullZenUpdate = new ExFullZenUpdate();
+	
+	/**
 	 * Send the status info of hp/sd and mana/whatever<br>
 	 * Requires StatusInfo.TYPE and a boolean for current hp or maxhp
 	 */

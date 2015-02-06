@@ -39,6 +39,7 @@ public class DatabaseService {
 		
 		addDAO(new AccountDAO());
 		addDAO(new PlayerDAO());
+		addDAO(new InventoryDAO());
 		log.info("Loaded "+daos.size()+" dao(s)");
 	}
 

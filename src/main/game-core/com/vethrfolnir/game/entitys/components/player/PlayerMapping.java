@@ -30,4 +30,6 @@ public class PlayerMapping {
 	public static final ComponentIndex<PlayerState> PlayerState = EntityWorld.getComponentIndex(PlayerState.class);
 	public static final ComponentIndex<PlayerStats> PlayerStats = EntityWorld.getComponentIndex(PlayerStats.class);
 	public static final ComponentIndex<KnownCreatures> KnownCreatures = EntityWorld.getComponentIndex(KnownCreatures.class);
+
+	public static final ComponentIndex<Appearance> Appearance = EntityWorld.getComponentIndex(Appearance.class);
 }

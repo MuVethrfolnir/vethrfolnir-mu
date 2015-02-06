@@ -54,7 +54,7 @@ public class RequestEnterWorld extends MuReadPacket {
 		PlayerState state = client.getEntity().get(this.state);
 		client.sendPacket(MuPackets.EnterWorld);
 
-		client.sendPacket(MuPackets.InventoryInfo);
+		client.sendPacket(MuPackets.InventoryInfo, client.getEntity());
 		//client.sendPacket(new SkillListInfo());
 		
 		// Max HP / SD

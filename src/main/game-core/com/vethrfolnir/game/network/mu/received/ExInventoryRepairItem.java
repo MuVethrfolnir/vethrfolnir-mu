@@ -14,24 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.vethrfolnir.game.network.login.received;
+package com.vethrfolnir.game.network.mu.received;
 
 import io.netty.buffer.ByteBuf;
 
-import com.vethrfolnir.network.NetworkClient;
-import com.vethrfolnir.network.ReadPacket;
+import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
+import com.vethrfolnir.game.entitys.components.inventory.Inventory;
+import com.vethrfolnir.game.module.item.MuItem;
+import com.vethrfolnir.game.network.mu.MuClient;
+import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 
-import corvus.corax.Corax;
 
 /**
- * @author Vlad
- *
+ * @author Seth
  */
-public class ReceivedNewId extends ReadPacket {
-
+public class ExInventoryRepairItem extends MuReadPacket {
+	
 	@Override
-	public void read(NetworkClient context, ByteBuf buff, Object... params) {
-		Corax.config().setProperty("LoginServer.ServerId", buff.readInt());
+	public void read(MuClient client, ByteBuf buff, Object... params) {
+		int slot = readC(buff);
+		readC(buff); // unk
+		
+		Inventory inventory = client.getEntity().get(CreatureMapping.Inventory);
+		
+		MuItem item = inventory.getItem(slot);
+		
+		if(item != null)
+			item.resetDurability(true);
 	}
 
 }
