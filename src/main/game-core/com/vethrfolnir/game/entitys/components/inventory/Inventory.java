@@ -20,11 +20,15 @@ import java.util.ArrayList;
 
 import com.vethrfolnir.game.entitys.Component;
 import com.vethrfolnir.game.entitys.GameObject;
-import com.vethrfolnir.game.entitys.components.player.*;
+import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
+import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
+import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.module.DatabaseAccess;
 import com.vethrfolnir.game.module.item.MuItem;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.services.dao.InventoryDAO;
+import com.vethrfolnir.game.util.SimpleArray;
+import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.tools.Disposable;
 
 /**
@@ -33,18 +37,26 @@ import com.vethrfolnir.tools.Disposable;
  */
 public class Inventory implements Component {
 
+	private static final MuLogger log = MuLogger.getLogger(Inventory.class);
+	
 	private GameObject entity;
 
-	private final ArrayList<MuItem> inventoryItems = new ArrayList<>();
+	private final SimpleArray<MuItem> items;
 	private final WindowType type;
+	
+	private final int invX, invY, offset;
 
-	private boolean[][] slots; 
-
-	private Appearance appearance;
+	protected final int[] wearBytes;
+	private boolean needsRegen = true;
 
 	public Inventory(WindowType type) {
 		this.type = type;
-		slots = new boolean[type.getY()][type.getX()];;
+		invX = type.getX();
+		invY = type.getY();
+		offset = type.getOffset();
+		items = new SimpleArray<MuItem>((invX * invY) + offset);
+		wearBytes = type == WindowType.InventoryWindow ? 
+				new int[] { 0xFF, 0xFF, 0xFF, 0xFF, 0xF3, 0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0xF0, 0xFF, 0xFF, 0xFF, 0x00, 0x00 } : null;
 	}
 	
 	@Override
@@ -52,23 +64,14 @@ public class Inventory implements Component {
 		this.entity = entity;
 		if(entity.isPlayer()) {
 			PlayerState state = entity.get(PlayerMapping.PlayerState);
-			appearance = entity.get(PlayerMapping.Appearance);
 			InventoryDAO dao = DatabaseAccess.InventoryAccess();
 			
 			ArrayList<MuItem> list = dao.loadInventory(state.getCharId());
+			System.out.println("Inv size: "+list.size());
 			for (int i = 0; i < list.size(); i++) {
 				MuItem item = list.get(i);
-				if(EquipmentLocation.contains(item.getSlot())) {
-					appearance.equipItem(item);
-				}
-				else {
-					if(check(item)) {
-						forcePut(item);
-						inventoryItems.add(item);
-					} // else warn
-					else
-						System.out.println("Wtf..");
-				}
+				System.out.println("Adding item to inventory: "+item);
+				put(item, item.getSlot(), true);
 			}
 			Disposable.dispose(list);
 		}
@@ -81,61 +84,137 @@ public class Inventory implements Component {
 	 * @param newWindow
 	 */
 	public void move(MuItem item, int oldPos, int newPos, WindowType newWindow) {
+		clear(item);
 		
-		if(appearance == null)
-			return;
-		
-		if(newPos < 0) {
-			oldPos += getType().getOffset();
-			newPos += getType().getOffset();
-			if(appearance.getItem(newPos) == null) {
-				remove(item);
+		if(newPos < offset) { // equipment
+			
+			if(newPos == Paperdoll.RightHand.ordinal() && getItem(Paperdoll.LeftHand) == null)
+				newPos = Paperdoll.LeftHand.ordinal();
+			
+			if(items.get(newPos) == null) {
+				clear(item);
+
 				item.setSlot(newPos);
-				inventoryItems.remove(item);
-				appearance.equipItem(item);
-				entity.sendPacket(MuPackets.ExInventoryMovedItem, item, newWindow);
+				items.set(newPos, item);
+				item.setEquipped(true);
+				needsRegen = true;
+
+				entity.get(CreatureMapping.Positioning).getCurrentRegion().broadcast(MuPackets.PlayerInfo, false, entity);
 			}
-			else {
-				System.out.println("Nop: cause "+appearance.getItem(newPos).getName());
-				entity.sendPacket(MuPackets.ExInventoryMovedItem, item, newWindow);
+		}
+		else // if check fails it reverts.
+			put(item, item.getSlot(), !check(item, newPos));
+		
+		entity.sendPacket(MuPackets.ExInventoryMovedItem, item, newWindow);
+	}
+
+	/**
+	 * Returns true if space has been found for this item 
+	 * @param item
+	 * @return
+	 */
+	public boolean store(MuItem item) {
+		for (int i = offset; i < items.getCapacity(); i++) {
+			if(check(item, i)) {
+				put(item, i, true);
+				entity.sendPacket(MuPackets.ExInventoryPlaceItem, item);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * @param item
+	 * @param i
+	 * @return 
+	 */
+	public boolean check(MuItem item, int slot) {
+		// wtf
+		if(item.getWidth() > 1 && ((slot + item.getWidth()) - offset) % invX == 1) {
+			System.out.println("out of bounds: "+((slot + item.getWidth()) - offset) % invX);
+			return false;
+		}
+
+		for (int i = 0; i < item.getHeight(); i++) {
+			for (int j = 0; j < item.getWidth(); j++) {
+				int ns = (i * invX + j) + slot;
+				
+				if (ns >= items.getCapacity())
+					return false;
+				
+				MuItem slotItem = items.get(ns);
+				
+				if(slotItem != null && slotItem != item)
+					return false;
+			}
+		}
+		
+		return true;
+	}
+
+	/**
+	 * @param item
+	 * @param slot
+	 */
+	public boolean put(MuItem item, int slot, boolean force) {
+		
+		if(slot < offset) { // equipment
+			if(force || items.get(slot) == null) {
+				item.setOwnerId(entity);
+				items.set(slot, item);
+				item.setEquipped(true);
+				needsRegen = true;
+				return true;
 			}
 			
-			return;
+			return false;
 		}
-		
-		int y = getLine(newPos);
-		int x = getColumn(newPos);
 
-		if(item.isEquipped()) {
-			System.out.println("Unequipping "+appearance.getItem(item.getSlot()));
-			appearance.unequipItem(item);
+		if(force || check(item, slot)) {
+			item.setOwnerId(entity);
+			item.setEquipped(false);
+			items.set(slot, item);
+			item.setSlot(slot);
+			
+			for (int i = 0; i < item.getHeight(); i++) {
+				for (int j = 0; j < item.getWidth(); j++) {
+					int ns = i * invX + j;
+					items.set(slot+ns, item);
+				}
+			}
+			return true;
 		}
 		else
-			remove(item);
-
-		if(check(item, x, y)) {
-			item.setSlot(newPos);
-			item.setOwnerId(entity);
-
-			if(!inventoryItems.contains(item))
-				inventoryItems.add(item);
-				
-			forcePut(item);
-			entity.sendPacket(MuPackets.ExInventoryMovedItem, item, newWindow);
+			log.warn("Failed placing item["+item.getName()+"] for user["+entity.getName()+"]");
+		
+		return false;
+	}
+	
+	public void clear(MuItem item) {
+		int slot = item.getSlot();
+		items.set(slot, null);
+		
+		if(slot >= offset) {
+			for (int i = 0; i < item.getHeight(); i++) {
+				for (int j = 0; j < item.getWidth(); j++) {
+					int ns = i * invX + j;
+					items.set(slot+ns, null);
+				}
+			}
 		}
-		else {
-			System.out.println("Nop! pos "+x+" - "+y+ " slot: "+newPos);
+	}
+
+	/**
+	 * @return the wearBytes
+	 */
+	public int[] getWearBytes() {
+		if(needsRegen ) {
+			WearSet.generateWearItems(this);
+			needsRegen = false;
 		}
 		
-		entity.get(PlayerMapping.Positioning).getCurrentRegion().broadcastToKnown(entity, MuPackets.PlayerInfo, false, entity);
-	}
-
-	private int getLine(int Position) {
-		return Position / getType().getX();
-	}
-
-	private int getColumn(int Position) {
-		return Position % getType().getX();
+		return wearBytes;
 	}
 
 	/**
@@ -143,22 +222,15 @@ public class Inventory implements Component {
 	 * @return
 	 */
 	public MuItem getItem(int slot) {
-		
-		if(slot < 0 && appearance != null) {
-			MuItem item = appearance.getItem(slot + getType().getOffset());
+		return items.get(slot);
+	}
 
-			if(item != null)
-				return item;
-		}
-		
-		for (int i = 0; i < inventoryItems.size(); i++) {
-			MuItem item = inventoryItems.get(i);
-
-			if(item.getSlot() == slot)
-				return item;
-		}
-		
-		return null;
+	/**
+	 * @param loc
+	 * @return
+	 */
+	public MuItem getItem(Paperdoll loc) {
+		return items.get(loc.ordinal());
 	}
 
 	/**
@@ -166,94 +238,17 @@ public class Inventory implements Component {
 	 */
 	public void removeItem(int itemSlot) {
 		MuItem item = getItem(itemSlot);
-		remove(item);
-		removeItem(item);
+		if(item != null) {
+			removeItem(item);
+		}
 	}
 
 	/**
 	 * @param itemSlot
 	 */
 	public void removeItem(MuItem item) {
-		if(!inventoryItems.remove(item) && appearance != null)
-			appearance.removeItem(item.getSlot());
-
+		clear(item);
 		entity.sendPacket(MuPackets.ExInventoryDeleteItem, item);
-	}
-
-	public boolean findCloses(MuItem itm) {
-		for (int i = 0; i < slots.length; i++) {
-			boolean[] rows = slots[i];
-			for (int j = 0; j < rows.length; j++) {
-				itm.setSlot((i % type.getY()) * type.getX() + (j % type.getX()));
-				if(check(itm))
-					return true;
-			}
-		}
-		itm.setSlot(-1);
-		return false;
-	}
-
-	private void forcePut(MuItem itm) {
-		slots[itm.getY()][itm.getX()] = true;
-		for (int i = 0; i < itm.getHeight(); i++) {
-			int row = itm.getY() + i;
-			slots[row][itm.getX()] = true;
-			for (int j = 0; j < itm.getWidth(); j++) {
-				slots[row][itm.getX() + j] = true;
-			}
-		}
-	}
-	
-	public void remove(MuItem itm) {
-		slots[itm.getY()][itm.getX()] = false;
-		for (int i = 0; i < itm.getHeight(); i++) {
-			int row = itm.getY() + i;
-			slots[row][itm.getX()] = false;
-			for (int j = 0; j < itm.getWidth(); j++) {
-				slots[row][itm.getX() + j] = false;
-			}
-		}
-	}
-
-	public void store(MuItem item) {
-		item.setOwnerId(entity);
-		if(findCloses(item)) {
-			forcePut(item);
-			inventoryItems.add(item);
-			entity.sendPacket(MuPackets.ExInventoryPlaceItem, item);
-		}
-	}
-	
-	private boolean check(MuItem itm) {
-		return check(itm, itm.getX(), itm.getY());
-	}
-	
-	private boolean check(MuItem itm, int x, int y) {
-		
-		if(y + itm.getHeight() > slots.length)
-			return false;
-		
-		if(x + itm.getWidth() > slots[y].length)
-			return false;
-		
-		if(!slots[y][x]) {
-			for (int i = 0; i < itm.getHeight(); i++) {
-				int row = y + i;
-				if(!slots[row][x]) {
-					for (int j = 0; j < itm.getWidth(); j++) {
-						if(slots[row][x + j])
-							return false;
-					}
-				}
-				else
-					return false;
-			}
-		}
-		else
-			return false;
-
-		
-		return true;
 	}
 
 	/**
@@ -265,21 +260,21 @@ public class Inventory implements Component {
 	
 	@Override
 	public void dispose() {
-		inventoryItems.clear();
+		items.clear();
 	}
 
 	/**
-	 * @return the inventoryItems
+	 * @return the items
 	 */
-	public ArrayList<MuItem> getItems() {
-		return inventoryItems;
+	public SimpleArray<MuItem> getItems() {
+		return items;
 	}
 	
 	/**
 	 * @return
 	 */
 	public int itemSize() {
-		return inventoryItems.size() + (appearance != null ? appearance.itemSize() : 0);
+		return items.size();
 	}
 
 }

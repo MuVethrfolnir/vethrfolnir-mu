@@ -19,7 +19,7 @@ package com.vethrfolnir.game.entitys.components.inventory;
 /**
  * @author Vlad
  */
-public enum EquipmentLocation {
+public enum Paperdoll {
 	LeftHand,
 	RightHand,
 	Helmet,
@@ -33,7 +33,7 @@ public enum EquipmentLocation {
 
 	public static boolean contains(int slot) {
 		for (int i = 0; i < values().length; i++) {
-			EquipmentLocation val = values()[i];
+			Paperdoll val = values()[i];
 			if(val.ordinal() == slot)
 				return true;
 		}

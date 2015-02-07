@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.vethrfolnir.game.module.item;
+package com.vethrfolnir.game.entitys.components.inventory;
 
-import com.vethrfolnir.game.entitys.components.inventory.EquipmentLocation;
-import com.vethrfolnir.game.entitys.components.player.Appearance;
+import com.vethrfolnir.game.module.item.MuItem;
 
 /**
  * @author psychojr
@@ -52,24 +51,24 @@ public class WearSet {
 
 	/**
 	 * Ugh..
-	 * @param app
+	 * @param inventory
 	 */
-	public static final void generateWearItems(Appearance app) {
+	public static final void generateWearItems(Inventory inventory) {
 		
-		int[] wearBytes = app.getWearBytes();
+		int[] wearBytes = inventory.wearBytes;
 		
-		MuItem LeftHandWeapon = app.getItem(EquipmentLocation.LeftHand);
-		MuItem RightHandWeapon = app.getItem(EquipmentLocation.RightHand);
+		MuItem LeftHandWeapon = inventory.getItem(Paperdoll.LeftHand);
+		MuItem RightHandWeapon = inventory.getItem(Paperdoll.RightHand);
 		
-		MuItem Helmet = app.getItem(EquipmentLocation.Helmet);
-		MuItem Armor = app.getItem(EquipmentLocation.ChestPlate);
-		MuItem Pants = app.getItem(EquipmentLocation.Pants);
-		MuItem Gloves = app.getItem(EquipmentLocation.Gloves);
-		MuItem Boots = app.getItem(EquipmentLocation.Boots);
+		MuItem Helmet = inventory.getItem(Paperdoll.Helmet);
+		MuItem Armor = inventory.getItem(Paperdoll.ChestPlate);
+		MuItem Pants = inventory.getItem(Paperdoll.Pants);
+		MuItem Gloves = inventory.getItem(Paperdoll.Gloves);
+		MuItem Boots = inventory.getItem(Paperdoll.Boots);
 		
-		MuItem Wings = app.getItem(EquipmentLocation.Wings);
+		MuItem Wings = inventory.getItem(Paperdoll.Wings);
 		
-		MuItem Pet = app.getItem(EquipmentLocation.Pet);
+		MuItem Pet = inventory.getItem(Paperdoll.Pet);
 		
 		
 		wearBytes[0] = LeftHandWeapon == null ? -1 : LeftHandWeapon.getItemId();

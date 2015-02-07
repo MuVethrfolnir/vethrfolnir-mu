@@ -30,7 +30,7 @@ public class ExInventoryDeleteItem extends MuWritePacket {
 	@Override
 	public void write(MuClient client, ByteBuf buff, Object... params) {
 		MuItem item = (MuItem) params[0];
-		writeArray(buff, 0xC1, 0x05, 0x23, 0x01, item.getSlot() + item.getInventoryOffset()); 
+		writeArray(buff, 0xC1, 0x05, 0x23, 0x01, item.getSlot()); 
 	}
 
 	

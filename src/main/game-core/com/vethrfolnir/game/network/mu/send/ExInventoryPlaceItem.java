@@ -33,7 +33,7 @@ public final class ExInventoryPlaceItem extends MuWritePacket {
 		writeC(buff, 0xC3);
 		writeC(buff, 0x00);
 		writeC(buff, 0x22);
-		writeC(buff, item.getSlot() + item.getInventoryOffset());
+		writeC(buff, item.getSlot());
 		writeArray(buff, item.toCode());
 	}
 

@@ -23,7 +23,6 @@ import com.vethrfolnir.game.entitys.components.inventory.Inventory;
 import com.vethrfolnir.game.entitys.components.inventory.WindowType;
 import com.vethrfolnir.game.module.item.MuItem;
 import com.vethrfolnir.game.network.mu.MuClient;
-import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
 import com.vethrfolnir.logging.MuLogger;
 
@@ -47,9 +46,6 @@ public class ExInventoryMoveItem extends MuReadPacket {
 		
 		WindowType newWindow = WindowType.values()[newWin];
 		WindowType oldWindow = WindowType.values()[oldWin];
-		
-		newPos = newPos - newWindow.getOffset();
-		oldPos = oldPos - oldWindow.getOffset();
 		
 		Inventory inventory = client.getEntity().get(CreatureMapping.Inventory);
 

@@ -20,6 +20,7 @@ import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
 import com.vethrfolnir.game.entitys.components.inventory.Inventory;
 import com.vethrfolnir.game.entitys.components.inventory.WindowType;
+import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.templates.item.ItemTemplate;
 
@@ -64,7 +65,6 @@ public class MuItem {
 
 	private WindowType location = WindowType.InventoryWindow;
 	private Inventory inventory;
-	private int x, y;
 	private boolean needsRegen = true;
 	private boolean isNew = true;
 	private boolean sellable;
@@ -73,6 +73,8 @@ public class MuItem {
 	public MuItem(int objectId, ItemTemplate template) {
 		this.objectId = objectId;
 		this.template = template;
+		
+		setDurabilityCount(template.MagDur + template.Dur); //XXX test purpose, one of them is 0
 	}
 	
 	public String getName() {
@@ -103,7 +105,7 @@ public class MuItem {
 	}
 	
 	/**
-	 * @return the ownerId
+	 * @return the owner's character id referenced in the database
 	 */
 	public int getOwnerId() {
 		return ownerId;
@@ -114,7 +116,7 @@ public class MuItem {
 	 */
 	public void setOwnerId(GameObject e) {
 		this.owner = e;
-		this.ownerId = e.getWorldIndex();
+		this.ownerId = e.get(PlayerMapping.PlayerState).getCharId();
 		inventory = e.get(CreatureMapping.Inventory);
 	}
 
@@ -428,7 +430,10 @@ public class MuItem {
 	 */
 	public void setDurabilityCount(int durabilityCount) {
 		this.durabilityCount = durabilityCount;
-		owner.sendPacket(MuPackets.ExDurabilityChange, this);
+
+		if(owner != null)
+			owner.sendPacket(MuPackets.ExDurabilityChange, this);
+		
 		needsRegen = true;
 	}
 
@@ -469,16 +474,6 @@ public class MuItem {
 	 */
 	public void setSlot(int slot) {
 		this.slot = slot;
-		y = getLine(slot);
-		x = getColumn(slot);
-	}
-
-	private int getLine(int Position) {
-		return Position / inventory.getType().getX();
-	}
-
-	private int getColumn(int Position) {
-		return Position % inventory.getType().getX();
 	}
 	
 	public boolean isAncient() {
@@ -506,34 +501,6 @@ public class MuItem {
 		
 		if(owner != null)
 			owner.sendPacket(MuPackets.ExItemLevelUpdate, this);
-	}
-
-	/**
-	 * @return the x
-	 */
-	public int getX() {
-		return x;
-	}
-
-	/**
-	 * @param x the x to set
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
-	
-	/**
-	 * @return the y
-	 */
-	public int getY() {
-		return y;
-	}
-	
-	/**
-	 * @param y the y to set
-	 */
-	public void setY(int y) {
-		this.y = y;
 	}
 
 	/**
@@ -573,13 +540,6 @@ public class MuItem {
 	 */
 	public boolean isNew() {
 		return isNew ;
-	}
-
-	/**
-	 * @return
-	 */
-	public int getInventoryOffset() {
-		return getInventory().getType().getOffset();
 	}
 
 	/**

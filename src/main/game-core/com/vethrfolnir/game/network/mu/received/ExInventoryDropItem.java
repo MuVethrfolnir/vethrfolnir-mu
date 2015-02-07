@@ -37,7 +37,7 @@ public class ExInventoryDropItem extends MuReadPacket {
 		int y = readC(buff);
 
 		Inventory inventory = client.getEntity().get(CreatureMapping.Inventory);
-		int itemSlot = readC(buff) - inventory.getType().getOffset();
+		int itemSlot = readC(buff);
 
 		MuItem item = inventory.getItem(itemSlot);
 

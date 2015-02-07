@@ -31,7 +31,7 @@ public final class ExDurabilityChange extends MuWritePacket {
 	public void write(MuClient client, ByteBuf buff, Object... params) {
 		MuItem item = (MuItem) params[0];
 		writeArray(buff, 0xC1, 0x06, 0x2A);
-		writeC(buff, item.getSlot() + item.getInventoryOffset());
+		writeC(buff, item.getSlot());
 		writeC(buff, item.getDurabilityCount());
 		writeC(buff, 0x01); // TODO Currently unknown
 	}

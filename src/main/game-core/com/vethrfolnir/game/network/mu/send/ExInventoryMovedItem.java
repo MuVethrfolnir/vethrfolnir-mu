@@ -37,7 +37,7 @@ public final class ExInventoryMovedItem extends MuWritePacket {
 		writeC(buff, 0x11);
 		writeC(buff, 0x24);
 		writeC(buff, windowId.ordinal()); // Move Type
-		writeC(buff, item.isEquipped() ? item.getSlot() : item.getSlot() + windowId.getOffset());
+		writeC(buff, item.getSlot());
 		writeArray(buff, item.toCode());
 	}
 }

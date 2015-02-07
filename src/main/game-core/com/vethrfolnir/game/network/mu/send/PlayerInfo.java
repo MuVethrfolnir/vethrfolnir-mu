@@ -24,7 +24,7 @@ import com.vethrfolnir.game.entitys.ComponentIndex;
 import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.Positioning;
-import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
+import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
 import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
@@ -65,7 +65,7 @@ public class PlayerInfo extends MuWritePacket {
 
 		writeArray(buff, positioning.getX(), positioning.getY());// 0x42, 0xD3);
 		writeC(buff, state.getClassId().classId << 1); // class id
-		writeArray(buff, client.getEntity().get(PlayerMapping.Appearance).getWearBytes());
+		writeArray(buff, client.getEntity().get(CreatureMapping.Inventory).getWearBytes());
 		writeS(buff, client.getEntity().getName(), 10); // name
 		writeArray(buff, positioning.getX(), positioning.getY(),// 0x42, 0xD3,
 		0x00, 0x00); // Cool effect

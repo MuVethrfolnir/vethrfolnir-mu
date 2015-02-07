@@ -18,18 +18,16 @@ package com.vethrfolnir.game.services.dao;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
 import com.vethrfolnir.game.entitys.components.inventory.Inventory;
-import com.vethrfolnir.game.entitys.components.player.Appearance;
 import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
 import com.vethrfolnir.game.module.StaticData;
 import com.vethrfolnir.game.module.item.MuItem;
 import com.vethrfolnir.game.templates.item.ItemTemplate;
+import com.vethrfolnir.game.util.SimpleArray;
 import com.vethrfolnir.logging.MuLogger;
-import com.vethrfolnir.tools.Disposable;
 
 /**
  * @author Vlad
@@ -44,21 +42,26 @@ public class InventoryDAO extends DAO {
 			@Override
 			public void perform(Connection con, Object... buff) throws Exception {
 				Inventory inv = e.get(CreatureMapping.Inventory);
-				Appearance app = e.get(PlayerMapping.Appearance);
 				
-				ArrayList<MuItem> items = new ArrayList<MuItem>();
-				items.addAll(app.getPaperdolls().values());
-				items.addAll(inv.getItems());
-				
-				for (int i = 0; i < buff.length; i++) {
+				SimpleArray<MuItem> items = inv.getItems();
+
+				for (int i = 0; i < items.size(); i++) {
 					MuItem item = items.get(i);
-					String sql = item.isNew() ? // TODO has to go after were done with DAO's 
+
+					if(item == null)
+						continue;
+
+					String sql = !item.isNew() ? // TODO has to go after were done with DAO's 
 						"update character_items set ownerId=?, itemId=?,durabilityCount=?,itemLevel=?,slot=?,skill=?,luck=?,option=?,execOption1=?,execOption2=?,execOption3=?,execOption4=?,execOption5=?,execOption6=?,option380=?,harmonyType=?,harmonyEnchant=?,socket1=?,socket2=?,socket3=?,socket4=?,socket5=? where objectId=?" :
 						"INSERT INTO `character_items` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-					
-					int pointer = 0;
-					try(PreparedStatement st = con.prepareStatement(sql )) {
-						st.setInt(pointer++, item.getOwnerId());
+
+					int pointer = 1;
+					try(PreparedStatement st = con.prepareStatement(sql)) {
+						if(item.isNew()) {
+							st.setInt(pointer++, item.getOwnerId());
+							st.setInt(pointer++, item.getObjectId());
+						}
+						
 						st.setInt(pointer++, item.getUniqueId());
 						st.setInt(pointer++, item.getDurabilityCount());
 						st.setInt(pointer++, item.getItemLevel());
@@ -71,6 +74,7 @@ public class InventoryDAO extends DAO {
 						st.setInt(pointer++, item.getExcelentOption3());
 						st.setInt(pointer++, item.getExcelentOption4());
 						st.setInt(pointer++, item.getExcelentOption5());
+						st.setInt(pointer++, item.getExcelentOption6());
 						st.setInt(pointer++, item.getOption380());
 						st.setInt(pointer++, item.getHarmonyType());
 						st.setInt(pointer++, item.getHarmonyEnchant());
@@ -79,15 +83,16 @@ public class InventoryDAO extends DAO {
 						st.setInt(pointer++, item.getSocketOption3());
 						st.setInt(pointer++, item.getSocketOption4());
 						st.setInt(pointer++, item.getSocketOption5());
-						st.setInt(pointer++, item.getObjectId());
+
+						if(!item.isNew())
+							st.setInt(pointer++, item.getObjectId());
+						
 						st.execute();
 					}
 					catch (Exception e2) {
-						log.log(Level.SEVERE, "Failed "+(item.isNew() ? "inserting" : "updating")+" item["+item.getUniqueId()+"] for owner["+e.getName()+"/"+e.get(PlayerMapping.PlayerState).getCharId()+"]");
+						log.fatal("Failed "+(item.isNew() ? "inserting" : "updating")+" item["+item.getUniqueId()+"] for owner["+e.getName()+"/"+e.get(PlayerMapping.PlayerState).getCharId()+"]", e2);
 					}
 				}
-				
-				Disposable.dispose(items);
 			}
 		});
 	}

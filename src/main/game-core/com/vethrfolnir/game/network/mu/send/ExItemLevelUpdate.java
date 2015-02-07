@@ -31,7 +31,7 @@ public final class ExItemLevelUpdate extends MuWritePacket {
 	public void write(MuClient client, ByteBuf buff, Object... params) {
 		MuItem item = (MuItem) params[0];
 		writeArray(buff, 0xC1, 0x00, 0xF3, 0x14);
-		writeC(buff, item.getSlot() + item.getInventoryOffset());
+		writeC(buff, item.getSlot());
 		writeArray(buff, item.toCode());
 	}
 

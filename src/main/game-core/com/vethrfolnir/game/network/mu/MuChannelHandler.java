@@ -105,6 +105,16 @@ public class MuChannelHandler extends ChannelInboundHandlerAdapter {
 	}
 	
 	/* (non-Javadoc)
+	 * @see io.netty.channel.ChannelInboundHandlerAdapter#channelUnregistered(io.netty.channel.ChannelHandlerContext)
+	 */
+	@Override
+	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+		log.info("A client disconnected "+ctx.channel());
+		MuClient client = ctx.channel().attr(MuClient.ClientKey).get();
+		client.close();
+	}
+	
+	/* (non-Javadoc)
 	 * @see io.netty.channel.ChannelInboundHandlerAdapter#channelRead(io.netty.channel.ChannelHandlerContext, java.lang.Object)
 	 */
 	@Override
