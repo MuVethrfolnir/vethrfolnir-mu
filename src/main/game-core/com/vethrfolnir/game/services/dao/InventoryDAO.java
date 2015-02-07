@@ -57,8 +57,9 @@ public class InventoryDAO extends DAO {
 
 					int pointer = 1;
 					try(PreparedStatement st = con.prepareStatement(sql)) {
+						st.setInt(pointer++, item.getOwnerId());
+
 						if(item.isNew()) {
-							st.setInt(pointer++, item.getOwnerId());
 							st.setInt(pointer++, item.getObjectId());
 						}
 						
