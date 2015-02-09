@@ -45,14 +45,14 @@ public class InventoryDAO extends DAO {
 				
 				SimpleArray<MuItem> items = inv.getItems();
 
-				for (int i = 0; i < items.size(); i++) {
+				for (int i = 0; i < items.getCapacity(); i++) {
 					MuItem item = items.get(i);
 
 					if(item == null)
 						continue;
 
 					String sql = !item.isNew() ? // TODO has to go after were done with DAO's 
-						"update character_items set ownerId=?, itemId=?,durabilityCount=?,itemLevel=?,slot=?,skill=?,luck=?,option=?,execOption1=?,execOption2=?,execOption3=?,execOption4=?,execOption5=?,execOption6=?,option380=?,harmonyType=?,harmonyEnchant=?,socket1=?,socket2=?,socket3=?,socket4=?,socket5=? where objectId=?" :
+						"update character_items set ownerId=?, itemId=?,durabilityCount=?,itemLevel=?,slot=?,skill=?,luck=?,`option`=?,execOption1=?,execOption2=?,execOption3=?,execOption4=?,execOption5=?,execOption6=?,option380=?,harmonyType=?,harmonyEnchant=?,socket1=?,socket2=?,socket3=?,socket4=?,socket5=? where objectId=?" :
 						"INSERT INTO `character_items` VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
 					int pointer = 1;

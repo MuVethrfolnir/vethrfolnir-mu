@@ -56,10 +56,9 @@ public final class MuEncoder {
 		short[] Contents = new short[contentSize + 1];
         Contents[0] = (short) serial; // XXX:  Check this
 
-        buff.readerIndex(1);
+        buff.readerIndex(header - 1);
         
-        //XXX When a c4.. 
-        buff.setByte(1, serial);
+        buff.setByte(header - 1, serial);
         
         MuCryptUtils.readAsUByteArray(buff, Contents);
         

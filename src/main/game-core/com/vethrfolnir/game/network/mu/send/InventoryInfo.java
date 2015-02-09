@@ -22,7 +22,6 @@ import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
 import com.vethrfolnir.game.entitys.components.inventory.Inventory;
 import com.vethrfolnir.game.module.item.MuItem;
-import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.network.NetworkClient;
 import com.vethrfolnir.network.WritePacket;
 
@@ -34,16 +33,17 @@ public class InventoryInfo extends WritePacket {
 
 	@Override
 	public void write(NetworkClient context, ByteBuf buff, Object... params) {
-		writeArray(buff, 0xC4, 0x00, 0x2D, 0xF3, 0x10);
+		writeArray(buff, 0xC4, 0x00, 0x00, 0xF3, 0x10);
 		
-		GameObject e = as(params[0]) == null ? ((MuClient)context).getEntity() : (GameObject) params[0];
+		GameObject e = (GameObject) params[0];
 		Inventory inv = e.get(CreatureMapping.Inventory);
 		
 		writeC(buff, inv.itemSize());
-		for (int i = 0; i < inv.getItems().size(); i++) {
+
+		for (int i = 0; i < inv.getItems().getCapacity(); i++) {
 			MuItem item = inv.getItems().get(i);
 			
-			if(item == null)
+			if(item == null || item.getSlot() != i)
 				continue;
 			
 			writeC(buff, item.getSlot());

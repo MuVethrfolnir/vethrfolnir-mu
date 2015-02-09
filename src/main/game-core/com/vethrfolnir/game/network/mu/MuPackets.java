@@ -83,6 +83,7 @@ public class MuPackets {
 	
 	/**
 	 * Sends the full inventory packet<br>
+	 * Requires: GameObject
 	 */
 	public static final InventoryInfo InventoryInfo = new InventoryInfo();
 	

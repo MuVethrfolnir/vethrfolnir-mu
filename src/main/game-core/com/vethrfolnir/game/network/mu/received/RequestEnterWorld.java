@@ -54,6 +54,7 @@ public class RequestEnterWorld extends MuReadPacket {
 		PlayerState state = client.getEntity().get(this.state);
 		client.sendPacket(MuPackets.EnterWorld);
 
+		client.sendPacket(MuPackets.InventoryInfo, client.getEntity());
 		//client.sendPacket(new SkillListInfo());
 		
 		// Max HP / SD
@@ -67,7 +68,6 @@ public class RequestEnterWorld extends MuReadPacket {
 		if(state.getAccessLevel() > 0)
 			client.sendPacket(MuPackets.StateChange, StateChange.StateGM); // GM
 		
-		client.sendPacket(MuPackets.InventoryInfo, client.getEntity());
 		client.sendPacket(MuPackets.SystemMessage, "Powerd by Project Vethrfolnir.", SystemMessage.MessageType.Admin);
 	}
 

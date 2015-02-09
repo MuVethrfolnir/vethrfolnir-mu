@@ -95,7 +95,7 @@ public class AccountDAO extends DAO {
 		final ArrayList<AccountCharacterInfo> infos = new ArrayList<>();
 
 		enqueueVoidAndWait((Connection con, Object... buff)-> {
-			PreparedStatement st = con.prepareStatement("select charId, slot, name, level, accessLevel, classId from characters where accountName = ?");
+			PreparedStatement st = con.prepareStatement("select charId, slot, name, level, accessLevel, classId, wearSet from characters where accountName = ?");
 			st.setString(1, account.getAccountName());
 			ResultSet rs = st.executeQuery();
 			
@@ -111,10 +111,12 @@ public class AccountDAO extends DAO {
 
 				// Slot used
 				account.getSlots().set(info.slot, true);
+				byte[] wearSet = rs.getBytes(pointer++);
 				
-				//TODO Get Inventory Info with charId
-				
-								
+				if(wearSet != null) {
+					for (int i = 0; i < wearSet.length; i++)
+						info.wearBytes[i] = wearSet[i] & 0xFF;
+				}
 				infos.add(info);
 			}
 		});

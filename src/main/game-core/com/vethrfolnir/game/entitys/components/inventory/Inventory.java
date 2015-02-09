@@ -45,6 +45,7 @@ public class Inventory implements Component {
 	private final WindowType type;
 	
 	private final int invX, invY, offset;
+	private int itemSize;
 
 	protected final int[] wearBytes;
 	private boolean needsRegen = true;
@@ -67,10 +68,8 @@ public class Inventory implements Component {
 			InventoryDAO dao = DatabaseAccess.InventoryAccess();
 			
 			ArrayList<MuItem> list = dao.loadInventory(state.getCharId());
-			System.out.println("Inv size: "+list.size());
 			for (int i = 0; i < list.size(); i++) {
 				MuItem item = list.get(i);
-				System.out.println("Adding item to inventory: "+item);
 				put(item, item.getSlot(), true);
 			}
 			Disposable.dispose(list);
@@ -102,8 +101,12 @@ public class Inventory implements Component {
 				entity.get(CreatureMapping.Positioning).getCurrentRegion().broadcast(MuPackets.PlayerInfo, false, entity);
 			}
 		}
-		else // if check fails it reverts.
-			put(item, item.getSlot(), !check(item, newPos));
+		else {
+			if(check(item, newPos))
+				put(item, newPos, true);
+			else
+				put(item, item.getSlot(), true);
+		}
 		
 		entity.sendPacket(MuPackets.ExInventoryMovedItem, item, newWindow);
 	}
@@ -132,7 +135,6 @@ public class Inventory implements Component {
 	public boolean check(MuItem item, int slot) {
 		// wtf
 		if(item.getWidth() > 1 && ((slot + item.getWidth()) - offset) % invX == 1) {
-			System.out.println("out of bounds: "+((slot + item.getWidth()) - offset) % invX);
 			return false;
 		}
 
@@ -165,6 +167,7 @@ public class Inventory implements Component {
 				items.set(slot, item);
 				item.setEquipped(true);
 				needsRegen = true;
+				itemSize++;
 				return true;
 			}
 			
@@ -176,7 +179,7 @@ public class Inventory implements Component {
 			item.setEquipped(false);
 			items.set(slot, item);
 			item.setSlot(slot);
-			
+			itemSize++;
 			for (int i = 0; i < item.getHeight(); i++) {
 				for (int j = 0; j < item.getWidth(); j++) {
 					int ns = i * invX + j;
@@ -249,6 +252,7 @@ public class Inventory implements Component {
 	public void removeItem(MuItem item) {
 		clear(item);
 		entity.sendPacket(MuPackets.ExInventoryDeleteItem, item);
+		itemSize--;
 	}
 
 	/**
@@ -274,7 +278,7 @@ public class Inventory implements Component {
 	 * @return
 	 */
 	public int itemSize() {
-		return items.size();
+		return itemSize;
 	}
 
 }

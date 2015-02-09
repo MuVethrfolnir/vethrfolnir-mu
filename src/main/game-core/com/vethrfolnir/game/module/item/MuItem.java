@@ -528,6 +528,10 @@ public class MuItem {
 		return dataBuffer;
 	}
 
+	public void forceRegen() {
+		needsRegen = true;
+	}
+	
 	/**
 	 * @param isNew the isNew to set
 	 */
@@ -539,7 +543,7 @@ public class MuItem {
 	 * @return
 	 */
 	public boolean isNew() {
-		return isNew ;
+		return isNew;
 	}
 
 	/**

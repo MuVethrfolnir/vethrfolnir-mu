@@ -166,6 +166,10 @@ public class SimpleArray<E> {
 		data[index] = e;
 	}
 	
+	public void forceSet(int index, E e) {
+		data[index] = e;
+	}
+	
 	/**
 	 * Removes all of the elements from this array. The array will be empty after
 	 * this call returns.

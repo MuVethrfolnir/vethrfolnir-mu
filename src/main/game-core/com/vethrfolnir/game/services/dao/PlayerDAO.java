@@ -21,9 +21,12 @@ import java.sql.ResultSet;
 
 import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.components.Positioning;
+import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
+import com.vethrfolnir.game.entitys.components.inventory.Inventory;
 import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.entitys.components.player.PlayerStats;
 import com.vethrfolnir.game.templates.PlayerTemplate;
+import com.vethrfolnir.tools.Tools;
 
 
 
@@ -81,9 +84,10 @@ public class PlayerDAO extends DAO {
 			PlayerState state = entity.get(PlayerState.class);
 			PlayerStats stats = entity.get(PlayerStats.class);
 			Positioning positioning = entity.get(Positioning.class);
+			Inventory inv = entity.get(CreatureMapping.Inventory);
 			
 			int pointer = 1;
-			PreparedStatement st = con.prepareStatement("update characters set level=?, classId=?, currentExperience=?, mapId=?, x=?, y=?, guild=?, guildRank=?, strength=?, agility=?, vitality=?, energy=?, command=?, freePoints=?, masterPoints=?, masterLevel=?, expandedInventory=?, credits=?, zen=?, accessLevel=? where charid=?");
+			PreparedStatement st = con.prepareStatement("update characters set level=?, classId=?, currentExperience=?, mapId=?, x=?, y=?, guild=?, guildRank=?, strength=?, agility=?, vitality=?, energy=?, command=?, freePoints=?, masterPoints=?, masterLevel=?, expandedInventory=?, credits=?, zen=?, accessLevel=?, wearSet=? where charid=?");
 			st.setInt(pointer++, stats.getLevel());
 			st.setInt(pointer++, state.getClassId().classId);
 			st.setInt(pointer++, (int) stats.getCurrentExperience());
@@ -104,6 +108,7 @@ public class PlayerDAO extends DAO {
 			st.setInt(pointer++, 0); // Credits
 			st.setInt(pointer++, state.getZen());
 			st.setInt(pointer++, state.getAccessLevel());
+			st.setBytes(pointer++, Tools.toBytes(inv.getWearBytes()));
 			st.setInt(pointer++, state.getCharId());
 			st.execute();
 		});

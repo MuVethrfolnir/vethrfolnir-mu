@@ -179,4 +179,17 @@ public class Tools
 		if(object instanceof Listener)
 			((Listener) object).afterUnmarshal(null, null);
 	}
+
+	/**
+	 * @param data
+	 * @return
+	 */
+	public static byte[] toBytes(int[] data) {
+		byte[] toData = new byte[data.length];
+		
+		for (int i = 0; i < toData.length; i++)
+			toData[i] = (byte) data[i];
+
+		return toData;
+	}
 }

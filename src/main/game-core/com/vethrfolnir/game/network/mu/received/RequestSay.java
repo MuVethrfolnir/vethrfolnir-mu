@@ -139,6 +139,10 @@ public class RequestSay extends MuReadPacket {
 			inventory.store(item);
 			return;
 		}
+		if(message.equals("forceInv")) {
+			client.sendPacket(MuPackets.InventoryInfo, client.getEntity());
+			return;
+		}
 		
 		if (message.startsWith("//")) {
 			PlayerState state = client.getEntity().get(this.state);

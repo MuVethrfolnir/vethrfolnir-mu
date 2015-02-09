@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for `characters`
 -- ----------------------------
@@ -27,5 +29,6 @@ CREATE TABLE `characters` (
   `credits` bigint(90) NOT NULL DEFAULT '0',
   `zen` bigint(90) NOT NULL DEFAULT '0',
   `accessLevel` int(30) NOT NULL DEFAULT '0',
+  `wearSet` varbinary(255) DEFAULT NULL,
   PRIMARY KEY (`charId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
