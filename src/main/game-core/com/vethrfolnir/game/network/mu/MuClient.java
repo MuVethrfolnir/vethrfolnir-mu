@@ -84,6 +84,7 @@ public final class MuClient extends NetworkClient {
 		entity.add(new Positioning(template.x, template.y, template.mapId));
 		entity.add(new Inventory(WindowType.InventoryWindow));
 		entity.add(new KnownCreatures());
+		entity.add(new ItemsVewport());
 		
 		entity.add(new PlayerState(template));
 		entity.add(new PlayerStats(template));

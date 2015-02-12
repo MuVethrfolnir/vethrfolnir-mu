@@ -18,6 +18,7 @@ package com.vethrfolnir.game.network.mu.received;
 
 import io.netty.buffer.ByteBuf;
 
+import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
 import com.vethrfolnir.game.entitys.components.inventory.Inventory;
 import com.vethrfolnir.game.module.item.MuItem;
@@ -37,6 +38,8 @@ public class ExInventoryDropItem extends MuReadPacket {
 		int y = readC(buff);
 
 		Inventory inventory = client.getEntity().get(CreatureMapping.Inventory);
+		Positioning pos = client.getEntity().get(CreatureMapping.Positioning);
+
 		int itemSlot = readC(buff);
 
 		MuItem item = inventory.getItem(itemSlot);
@@ -50,16 +53,7 @@ public class ExInventoryDropItem extends MuReadPacket {
 			
 			System.out.println("Droping item: "+item.getName());
 			inventory.removeItem(itemSlot);
-
-			/**
-			 * TODO
-			 * client.sendPacket(MuPackets.ExInventoryDeleteItem(itemSlot));
-
-			
-			item.showItem(player, player.getMapId(), _x, _y);
-			item.setPendingDelete(true);
-			player.getInventory().updateDB(item);
-			*/
+			pos.getCurrentRegion().dropItem(item, x, y, true);
 		}
 	}
 

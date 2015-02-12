@@ -89,7 +89,7 @@ public class MuPackets {
 	
 	/**
 	 * Sends the confirmation that the item has been deleted from the inventory
-	 * Requires: MuItem
+	 * Requires: int id
 	 */
 	public static final ExInventoryDeleteItem ExInventoryDeleteItem = new ExInventoryDeleteItem();
 	
@@ -105,6 +105,18 @@ public class MuPackets {
 	 */
 	public static final ExInventoryMovedItem ExInventoryMovedItem = new ExInventoryMovedItem();
 	
+	/**
+	 * Sends the item info for the player viewport
+	 * Requires: MuItem, int groundId, boolean was dropped by player
+	 */
+	public static final ShowGroundItem ShowGroundItem = new ShowGroundItem();
+	
+	/**
+	 * Deletes an item thats on the ground
+	 * Requires: int groundid 
+	 */
+	public static final DeleteGroundItem DeleteGroundItem = new DeleteGroundItem();
+
 	/**
 	 * Sends information about a item's durability.
 	 * Requires: MuItem

@@ -165,5 +165,4 @@ public class Positioning implements Component {
 		moveFlag = false;
 		return val;
 	}
-
 }

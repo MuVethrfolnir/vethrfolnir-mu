@@ -126,6 +126,9 @@ public final class EntityWorld implements Updatable {
 			free.remove(obj.freeIndex);
 			entitys.remove(obj.index);
 		}
+	
+//		for (int i = 0; i < entitys.size(); i++)
+//			entitys.get(i).index = i;
 		
 		garbage.clear();
 	}

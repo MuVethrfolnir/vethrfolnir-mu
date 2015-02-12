@@ -70,6 +70,8 @@ public class MuItem {
 	private boolean sellable;
 	private boolean isEquipped;
 	
+	private GroundItem groundItem;
+	
 	public MuItem(int objectId, ItemTemplate template) {
 		this.objectId = objectId;
 		this.template = template;
@@ -574,6 +576,28 @@ public class MuItem {
 		this.isEquipped = isEquipped;
 	}
 
+	/**
+	 * Is item on the ground or not
+	 * @return
+	 */
+	public boolean isItemGrounded() {
+		return groundItem != null;
+	}
+	
+	/**
+	 * @return the groundItem
+	 */
+	public GroundItem getGroundItem() {
+		return groundItem;
+	}
+	
+	/**
+	 * @param groundItem the groundItem to set
+	 */
+	protected void setGroundItem(GroundItem groundItem) {
+		this.groundItem = groundItem;
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */

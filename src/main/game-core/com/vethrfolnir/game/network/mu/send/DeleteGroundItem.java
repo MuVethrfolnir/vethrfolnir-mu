@@ -14,29 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.vethrfolnir.game.network.mu.received;
+package com.vethrfolnir.game.network.mu.send;
 
 import io.netty.buffer.ByteBuf;
 
-import com.vethrfolnir.game.entitys.GameObject;
-import com.vethrfolnir.game.entitys.components.player.ItemsVewport;
-import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
+import java.nio.ByteOrder;
+
 import com.vethrfolnir.game.network.mu.MuClient;
-import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
+import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
 
 
 /**
  * @author Seth
  */
-public class ExInventoryPickUpItem extends MuReadPacket {
+public final class DeleteGroundItem extends MuWritePacket {
 
 	@Override
-	public void read(MuClient client, ByteBuf buff, Object... params) {
-		int objId = readSh(buff);
-		GameObject e = client.getEntity();
-		ItemsVewport iv = e.get(PlayerMapping.ItemsVewport);
-		
-		iv.pickUp(objId);
+	public void write(MuClient client, ByteBuf buff, Object... params) {
+		int id = (int) params[0];
+		writeArray(buff, 0xC2, 0x00, 0x07, 0x21, 0x01); //size
+		writeSh(buff, id, ByteOrder.BIG_ENDIAN);
 	}
 
 }

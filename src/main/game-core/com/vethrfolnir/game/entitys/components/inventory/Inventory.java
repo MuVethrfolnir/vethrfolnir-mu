@@ -26,6 +26,7 @@ import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.module.DatabaseAccess;
 import com.vethrfolnir.game.module.item.MuItem;
 import com.vethrfolnir.game.network.mu.MuPackets;
+import com.vethrfolnir.game.network.mu.send.SystemMessage.MessageType;
 import com.vethrfolnir.game.services.dao.InventoryDAO;
 import com.vethrfolnir.game.util.SimpleArray;
 import com.vethrfolnir.logging.MuLogger;
@@ -124,6 +125,8 @@ public class Inventory implements Component {
 				return true;
 			}
 		}
+		
+		entity.sendPacket(MuPackets.SystemMessage, "Inventory is full.", MessageType.Normal);
 		return false;
 	}
 	
@@ -253,6 +256,9 @@ public class Inventory implements Component {
 		clear(item);
 		entity.sendPacket(MuPackets.ExInventoryDeleteItem, item);
 		itemSize--;
+		
+		if(!item.isNew())
+			DatabaseAccess.InventoryAccess().removeItem(item);
 	}
 
 	/**

@@ -49,7 +49,7 @@ public class KnownCreatures implements Component, Updatable {
 	@Override
 	public void update(int tick, float deltaTime) {
 
-		if(this.entity.isVoid() || (tick % 8 == 1))
+		if(this.entity.isVoid() || (tick != 7))
 			return;
 		
 		Region currentRegion = positioning.getCurrentRegion();

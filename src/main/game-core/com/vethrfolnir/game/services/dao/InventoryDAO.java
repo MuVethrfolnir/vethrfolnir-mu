@@ -160,4 +160,18 @@ public class InventoryDAO extends DAO {
 			}
 		});
 	}
+
+	/**
+	 * @param item
+	 */
+	public void removeItem(MuItem item) {
+		enqueueVoidAndWait(new VoidProcedure() {
+			@Override
+			public void perform(Connection con, Object... buff) throws Exception {
+				PreparedStatement st = con.prepareStatement("delete from character_items where objectId=?");
+				st.setInt(1, item.getObjectId());
+				st.execute();
+			}
+		});
+	}
 }
