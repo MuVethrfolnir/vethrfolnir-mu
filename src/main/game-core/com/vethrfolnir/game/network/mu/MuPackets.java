@@ -219,4 +219,22 @@ public class MuPackets {
 	 * Require: GameObject entity, SkillId
 	 */
 	public static final MassSkillUse MassSkillUse = new MassSkillUse();
+	
+	/**
+	 * Send party invite<br>
+	 * Require: GameObject entity
+	 */
+	public static final ExPartyInvite ExPartyInvite = new ExPartyInvite();
+	
+	/**
+	 * Sends the party information
+	 * Require: party object, dismantle (boolean) 
+	 */
+	public static final PartyInfo PartyInfo = new PartyInfo();
+	
+	/**
+	 * Send Party Info Bar
+	 * Require: party object
+	 */
+	public static final ExPartyInfoBar ExPartyInfoBar = new ExPartyInfoBar();
 }

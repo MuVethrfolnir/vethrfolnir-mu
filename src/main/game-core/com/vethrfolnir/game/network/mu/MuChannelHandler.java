@@ -79,6 +79,13 @@ public class MuChannelHandler extends ChannelInboundHandlerAdapter {
 //		clientpackets.put(0x32, new ExBuyItem());
 //		clientpackets.put(0x33, new ExSellItem());
 		clientpackets.put(0x34, new ExInventoryRepairItem());
+		
+		// Party
+		clientpackets.put(0x40, new RequestPartyInvite());
+		clientpackets.put(0x41, new RequestPartyJoinAnswer());
+		clientpackets.put(0x42, new RequestPartyInfo());
+		clientpackets.put(0x43, new RequestLeaveParty());
+
 
 	}
 	

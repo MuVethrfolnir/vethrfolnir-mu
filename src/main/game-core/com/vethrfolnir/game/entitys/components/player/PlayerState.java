@@ -18,6 +18,7 @@ package com.vethrfolnir.game.entitys.components.player;
 
 import com.vethrfolnir.game.entitys.Component;
 import com.vethrfolnir.game.entitys.GameObject;
+import com.vethrfolnir.game.module.MuParty;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.staticdata.ClassId;
 import com.vethrfolnir.game.templates.PlayerTemplate;
@@ -38,6 +39,9 @@ public class PlayerState implements Component {
 	
 	private int accessLevel;
 	private int zen;
+	
+	private MuParty party;
+	private int partySlot;
 	
 	/**
 	 * @param template
@@ -117,6 +121,29 @@ public class PlayerState implements Component {
 		return charId;
 	}
 
+	/**
+	 * @return the party
+	 */
+	public MuParty getParty() {
+		return party;
+	}
+	
+	/**
+	 * @param party the party to set
+	 */
+	public void setParty(MuParty party) {
+		this.party = party;
+		if(party != null)
+			partySlot = party.getPartyMembers().indexOf(entity);
+	}
+
+	/**
+	 * @return the partySlot
+	 */
+	public int getPartySlot() {
+		return partySlot;
+	}
+	
 	/**
 	 * Delecation from MuClient
 	 */

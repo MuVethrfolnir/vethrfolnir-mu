@@ -24,8 +24,8 @@ import com.vethrfolnir.game.entitys.annotation.FetchIndex;
 import com.vethrfolnir.game.entitys.components.Positioning;
 import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
 import com.vethrfolnir.game.entitys.components.inventory.Inventory;
-import com.vethrfolnir.game.entitys.components.player.PlayerState;
-import com.vethrfolnir.game.entitys.components.player.PlayerStats;
+import com.vethrfolnir.game.entitys.components.player.*;
+import com.vethrfolnir.game.module.MuParty;
 import com.vethrfolnir.game.module.StaticData;
 import com.vethrfolnir.game.module.item.MuItem;
 import com.vethrfolnir.game.network.mu.MuClient;
@@ -163,6 +163,11 @@ public class RequestSay extends MuReadPacket {
 			// TODO Implement Chat types!
 			switch (type) {
 				case Party:
+					PlayerState state = client.getEntity().get(PlayerMapping.PlayerState);
+					if(state.getParty() != null) {
+						MuParty party = state.getParty();
+						party.sendPacket(MuPackets.PlayerSay, from, message);
+					}
 					return;
 				case Alliance:
 					return;
