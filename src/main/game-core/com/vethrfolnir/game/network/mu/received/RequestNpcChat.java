@@ -18,43 +18,50 @@ package com.vethrfolnir.game.network.mu.received;
 
 import io.netty.buffer.ByteBuf;
 
-import com.vethrfolnir.game.entitys.components.Positioning;
+import com.vethrfolnir.game.controllers.NpcController;
+import com.vethrfolnir.game.controllers.NpcController.ActionController;
+import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.components.creature.CreatureMapping;
-import com.vethrfolnir.game.entitys.components.inventory.Inventory;
-import com.vethrfolnir.game.module.item.MuItem;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.MuPackets;
 import com.vethrfolnir.game.network.mu.packets.MuReadPacket;
-import com.vethrfolnir.logging.MuLogger;
+import com.vethrfolnir.game.staticdata.world.Region;
 
+import corvus.corax.inject.Inject;
 
 /**
- * @author Seth
+ * @author PsychoJr
  */
-public class ExInventoryDropItem extends MuReadPacket {
+public class RequestNpcChat extends MuReadPacket {
+
+	@Inject
+	private NpcController npcControllers; 
+	
 	@Override
 	public void read(MuClient client, ByteBuf buff, Object... params) {
-		int x = readC(buff);
-		int y = readC(buff);
+		int npcObjId = readSh(buff);
+		
+		System.out.println("Hello "+npcObjId);
 
-		Inventory inventory = client.getEntity().get(CreatureMapping.Inventory);
-		Positioning pos = client.getEntity().get(CreatureMapping.Positioning);
+		Region region = client.getEntity().get(CreatureMapping.Positioning).getCurrentRegion();
 
-		int itemSlot = readC(buff);
+		GameObject npc = region.getNpc(npcObjId);
 
-		MuItem item = inventory.getItem(itemSlot);
+		if(npc == null) {
+			log.fatal("Invalid: "+npcObjId+" request sent by "+client);
+			return;
+		}
+		
+		int npcId = npc.get(CreatureMapping.CreatureState).getNpcId();
+		
+		ActionController controller = npcControllers.getController(npcId, ActionController.class);
 
-		if(item == null) // Error or hack
-		{
-			MuLogger.e(getClass().getSimpleName()+": Character["+client+"] requested to move an inexistent item on slot["+itemSlot+"].");
-			client.sendPacket(MuPackets.InventoryInfo, client.getEntity());
+		if(controller != null) {
+			controller.action(npcId, client.getEntity(), npc);
 		}
 		else {
-			
-			System.out.println("Droping item: "+item.getName());
-			inventory.removeItem(itemSlot);
-			pos.getCurrentRegion().dropItem(item, x, y, true);
+			client.sendPacket(MuPackets.CreatureSay, npc, "Action not handled yet.");
+			client.sendPacket(MuPackets.PlayerSay, "NPC["+npcId+"]", "Action["+npcObjId+"] not handled yet.");
 		}
 	}
-
 }

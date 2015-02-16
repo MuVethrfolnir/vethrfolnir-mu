@@ -172,6 +172,11 @@ public class MuPackets {
 	public static final NpcInfo NpcInfo = new NpcInfo();
 	
 	/**
+	 * Sends a message to the client which will show like a bubble above the npc name
+	 * Requires: int objId, String msg
+	 */
+	public static final CreatureSay CreatureSay = new CreatureSay();
+	/**
 	 * Sends the damage info to the client<br>
 	 * Requires: GameObject target, int dmg, DamageType and if needed an int with SD-Damage
 	 */

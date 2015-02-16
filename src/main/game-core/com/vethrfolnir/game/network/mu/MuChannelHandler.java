@@ -86,7 +86,9 @@ public class MuChannelHandler extends ChannelInboundHandlerAdapter {
 		clientpackets.put(0x42, new RequestPartyInfo());
 		clientpackets.put(0x43, new RequestLeaveParty());
 
-
+		
+		// NPC
+		clientpackets.put(0x30, new RequestNpcChat());
 	}
 	
 	/* (non-Javadoc)

@@ -21,6 +21,7 @@ import java.io.IOException;
 
 import com.vethrfolnir.MuSetupTemplate;
 import com.vethrfolnir.database.DatabaseFactory;
+import com.vethrfolnir.game.controllers.NpcController;
 import com.vethrfolnir.game.entitys.EntityWorld;
 import com.vethrfolnir.game.entitys.annotation.EntitySystemProcessor;
 import com.vethrfolnir.game.module.StaticData;
@@ -57,11 +58,15 @@ public class GameSetup extends MuSetupTemplate {
 		bind(DatabaseService.class);
 		bind(DatabaseFactory.class);
 		bind(LoginServerClient.class);
+		bind(ScriptingService.class);
 		
 		bind(EntityWorld.class);
 		bind(IdFactory.class);
 		bind(GameController.class);
 
+		// Controllers
+		bind(NpcController.class);
+		
 		Runtime.getRuntime().addShutdownHook(new Thread(()-> {
 			Corax.instance().destroy();
 		}));
@@ -96,6 +101,8 @@ public class GameSetup extends MuSetupTemplate {
 		StaticData.loadData();
 		
 		Tools.printSection("Scripts");
+		ScriptingService scripting = Corax.fetch(ScriptingService.class);
+		scripting.loadScripts();
 		
 		Tools.printSection("Network");
 		LoginServerClient client = Corax.fetch(LoginServerClient.class);

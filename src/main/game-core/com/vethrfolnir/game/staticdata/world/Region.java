@@ -246,6 +246,20 @@ public class Region implements Disposable, Updatable {
 	}
 
 	/**
+	 * @param objId
+	 * @return
+	 */
+	public GameObject getNpc(int objId) {
+		for (int i = 0; i < nonPlayers.size(); i++) {
+			GameObject npc = nonPlayers.get(i);
+			
+			if(npc.getWorldIndex() == objId)
+				return npc;
+		}
+		return null;
+	}
+
+	/**
 	 * @param packet
 	 * @param params
 	 */
@@ -333,4 +347,5 @@ public class Region implements Disposable, Updatable {
 	public void needsCleanup() {
 		needsCleanup = true;
 	}
+
 }
