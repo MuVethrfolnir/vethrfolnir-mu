@@ -195,4 +195,10 @@ public class SimpleArray<E> {
 		System.arraycopy(oldData, 0, data, 0, oldData.length);
 	}
 
+	/**
+	 * @return the data
+	 */
+	public E[] getData() {
+		return data;
+	}
 }

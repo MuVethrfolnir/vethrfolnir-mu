@@ -28,10 +28,11 @@ import com.vethrfolnir.network.WritePacket;
  * @author Vlad
  *
  */
-@SuppressWarnings("unused")
 public class PlayerState implements Component {
 
 	protected MuClient client;
+	
+	@SuppressWarnings("unused")
 	private GameObject entity;
 
 	protected final int charId;
@@ -41,7 +42,6 @@ public class PlayerState implements Component {
 	private int zen;
 	
 	private MuParty party;
-	private int partySlot;
 	
 	/**
 	 * @param template
@@ -133,17 +133,8 @@ public class PlayerState implements Component {
 	 */
 	public void setParty(MuParty party) {
 		this.party = party;
-		if(party != null)
-			partySlot = party.getPartyMembers().indexOf(entity);
 	}
 
-	/**
-	 * @return the partySlot
-	 */
-	public int getPartySlot() {
-		return partySlot;
-	}
-	
 	/**
 	 * Delecation from MuClient
 	 */
@@ -160,5 +151,4 @@ public class PlayerState implements Component {
 		entity = null;
 		classId = null;
 	}
-
 }

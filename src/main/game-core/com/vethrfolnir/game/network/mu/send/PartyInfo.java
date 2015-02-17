@@ -18,9 +18,12 @@ package com.vethrfolnir.game.network.mu.send;
 
 import io.netty.buffer.ByteBuf;
 
+import java.util.ArrayList;
+
 import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.components.Positioning;
-import com.vethrfolnir.game.entitys.components.player.*;
+import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
+import com.vethrfolnir.game.entitys.components.player.PlayerStats;
 import com.vethrfolnir.game.module.MuParty;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
@@ -43,15 +46,16 @@ public class PartyInfo extends MuWritePacket {
 		
 		if(dismantle)
 			return;
-		
-		for (GameObject member : party.getPartyMembers()) {
+
+		ArrayList<GameObject> list = party.getPartyMembers();
+		for (int i = 0; i < list.size(); i++) {
+			GameObject member = list.get(i);
 			
-			PlayerState state = member.get(PlayerMapping.PlayerState);
 			PlayerStats stats = member.get(PlayerMapping.PlayerStats);
 			Positioning pos = member.get(PlayerMapping.Positioning);
 			
 			writeS(buff, member.getName(), 10);
-			writeC(buff, state.getPartySlot());
+			writeC(buff, i); // slot
 			
 			writeC(buff, pos.getMapId());
 			writeArray(buff, pos.getX(), pos.getY());

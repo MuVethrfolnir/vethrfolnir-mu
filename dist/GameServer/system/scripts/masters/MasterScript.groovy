@@ -28,7 +28,4 @@ NpcController cons = Corax.fetch(NpcController.class);
 cons.register(new GeneralNPCActionController(), 255, 256);
 println "Loaded "+cons.size()+" npc controller(s)"
 
-// Load Skill Controllers
- 
-// Load Quests
 println "Loading of scripts complete."

@@ -18,9 +18,11 @@ package com.vethrfolnir.game.network.mu.send;
 
 import io.netty.buffer.ByteBuf;
 
+import java.util.ArrayList;
+
 import com.vethrfolnir.game.entitys.GameObject;
-import com.vethrfolnir.game.entitys.components.Positioning;
-import com.vethrfolnir.game.entitys.components.player.*;
+import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
+import com.vethrfolnir.game.entitys.components.player.PlayerStats;
 import com.vethrfolnir.game.module.MuParty;
 import com.vethrfolnir.game.network.mu.MuClient;
 import com.vethrfolnir.game.network.mu.packets.MuWritePacket;
@@ -37,11 +39,11 @@ public class ExPartyInfoBar extends MuWritePacket {
 		MuParty party = (MuParty) params[0];
 		int[] statsArray = new int[5];
 		
-		for(GameObject member : party.getPartyMembers()) {
-			PlayerState state = member.get(PlayerMapping.PlayerState);
+		ArrayList<GameObject> list = party.getPartyMembers();
+		for (int i = 0; i < list.size(); i++) {
+			GameObject member = list.get(i);
 			PlayerStats stats = member.get(PlayerMapping.PlayerStats);
 			
-			int i = state.getPartySlot();
 			float percent = (float)stats.getHealthPoints() / stats.getMaxHealthPoints() * 10;
 			statsArray[i] = Math.min((int) percent, 10);
 		}

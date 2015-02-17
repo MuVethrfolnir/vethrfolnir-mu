@@ -27,31 +27,8 @@ import javax.xml.bind.Unmarshaller.Listener;
 /**
  * @author  Setekh
  */
-public class Tools
-{
-	
-    private static final HashMap<Class<?>, Class<?>> nativeTypes = new HashMap<>();
+public class Tools {
 
-    static
-    {
-        nativeTypes.put(Boolean.class, boolean.class);
-        nativeTypes.put(Character.class, char.class);
-        nativeTypes.put(Byte.class, byte.class);
-        nativeTypes.put(Short.class, short.class);
-        nativeTypes.put(Integer.class, int.class);
-        nativeTypes.put(Long.class, long.class);
-        nativeTypes.put(Float.class, float.class);
-        nativeTypes.put(Double.class, double.class);
-    }
-
-    /**
-     * If it's not a primitive it will return the type parameter
-     * @param type
-     */
-    public static Class<?> identifyAndGet(Class<?> type) {
-        return nativeTypes.containsKey(type) ? nativeTypes.get(type) : type;
-    }
-    
 	public static void printSection(String s)
 	{
 		int maxlength = 79;

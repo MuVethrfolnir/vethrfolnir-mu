@@ -16,33 +16,43 @@
  */
 package com.vethrfolnir.game.services;
 
-import groovy.util.*;
+import groovy.util.GroovyScriptEngine;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
 import com.vethrfolnir.logging.MuLogger;
-import com.vethrfolnir.tools.Tools;
 
 import corvus.corax.config.CorvusConfig;
 
 /**
  * @author Vlad
  *
+ * GroovyScriptEngine is basically a handler for GroovyClassLoader, we should 
+ * make our system around GroovyClassLoader than GroovyScriptEngine
  */
 public class ScriptingService {
 	private static final MuLogger log = MuLogger.getLogger(ScriptingService.class);
-	static {
-		CorvusConfig.WorkingDirectory = new File("dist/GameServer");
-	}
 	public static final File ScriptDir = new File(CorvusConfig.WorkingDirectory, "system/scripts");
 	
 	private final GroovyScriptEngine engine;
 	
+	private Field ScriptEngineRoots;
+	
 	public ScriptingService() {
 		engine = new GroovyScriptEngine(getPackageURLs());
+		
+		try { // so bad
+			ScriptEngineRoots = engine.getClass().getDeclaredField("roots");
+			ScriptEngineRoots.setAccessible(true);
+		}
+		catch (Exception e) {
+			log.warn("Failed getting Script engine roots field, new paths wont be added at runtime.", e);
+		}
+		
 		log.info("Ready.");
 	}
 	
@@ -53,6 +63,7 @@ public class ScriptingService {
 			ArrayList<File> files = listScriptFiles(ScriptDir);
 			for (int i = 0; i < files.size(); i++) {
 				File l = files.get(i);
+				
 				engine.loadScriptByName(l.getName());
 			}
 			
@@ -64,118 +75,6 @@ public class ScriptingService {
 	}
 	
 	/**
-	 * Creates an instance of the specified class, if the class has not been loaded yet, it will be now.
-	 * @return the specified initiated object, with the default constructor
-	 * @see GroovyScriptManager#loadClass(String)
-	 */
-	@SuppressWarnings("unchecked")
-	public synchronized <T> T load(String scriptName) {
-		try
-		{
-			T obj = (T) loadClass(scriptName).newInstance();
-			return obj;
-			
-		}
-		catch (InstantiationException | IllegalAccessException e)
-		{
-			log.warn("Failed loading script: "+scriptName+". ", e);
-			return null;
-		}
-	}
-	
-	/**
-	 * Creates an instance of the specified class, if the class has not been loaded yet, it will be now.<br>
-	 * Supports native types.
-	 * @return the specified initiated object
-	 * @see GroovyScriptManager#loadClass(String)
-	 */
-	@SuppressWarnings("unchecked")
-	public synchronized <T> T loadNative(String scriptName, Object... objects) {
-		try
-		{
-			Class<?>[] types = new Class<?>[objects.length] ;
-			
-			int pointer = 0;
-			for(Object obj : objects) {
-				types[pointer++] = Tools.identifyAndGet(obj.getClass());
-			}
-			
-			T obj = (T) load(scriptName, types, objects);
-			return obj;
-		}
-		catch (Exception e)
-		{
-			log.warn("Failed loading script: "+scriptName+". ", e);
-			return null;
-		}
-	}
-	
-	/**
-	 * Creates an instance of the specified class, if the class has not been loaded yet, it will be now.<br>
-	 * <b><font color = #FF0000>Warning:</font></b> It dose not support native types. Use: {@link #loadNative(String, Object...)}
-	 * @return the specified initiated object
-	 * @see GroovyScriptManager#loadClass(String)
-	 */
-	@SuppressWarnings("unchecked")
-	public synchronized <T> T load(String scriptName, Object... objects) {
-		try
-		{
-			Class<?>[] types = new Class<?>[objects.length] ;
-			
-			int pointer = 0;
-			for(Object obj : objects) {
-				types[pointer++] = obj.getClass();
-			}
-			
-			T obj = (T) load(scriptName, types, objects);
-			return obj;
-		}
-		catch (Exception e)
-		{
-			log.warn("Failed loading script: "+scriptName+". ", e);
-			return null;
-		}
-	}
-	
-	/**
-	 * Creates an instance of the specified class, if the class has not been loaded yet, it will be now.
-	 * @return the specified initiated object
-	 * @see GroovyScriptManager#loadClass(String)
-	 */
-	@SuppressWarnings("unchecked")
-	public synchronized <T> T load(String scriptName, Class<?>[] types, Object... objects) {
-		try
-		{
-			T obj = (T) loadClass(scriptName).getConstructor(types).newInstance(objects);
-			return obj;
-		}
-		catch (Exception e)
-		{
-			log.warn("Failed loading script: "+scriptName+". ", e);
-			return null;
-		}
-	}
-	
-	/**
-	 * Loads the specified script, will return null if the script is not a returnable object
-	 * @param scriptName must not contain file extension
-	 * @return class or null
-	 */
-	public synchronized Class<?> loadClass(String scriptName) {
-		try
-		{
-			Class<?> clz = engine.loadScriptByName(scriptName+ (scriptName.endsWith(".groovy") ? "" : ".groovy"));
-			return clz;
-		}
-		catch (ResourceException | ScriptException e)
-		{
-			log.warn("Failed loading script: ", e);
-		}
-		
-		return null;
-	}
-
-	/**
 	 * @return the engine
 	 */
 	public GroovyScriptEngine getEngine() {
@@ -184,6 +83,8 @@ public class ScriptingService {
 	
 	public void reparsePackages() {
 		URL[] urls = getPackageURLs();
+		
+		try { ScriptEngineRoots.set(engine, urls); } catch (Exception e) { log.warn("Hm..", e); }
 		
 		for(URL url : urls) {
 			
@@ -249,7 +150,7 @@ public class ScriptingService {
 			if(file.isDirectory()) {
 				files.addAll(listScriptFiles(file));
 			}
-			else if (file.getName().endsWith("groovy")){
+			else if (file.getName().endsWith("groovy") || file.getName().endsWith("java")){
 				files.add(file);
 			}
 		}

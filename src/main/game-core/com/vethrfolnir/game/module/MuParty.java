@@ -22,7 +22,6 @@ import com.vethrfolnir.game.entitys.GameObject;
 import com.vethrfolnir.game.entitys.components.player.PlayerMapping;
 import com.vethrfolnir.game.entitys.components.player.PlayerState;
 import com.vethrfolnir.game.network.mu.MuPackets;
-import com.vethrfolnir.game.network.mu.send.SystemMessage;
 import com.vethrfolnir.game.network.mu.send.SystemMessage.MessageType;
 import com.vethrfolnir.logging.MuLogger;
 import com.vethrfolnir.network.WritePacket;
@@ -79,13 +78,7 @@ public final class MuParty {
 	}
 	
 	public GameObject getPartyMember(int partySlot) {
-		for(GameObject member : partyMembers) {
-			PlayerState memberState = member.get(PlayerMapping.PlayerState);
-			if(memberState.getPartySlot() == partySlot) {
-				return member;
-			}
-		}
-		return null;
+		return partyMembers.get(partySlot);
 	}
 	
 	public void removePartyMember(GameObject target) {
